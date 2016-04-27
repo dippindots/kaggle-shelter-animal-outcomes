@@ -30,5 +30,3 @@ class KNeighborsPredictor(PredictorBase):
         predictions_df = pd.DataFrame(predictions_data)
         
         return predictions_df
-    
-        

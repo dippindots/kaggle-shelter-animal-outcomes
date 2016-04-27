@@ -22,13 +22,13 @@ class KNeighborsPredictor(PredictorBase):
 
     def predict(self, X_test):
         predictions = self.neigh.predict(X_test)
-        test_n = len(X_test)
-        zeroes = [0.0] * test_n
+        n = len(X_test)
+        zeroes = [0.0] * n
         predictions_data = {
-                            'ID': range(test_n), 'Adoption': zeroes, 'Died': zeroes, 
+                            'ID': range(1, n + 1), 'Adoption': zeroes, 'Died': zeroes, 
                             'Euthanasia': zeroes, 'Return_to_owner': zeroes, 'Transfer': zeroes}
         predictions_df = pd.DataFrame(predictions_data)
-        for i in range(test_n):
+        for i in range(n):
             prediction = predictions[i]
             predictions_df.loc[i, (prediction)] = 1.0
         

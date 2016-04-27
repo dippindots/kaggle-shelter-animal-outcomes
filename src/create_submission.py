@@ -5,7 +5,7 @@ Best predictors:
     Date        Type                MyLLScore  KaggleLLScore  GithubTag
     ======================================================================
     04/27/2016  BaseLinePredictor    20.61577       20.25113  Submission00
-    04/27/2016  KNeighborsPredictor  13.99550       
+    04/27/2016  KNeighborsPredictor  14.37823       13.94696  Submission01
 
 @author: Paul Reiners
 '''
@@ -56,7 +56,6 @@ def convert_age_to_days(age_str):
 if __name__ == '__main__':
     train_data = get_data('../data/train.csv', 'train')
     test_data = get_data('../data/test.csv', 'test')
-    print test_data.info()
     all_data = train_data.append(test_data)
     all_data = clean_data(all_data)
     
@@ -77,8 +76,9 @@ if __name__ == '__main__':
     
     possible_outcomes = ['Adoption', 'Died', 'Euthanasia', 'Return_to_owner', 'Transfer']
     ll = log_loss(y_test, 'OutcomeType', predictions_df, possible_outcomes)
-    print "%.5f" % ll
+    print "score: %.5f" % ll
     
     if ll < BEST_SCORE:
         test_predictions = predictor.predict(test_data)
-        print test_predictions
+        test_predictions.to_csv('../submissions/my_submission.csv', index=False, 
+                                columns=['ID', 'Adoption', 'Died', 'Euthanasia', 'Return_to_owner', 'Transfer'])

@@ -12,7 +12,12 @@ class PredictorBase(object):
     __metaclass__ = abc.ABCMeta
     
     @abc.abstractmethod
-    def predict(self, X_train, X_test, y_train):
+    def fit(self, X_train, y_train):
+        """Fit model."""
+        return
+    
+    @abc.abstractmethod
+    def predict(self, X_test):
         """Make predictions."""
         return
         

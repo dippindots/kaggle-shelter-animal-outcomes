@@ -53,7 +53,8 @@ if __name__ == '__main__':
     X_train, X_test, y_train, y_test = train_test_split(X, y)
 
     predictor = KNeighborsPredictor()
-    predictions_df = predictor.predict(X_train, X_test, y_train)
+    predictor.fit(X_train, y_train)
+    predictions_df = predictor.predict(X_test)
     
     possible_outcomes = ['Adoption', 'Died', 'Euthanasia', 'Return_to_owner', 'Transfer']
     ll = log_loss(y_test, 'OutcomeType', predictions_df, possible_outcomes)

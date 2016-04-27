@@ -14,12 +14,14 @@ class KNeighborsPredictor(PredictorBase):
     '''
     Uses k-nearest neighbors.
     '''
+    
+    def fit(self, X_train, y_train):
+        self.neigh = KNeighborsClassifier()
+        self.neigh.fit(X_train, y_train)
+    
 
-
-    def predict(self, X_train, X_test, y_train):
-        neigh = KNeighborsClassifier()
-        neigh.fit(X_train, y_train)
-        predictions = neigh.predict(X_test)
+    def predict(self, X_test):
+        predictions = self.neigh.predict(X_test)
         test_n = len(X_test)
         zeroes = [0.0] * test_n
         predictions_data = {

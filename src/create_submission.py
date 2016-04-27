@@ -2,9 +2,10 @@
 Created on Apr 26, 2016
 
 Best predictors:
-    Date        Type              MyLLScore  KaggleLLScore  GithubTag
-    ====================================================================
-    04/27/2016  BaseLinePredictor  20.61577       20.25113  Submission00
+    Date        Type                MyLLScore  KaggleLLScore  GithubTag
+    ======================================================================
+    04/27/2016  BaseLinePredictor    20.61577       20.25113  Submission00
+    04/27/2016  KNeighborsPredictor  13.99550       
 
 @author: Paul Reiners
 '''
@@ -12,16 +13,20 @@ import pandas as pd
 import numpy as np
 from sklearn.cross_validation import train_test_split
 from util import log_loss 
-from base_line_predictor import BaseLinePredictor
+from k_neighbors_predictor import KNeighborsPredictor
 
 def get_and_clean_data():
-    dtype = {'Name':str}
+    dtype = {'Name': str}
     data = pd.read_csv('../data/train.csv', dtype=dtype, parse_dates=['DateTime'], index_col=0)
-    categorical_columns = ["OutcomeType", "OutcomeSubtype", "AnimalType", "SexuponOutcome", "Breed", "Color"]
+    data = data.drop(['OutcomeSubtype', 'Name', 'DateTime'], axis=1)
+    data = data.dropna()
+    categorical_columns = ["OutcomeType", "AnimalType", "SexuponOutcome", "Breed", "Color"]
     for categorical_column in categorical_columns:
         data[categorical_column] = data[categorical_column].astype('category')
-    
     data['AgeuponOutcome'] = data['AgeuponOutcome'].apply(convert_age_to_days)
+    
+    data = pd.get_dummies(data, columns=["AnimalType", "SexuponOutcome", "Breed", "Color"])
+    
     return data
 
 
@@ -47,7 +52,7 @@ if __name__ == '__main__':
     y = data['OutcomeType']
     X_train, X_test, y_train, y_test = train_test_split(X, y)
 
-    predictor = BaseLinePredictor()
+    predictor = KNeighborsPredictor()
     predictions_df = predictor.predict(X_train, X_test, y_train)
     
     possible_outcomes = ['Adoption', 'Died', 'Euthanasia', 'Return_to_owner', 'Transfer']

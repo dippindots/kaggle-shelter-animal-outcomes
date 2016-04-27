@@ -6,6 +6,7 @@ Best predictors:
     ======================================================================
     04/27/2016  BaseLinePredictor    20.61577       20.25113  Submission00
     04/27/2016  KNeighborsPredictor  14.37823       13.94696  Submission01
+    04/27/2016  KNeighborsPredictor   5.07153        5.20698  Submission02
 
 @author: Paul Reiners
 '''
@@ -15,7 +16,7 @@ from sklearn.cross_validation import train_test_split
 from util import log_loss 
 from k_neighbors_predictor import KNeighborsPredictor
 
-BEST_SCORE = 20.61577
+BEST_SCORE = 14.37823
 
 def get_data(file_path, tag):
     dtype = {'Name': str}

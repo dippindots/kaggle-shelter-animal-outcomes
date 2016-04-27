@@ -1,12 +1,18 @@
 '''
 Created on Apr 26, 2016
 
+Best predictors:
+    Date        Type              MyLLScore  KaggleLLScore  GithubTag
+    ====================================================================
+    04/27/2016  BaseLinePredictor  20.61577       20.25113  Submission00
+
 @author: Paul Reiners
 '''
 import pandas as pd 
 import numpy as np
 from sklearn.cross_validation import train_test_split
 from util import log_loss 
+from base_line_predictor import BaseLinePredictor
 
 def get_and_clean_data():
     dtype = {'Name':str}
@@ -40,13 +46,10 @@ if __name__ == '__main__':
     X = data.drop(['OutcomeType'], axis=1)
     y = data['OutcomeType']
     X_train, X_test, y_train, y_test = train_test_split(X, y)
-    predictions = [{'Adoption': 1, 'Died': 0, 'Euthanasia': 0, 'Return_to_owner': 0, 'Transfer': 0}] * len(y_test)
-    test_n = len(X_test)
-    zeroes = [0] * test_n
-    predictions_data = {
-                        'ID': test_n, 'Adoption': [1] * test_n, 'Died': zeroes, 
-                        'Euthanasia': zeroes, 'Return_to_owner': zeroes, 'Transfer': zeroes}
-    predictions_df = pd.DataFrame(predictions_data)
+
+    predictor = BaseLinePredictor()
+    predictions_df = predictor.predict(X_train, X_test, y_train)
+    
     possible_outcomes = ['Adoption', 'Died', 'Euthanasia', 'Return_to_owner', 'Transfer']
     ll = log_loss(y_test, 'OutcomeType', predictions_df, possible_outcomes)
-    print ll
+    print "%.5f" % ll

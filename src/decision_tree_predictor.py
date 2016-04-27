@@ -17,8 +17,10 @@ class DecisionTreePredictor(PredictorBase):
     Uses decision tree.
     '''
 
-    def fit(self, X_train, y_train):
+    def __init__(self):
         self.clf = tree.DecisionTreeClassifier()
+
+    def fit(self, X_train, y_train):
         self.clf.fit(X_train, y_train)
 
     def predict(self, X_test):

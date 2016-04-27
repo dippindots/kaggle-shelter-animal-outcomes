@@ -12,7 +12,7 @@ Best predictors:
 '''
 from sklearn.cross_validation import train_test_split
 
-from decision_tree_predictor import DecisionTreePredictor
+from k_neighbors_predictor import KNeighborsPredictor
 import numpy as np
 import pandas as pd
 from util import log_loss
@@ -78,7 +78,7 @@ if __name__ == '__main__':
     y = train_data['OutcomeType']
     X_train, X_test, y_train, y_test = train_test_split(X, y)
 
-    predictor = DecisionTreePredictor()
+    predictor = KNeighborsPredictor()
     predictor.fit(X_train, y_train)
     predictions_df = predictor.predict(X_test)
 

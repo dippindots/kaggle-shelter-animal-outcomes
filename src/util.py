@@ -5,11 +5,23 @@ Created on Apr 26, 2016
 '''
 from math import log
 
-def log_loss(truth_df, label_col_name, predictions_df, possible_labels):
-    n = len(truth_df)
+def log_loss(truths, label_col_name, predictions_df, possible_labels):
+    ''' Function to measure log loss of a prediction.
+    
+    Parameters
+    ==========
+    truths          : numpy.ndarray
+                      the ground truth
+    label_col_name  : str
+                      the name of the column you're trying to predict
+    predictions_df  : pandas.core.frame.DataFrame
+                      your predictions
+    possible_labels : list
+                      possible labels'''
+    n = len(truths)
     total = 0.0
     for i in range(n):
-        truth = truth_df[label_col_name].iloc[i]
+        truth = truths[i]
         for possible_label in possible_labels:
             if truth == possible_label:
                 y = 1

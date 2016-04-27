@@ -34,21 +34,19 @@ def convert_age_to_days(age_str):
             return 365 * num 
     else:
         return np.nan
-    
-def get_black_dogs(data):
-    black = data['AnimalType'] == "Dog"
-    dog = data['Color'] == "Black"
-    black_dogs = data[black & dog]
-
-    return black_dogs
 
 if __name__ == '__main__':
     data = get_and_clean_data()
-    print data.dtypes
     X = data.drop(['OutcomeType'], axis=1)
     y = data['OutcomeType']
     X_train, X_test, y_train, y_test = train_test_split(X, y)
     predictions = [{'Adoption': 1, 'Died': 0, 'Euthanasia': 0, 'Return_to_owner': 0, 'Transfer': 0}] * len(y_test)
+    test_n = len(X_test)
+    zeroes = [0] * test_n
+    predictions_data = {
+                        'ID': test_n, 'Adoption': [1] * test_n, 'Died': zeroes, 
+                        'Euthanasia': zeroes, 'Return_to_owner': zeroes, 'Transfer': zeroes}
+    predictions_df = pd.DataFrame(predictions_data)
     possible_outcomes = ['Adoption', 'Died', 'Euthanasia', 'Return_to_owner', 'Transfer']
-    ll = log_loss(y_test, predictions, possible_outcomes)
+    ll = log_loss(y_test, 'OutcomeType', predictions_df, possible_outcomes)
     print ll

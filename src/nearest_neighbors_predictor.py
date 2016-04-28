@@ -1,8 +1,8 @@
 '''
 Created on Apr 27, 2016
 
-MyLLScore:     3.70919
-KaggleLLScore: 3.59477
+MyLLScore:     1.00052
+KaggleLLScore: 1.00036
 
 @author: Paul Reiners
 '''
@@ -17,7 +17,7 @@ class NearestNeighborsPredictor(PredictorBase):
     '''
 
     def __init__(self):
-        self.clf = KNeighborsClassifier(7)
+        self.clf = KNeighborsClassifier(510)
 
     def fit(self, X_train, y_train):
         self.clf.fit(X_train, y_train)

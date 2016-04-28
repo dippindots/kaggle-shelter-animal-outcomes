@@ -1,6 +1,10 @@
 '''
 Created on Apr 26, 2016
 
+See [Classifier comparison]
+(http://scikit-learn.org/stable/auto_examples/classification/plot_classifier_comparison.html)
+for possible classifiers.
+
 Best predictors:
     Date        Type                MyLLScore  KaggleLLScore  GithubTag
     ======================================================================

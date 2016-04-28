@@ -1,23 +1,23 @@
 '''
 Created on Apr 27, 2016
 
-MyLLScore:     10.69225
+MyLLScore:
 KaggleLLScore:
 
 @author: Paul Reiners
 '''
-from sklearn import tree
+from sklearn.svm import SVC
 
 from predictor_base import PredictorBase
 
 
-class DecisionTreePredictor(PredictorBase):
+class LinearSVMPredictor(PredictorBase):
     '''
-    Uses decision tree.
+    Uses support vector machine.
     '''
 
     def __init__(self):
-        self.clf = tree.DecisionTreeClassifier()
+        self.clf = SVC(kernel="linear", C=0.025, probability=True)
 
     def fit(self, X_train, y_train):
         self.clf.fit(X_train, y_train)

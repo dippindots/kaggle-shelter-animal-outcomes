@@ -1,7 +1,7 @@
 '''
 Created on Apr 27, 2016
 
-MyLLScore:     1.24175
+MyLLScore:     1.22222
 KaggleLLScore:
 
 @author: Paul Reiners
@@ -17,7 +17,7 @@ class RandomForestPredictor(PredictorBase):
 
     def __init__(self):
         self.clf = RandomForestClassifier(
-            max_depth=5, n_estimators=10, max_features=1)
+            max_depth=8, n_estimators=10, max_features=1)
 
     def fit(self, X_train, y_train):
         self.clf.fit(X_train, y_train)

@@ -6,17 +6,17 @@ See [Classifier comparison]
 for possible classifiers.
 
 Best predictors:
-    Date        Type                MyLLScore  KaggleLLScore  GithubTag
-    ======================================================================
-    04/27/2016  BaseLinePredictor    20.61577       20.25113  Submission00
-    04/27/2016  KNeighborsPredictor  14.37823       13.94696  Submission01
-    04/27/2016  KNeighborsPredictor   5.07153        5.20698  Submission02
+    Date        Type                       MyLLScore  KaggleLLScore  GithubTag
+    =============================================================================
+    04/27/2016  BaseLinePredictor          20.61577        20.25113  Submission00
+    04/27/2016  NearestNeighborsPredictor  14.37823        13.94696  Submission01
+    04/27/2016  NearestNeighborsPredictor   5.07153         5.20698  Submission02
 
 @author: Paul Reiners
 '''
 from sklearn.cross_validation import train_test_split
 
-from k_neighbors_predictor import KNeighborsPredictor
+from nearest_neighbors_predictor import NearestNeighborsPredictor
 import numpy as np
 import pandas as pd
 from util import log_loss
@@ -82,7 +82,7 @@ if __name__ == '__main__':
     y = train_data['OutcomeType']
     X_train, X_test, y_train, y_test = train_test_split(X, y)
 
-    predictor = KNeighborsPredictor()
+    predictor = NearestNeighborsPredictor()
     predictor.fit(X_train, y_train)
     predictions_df = predictor.predict(X_test)
 

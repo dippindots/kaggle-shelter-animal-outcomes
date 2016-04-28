@@ -1,8 +1,8 @@
 '''
 Created on Apr 27, 2016
 
-MyLLScore:     14.37823
-KaggleLLScore: 13.94696
+MyLLScore:     5.07153
+KaggleLLScore: 5.20698
 
 @author: Paul Reiners
 '''
@@ -11,7 +11,7 @@ from sklearn.neighbors import KNeighborsClassifier
 from predictor_base import PredictorBase
 
 
-class KNeighborsPredictor(PredictorBase):
+class NearestNeighborsPredictor(PredictorBase):
     '''
     Uses k-nearest neighbors.
     '''

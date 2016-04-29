@@ -96,6 +96,13 @@ def is_intact(sex_upon_outcome):
         return 0.5
 
 
+def is_black(color):
+    if color == 'Black':
+        return 1.0
+    else:
+        return 0.0
+
+
 def is_male(sex_upon_outcome):
     if 'Male' in sex_upon_outcome:
         return 1.0
@@ -111,15 +118,18 @@ def clean_data(data):
     data['IsDog'] = data['AnimalType'].apply(is_dog)
     data['IsIntact'] = data['SexuponOutcome'].apply(is_intact)
     data['IsMale'] = data['SexuponOutcome'].apply(is_male)
+    # data['IsBlack'] = data['Color'].apply(is_black)
 
     drop_cols = ['OutcomeSubtype', 'DateTime', 'AnimalType', 'SexuponOutcome']
     data = data.drop(drop_cols, axis=1)
-    categorical_columns = ["OutcomeType", "Breed", "Color", 'Month']
+    categorical_columns = ["OutcomeType", "Breed", 'Month',
+                           "Color"]
     for categorical_column in categorical_columns:
         data[categorical_column] = data[categorical_column].astype('category')
     data['AgeuponOutcome'] = data['AgeuponOutcome'].apply(convert_age_to_days)
 
-    data = pd.get_dummies(data, columns=["Breed", "Color", 'Month'])
+    data = pd.get_dummies(data, columns=["Breed", 'Month',
+                                         "Color"])
 
     return data
 

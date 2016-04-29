@@ -8,6 +8,9 @@ Based on [Classifier comparison]
 '''
 import time
 
+from sklearn.feature_selection import SelectKBest
+from sklearn.feature_selection import chi2
+
 from classifiers.ada_boost_predictor import AdaBoostPredictor
 from classifiers.decision_tree_predictor import DecisionTreePredictor
 from classifiers.linear_descriminant_analysis_predictor \
@@ -39,6 +42,12 @@ if __name__ == '__main__':
     train_data = clean_data(train_data)
     train_data = train_data.dropna()
     X_train, y_train, X_test, y_test = split_data(train_data)
+    # k
+    #  5: 0.92539 (no warning)
+    # 10: 0.89024 (1 warning)
+    k_best = SelectKBest(chi2, k=10)
+    X_train = k_best.fit_transform(X_train, y_train)
+    X_test = k_best.transform(X_test)
 
     # iterate over classifiers
     for name, clf in zip(names, classifiers):

@@ -118,7 +118,7 @@ def clean_data(data):
     data['IsDog'] = data['AnimalType'].apply(is_dog)
     data['IsIntact'] = data['SexuponOutcome'].apply(is_intact)
     data['IsMale'] = data['SexuponOutcome'].apply(is_male)
-    # data['IsBlack'] = data['Color'].apply(is_black)
+    data['IsBlack'] = data['Color'].apply(is_black)
 
     drop_cols = ['OutcomeSubtype', 'DateTime', 'AnimalType', 'SexuponOutcome']
     data = data.drop(drop_cols, axis=1)

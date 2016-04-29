@@ -23,6 +23,10 @@ class PredictorBase(object):
         """Make predictions."""
         return
 
+    def find_best_params(self):
+        """Use grid search to find best params"""
+        pass
+
     def bundle_predictions(self, predictions):
         n = len(predictions)
         predictions = predictions.transpose()

@@ -46,6 +46,7 @@ def get_data(file_path, tag=None):
     data = pd.read_csv(
         file_path, dtype=dtype, parse_dates=['DateTime'], index_col=0)
     data.Name = data.Name.fillna('')
+    data.SexuponOutcome = data.SexuponOutcome.fillna('')
     if tag:
         data['tag'] = tag
 
@@ -79,21 +80,46 @@ def get_month(date_time):
     return date_time.month
 
 
+def is_dog(animal_type):
+    if animal_type == 'Dog':
+        return 1.0
+    else:
+        return 0.0
+
+
+def is_intact(sex_upon_outcome):
+    if 'Intact' in sex_upon_outcome:
+        return 1.0
+    elif 'Neutered' in sex_upon_outcome or 'Spayed' in sex_upon_outcome:
+        return 0.0
+    else:
+        return 0.5
+
+
+def is_male(sex_upon_outcome):
+    if 'Male' in sex_upon_outcome:
+        return 1.0
+    elif 'Female' in sex_upon_outcome:
+        return 0.0
+    else:
+        return 0.5
+
+
 def clean_data(data):
     data['Name'] = data['Name'].apply(get_is_named)
     data['Month'] = data['DateTime'].apply(get_month)
-    drop_cols = ['OutcomeSubtype', 'DateTime']
+    data['IsDog'] = data['AnimalType'].apply(is_dog)
+    data['IsIntact'] = data['SexuponOutcome'].apply(is_intact)
+    data['IsMale'] = data['SexuponOutcome'].apply(is_male)
+
+    drop_cols = ['OutcomeSubtype', 'DateTime', 'AnimalType', 'SexuponOutcome']
     data = data.drop(drop_cols, axis=1)
-    categorical_columns = [
-        "OutcomeType", "AnimalType", "SexuponOutcome", "Breed", "Color",
-        'Month']
+    categorical_columns = ["OutcomeType", "Breed", "Color", 'Month']
     for categorical_column in categorical_columns:
         data[categorical_column] = data[categorical_column].astype('category')
     data['AgeuponOutcome'] = data['AgeuponOutcome'].apply(convert_age_to_days)
 
-    data = pd.get_dummies(
-        data, columns=["AnimalType", "SexuponOutcome", "Breed", "Color",
-                       'Month'])
+    data = pd.get_dummies(data, columns=["Breed", "Color", 'Month'])
 
     return data
 

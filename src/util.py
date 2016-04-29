@@ -45,6 +45,7 @@ def get_data(file_path, tag=None):
     dtype = {'Name': str}
     data = pd.read_csv(
         file_path, dtype=dtype, parse_dates=['DateTime'], index_col=0)
+    data.Name = data.Name.fillna('')
     if tag:
         data['tag'] = tag
 
@@ -67,8 +68,16 @@ def measure_log_loss_of_predictor(X_train, y_train, X_test, y_test, predictor):
     return ll
 
 
+def get_is_named(name):
+    if len(name) > 0:
+        return 1.0
+    else:
+        return 0.0
+
+
 def clean_data(data):
-    drop_cols = ['OutcomeSubtype', 'Name', 'DateTime']
+    data['Name'] = data['Name'].apply(get_is_named)
+    drop_cols = ['OutcomeSubtype', 'DateTime']
     data = data.drop(drop_cols, axis=1)
     categorical_columns = [
         "OutcomeType", "AnimalType", "SexuponOutcome", "Breed", "Color"]

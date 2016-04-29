@@ -1,8 +1,8 @@
 '''
 Created on Apr 27, 2016
 
-MyLLScore:     0.94061
-KaggleLLScore: 0.90950
+MyLLScore:     0.92471
+KaggleLLScore: 0.90939
 
 @author: Paul Reiners
 '''

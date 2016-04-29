@@ -6,6 +6,8 @@ Based on [Classifier comparison]
 
 @author: Paul Reiners
 '''
+import time
+
 from classifiers.ada_boost_predictor import AdaBoostPredictor
 from classifiers.decision_tree_predictor import DecisionTreePredictor
 from classifiers.linear_descriminant_analysis_predictor \
@@ -29,7 +31,7 @@ if __name__ == '__main__':
         LinearSVMPredictor(),
         RBF_SVMPredictor(),
         DecisionTreePredictor(),
-        RandomForestPredictor(max_depth=5, n_estimators=10, max_features=1),
+        RandomForestPredictor(),
         AdaBoostPredictor(),
         NaiveBayesPredictor(),
         LinearDiscriminantAnalysisPredictor(),
@@ -43,5 +45,5 @@ if __name__ == '__main__':
 
         ll = measure_log_loss_of_predictor(
             X_train, y_train, X_test, y_test, clf)
-        print name
+        print name, time.ctime()
         print "\tscore: %.5f\n" % ll

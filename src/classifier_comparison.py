@@ -24,19 +24,19 @@ from util import get_data, split_data, measure_log_loss_of_predictor, \
 
 
 if __name__ == '__main__':
-    names = ["Nearest Neighbors", "Linear SVM", "RBF SVM", "Decision Tree",
+    names = ["Nearest Neighbors", "Decision Tree",
              "Random Forest", "AdaBoost", "Naive Bayes",
              "Linear Discriminant Analysis", "Quadratic Discriminant Analysis"]
+    # Slow: "Linear SVM", "RBF SVM"
     classifiers = [
         NearestNeighborsPredictor(),
-        LinearSVMPredictor(),
-        RBF_SVMPredictor(),
         DecisionTreePredictor(),
         RandomForestPredictor(),
         AdaBoostPredictor(),
         NaiveBayesPredictor(),
         LinearDiscriminantAnalysisPredictor(),
         QuadraticDiscriminantAnalysisPredictor()]
+    # Slow: LinearSVMPredictor(), RBF_SVMPredictor()
     train_data = get_data('../data/train.csv')
     train_data = clean_data(train_data)
     train_data = train_data.dropna()
@@ -44,7 +44,7 @@ if __name__ == '__main__':
 
     # iterate over classifiers
     for name, clf in zip(names, classifiers):
+        print name, time.ctime()
         ll = measure_log_loss_of_predictor(
             X_train, y_train, X_test, y_test, clf)
-        print name, time.ctime()
         print "\tscore: %.5f\n" % ll

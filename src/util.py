@@ -67,7 +67,7 @@ def measure_log_loss_of_predictor(X_train, y_train, X_test, y_test, predictor):
     return ll
 
 
-def clean_data(data, is_test=False):
+def clean_data(data):
     drop_cols = ['OutcomeSubtype', 'Name', 'DateTime']
     data = data.drop(drop_cols, axis=1)
     categorical_columns = [

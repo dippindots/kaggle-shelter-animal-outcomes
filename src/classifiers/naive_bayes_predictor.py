@@ -1,23 +1,23 @@
 '''
 Created on Apr 27, 2016
 
-MyLLScore:     1.00052
-KaggleLLScore: 1.00036
+MyLLScore:     31.89242
+KaggleLLScore:
 
 @author: Paul Reiners
 '''
-from sklearn.neighbors import KNeighborsClassifier
+from sklearn.naive_bayes import GaussianNB
 
-from predictor_base import PredictorBase
+from classifiers.predictor_base import PredictorBase
 
 
-class NearestNeighborsPredictor(PredictorBase):
+class NaiveBayesPredictor(PredictorBase):
     '''
-    Uses k-nearest neighbors.
+    Naive Bayes
     '''
 
     def __init__(self):
-        self.clf = KNeighborsClassifier(510)
+        self.clf = GaussianNB()
 
     def fit(self, X_train, y_train):
         self.clf.fit(X_train, y_train)

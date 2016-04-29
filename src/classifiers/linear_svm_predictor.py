@@ -1,8 +1,6 @@
 '''
 Created on Apr 27, 2016
 
-TAKES MORE THAN A HALF-HOUR TO RUN.
-
 MyLLScore:
 KaggleLLScore:
 
@@ -10,16 +8,16 @@ KaggleLLScore:
 '''
 from sklearn.svm import SVC
 
-from predictor_base import PredictorBase
+from classifiers.predictor_base import PredictorBase
 
 
-class RBF_SVMPredictor(PredictorBase):
+class LinearSVMPredictor(PredictorBase):
     '''
-    RBF SVM
+    Linear SVM
     '''
 
     def __init__(self):
-        self.clf = SVC(gamma=2, C=1, probability=True)
+        self.clf = SVC(kernel="linear", C=0.025, probability=True)
 
     def fit(self, X_train, y_train):
         self.clf.fit(X_train, y_train)

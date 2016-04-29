@@ -1,23 +1,23 @@
 '''
 Created on Apr 27, 2016
 
-MyLLScore:     1.22222
+MyLLScore:     0.99518
 KaggleLLScore:
 
 @author: Paul Reiners
 '''
-from sklearn.ensemble import RandomForestClassifier
-from predictor_base import PredictorBase
+from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
+
+from classifiers.predictor_base import PredictorBase
 
 
-class RandomForestPredictor(PredictorBase):
+class LinearDiscriminantAnalysisPredictor(PredictorBase):
     '''
-    Random Forest
+    Linear Discriminant Analysis
     '''
 
     def __init__(self):
-        self.clf = RandomForestClassifier(
-            max_depth=8, n_estimators=10, max_features=1)
+        self.clf = LinearDiscriminantAnalysis()
 
     def fit(self, X_train, y_train):
         self.clf.fit(X_train, y_train)

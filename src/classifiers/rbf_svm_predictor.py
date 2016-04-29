@@ -1,23 +1,25 @@
 '''
 Created on Apr 27, 2016
 
-MyLLScore:     0.99518
+TAKES MORE THAN A HALF-HOUR TO RUN.
+
+MyLLScore:
 KaggleLLScore:
 
 @author: Paul Reiners
 '''
-from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
+from sklearn.svm import SVC
 
-from predictor_base import PredictorBase
+from classifiers.predictor_base import PredictorBase
 
 
-class LinearDiscriminantAnalysisPredictor(PredictorBase):
+class RBF_SVMPredictor(PredictorBase):
     '''
-    Linear Discriminant Analysis
+    RBF SVM
     '''
 
     def __init__(self):
-        self.clf = LinearDiscriminantAnalysis()
+        self.clf = SVC(gamma=2, C=1, probability=True)
 
     def fit(self, X_train, y_train):
         self.clf.fit(X_train, y_train)

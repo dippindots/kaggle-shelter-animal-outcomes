@@ -1,23 +1,23 @@
 '''
 Created on Apr 27, 2016
 
-MyLLScore:
+MyLLScore:     1.55686
 KaggleLLScore:
 
 @author: Paul Reiners
 '''
-from sklearn.svm import SVC
+from sklearn.ensemble import AdaBoostClassifier
 
-from predictor_base import PredictorBase
+from classifiers.predictor_base import PredictorBase
 
 
-class LinearSVMPredictor(PredictorBase):
+class AdaBoostPredictor(PredictorBase):
     '''
-    Linear SVM
+    AdaBoost
     '''
 
     def __init__(self):
-        self.clf = SVC(kernel="linear", C=0.025, probability=True)
+        self.clf = AdaBoostClassifier()
 
     def fit(self, X_train, y_train):
         self.clf.fit(X_train, y_train)

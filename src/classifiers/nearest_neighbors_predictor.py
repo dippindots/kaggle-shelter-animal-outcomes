@@ -1,23 +1,23 @@
 '''
 Created on Apr 27, 2016
 
-MyLLScore:     0.94061
-KaggleLLScore: 0.90950
+MyLLScore:     1.00052
+KaggleLLScore: 1.00036
 
 @author: Paul Reiners
 '''
-from sklearn import tree
+from sklearn.neighbors import KNeighborsClassifier
 
-from predictor_base import PredictorBase
+from classifiers.predictor_base import PredictorBase
 
 
-class DecisionTreePredictor(PredictorBase):
+class NearestNeighborsPredictor(PredictorBase):
     '''
-    Uses decision tree.
+    Uses k-nearest neighbors.
     '''
 
     def __init__(self):
-        self.clf = tree.DecisionTreeClassifier(max_depth=6)
+        self.clf = KNeighborsClassifier(510)
 
     def fit(self, X_train, y_train):
         self.clf.fit(X_train, y_train)

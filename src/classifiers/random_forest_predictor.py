@@ -1,23 +1,23 @@
 '''
 Created on Apr 27, 2016
 
-MyLLScore:     26.94625
+MyLLScore:     1.22222
 KaggleLLScore:
 
 @author: Paul Reiners
 '''
-from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis
+from sklearn.ensemble import RandomForestClassifier
+from classifiers.predictor_base import PredictorBase
 
-from predictor_base import PredictorBase
 
-
-class QuadraticDiscriminantAnalysisPredictor(PredictorBase):
+class RandomForestPredictor(PredictorBase):
     '''
-    Quadratic Discriminant Analysis
+    Random Forest
     '''
 
     def __init__(self):
-        self.clf = QuadraticDiscriminantAnalysis()
+        self.clf = RandomForestClassifier(
+            max_depth=8, n_estimators=10, max_features=1)
 
     def fit(self, X_train, y_train):
         self.clf.fit(X_train, y_train)

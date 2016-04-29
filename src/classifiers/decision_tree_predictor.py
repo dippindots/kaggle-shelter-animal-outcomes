@@ -1,23 +1,23 @@
 '''
 Created on Apr 27, 2016
 
-MyLLScore:     31.89242
-KaggleLLScore:
+MyLLScore:     0.94061
+KaggleLLScore: 0.90950
 
 @author: Paul Reiners
 '''
-from sklearn.naive_bayes import GaussianNB
+from sklearn import tree
 
-from predictor_base import PredictorBase
+from classifiers.predictor_base import PredictorBase
 
 
-class NaiveBayesPredictor(PredictorBase):
+class DecisionTreePredictor(PredictorBase):
     '''
-    Naive Bayes
+    Uses decision tree.
     '''
 
     def __init__(self):
-        self.clf = GaussianNB()
+        self.clf = tree.DecisionTreeClassifier(max_depth=6)
 
     def fit(self, X_train, y_train):
         self.clf.fit(X_train, y_train)

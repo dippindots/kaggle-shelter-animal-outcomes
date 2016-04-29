@@ -1,23 +1,23 @@
 '''
 Created on Apr 27, 2016
 
-MyLLScore:     1.55686
+MyLLScore:     26.94625
 KaggleLLScore:
 
 @author: Paul Reiners
 '''
-from sklearn.ensemble import AdaBoostClassifier
+from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis
 
-from predictor_base import PredictorBase
+from classifiers.predictor_base import PredictorBase
 
 
-class AdaBoostPredictor(PredictorBase):
+class QuadraticDiscriminantAnalysisPredictor(PredictorBase):
     '''
-    AdaBoost
+    Quadratic Discriminant Analysis
     '''
 
     def __init__(self):
-        self.clf = AdaBoostClassifier()
+        self.clf = QuadraticDiscriminantAnalysis()
 
     def fit(self, X_train, y_train):
         self.clf.fit(X_train, y_train)

@@ -7,7 +7,7 @@ KaggleLLScore: 20.25113
 @author: Paul Reiners
 '''
 import pandas as pd
-from predictor_base import PredictorBase
+from classifiers.predictor_base import PredictorBase
 
 
 class BaseLinePredictor(PredictorBase):

@@ -19,7 +19,8 @@ from classifiers.quadratic_descriminant_analysis_predictor \
     import QuadraticDiscriminantAnalysisPredictor
 from classifiers.random_forest_predictor import RandomForestPredictor
 from classifiers.rbf_svm_predictor import RBF_SVMPredictor
-from util import get_data, split_data, measure_log_loss_of_predictor
+from util import get_data, split_data, measure_log_loss_of_predictor, \
+    clean_data
 
 
 if __name__ == '__main__':
@@ -36,13 +37,13 @@ if __name__ == '__main__':
         NaiveBayesPredictor(),
         LinearDiscriminantAnalysisPredictor(),
         QuadraticDiscriminantAnalysisPredictor()]
-    train_data = get_data('../data/train.csv', 'train')
+    train_data = get_data('../data/train.csv')
+    train_data = clean_data(train_data)
     train_data = train_data.dropna()
+    X_train, y_train, X_test, y_test = split_data(train_data)
 
     # iterate over classifiers
     for name, clf in zip(names, classifiers):
-        X_train, y_train, X_test, y_test = split_data(train_data)
-
         ll = measure_log_loss_of_predictor(
             X_train, y_train, X_test, y_test, clf)
         print name, time.ctime()

@@ -7,6 +7,7 @@ from math import log
 
 from sklearn.cross_validation import train_test_split
 
+import numpy as np
 import pandas as pd
 
 
@@ -40,11 +41,12 @@ def log_loss(truths, label_col_name, predictions_df, possible_labels):
     return -1.0 / n * total
 
 
-def get_data(file_path, tag):
+def get_data(file_path, tag=None):
     dtype = {'Name': str}
     data = pd.read_csv(
         file_path, dtype=dtype, parse_dates=['DateTime'], index_col=0)
-    data['tag'] = tag
+    if tag:
+        data['tag'] = tag
 
     return data
 
@@ -63,3 +65,35 @@ def measure_log_loss_of_predictor(X_train, y_train, X_test, y_test, predictor):
         'Adoption', 'Died', 'Euthanasia', 'Return_to_owner', 'Transfer']
     ll = log_loss(y_test, 'OutcomeType', predictions_df, possible_outcomes)
     return ll
+
+
+def clean_data(data, is_test=False):
+    drop_cols = ['OutcomeSubtype', 'Name', 'DateTime']
+    data = data.drop(drop_cols, axis=1)
+    categorical_columns = [
+        "OutcomeType", "AnimalType", "SexuponOutcome", "Breed", "Color"]
+    for categorical_column in categorical_columns:
+        data[categorical_column] = data[categorical_column].astype('category')
+    data['AgeuponOutcome'] = data['AgeuponOutcome'].apply(convert_age_to_days)
+
+    data = pd.get_dummies(
+        data, columns=["AnimalType", "SexuponOutcome", "Breed", "Color"])
+
+    return data
+
+
+def convert_age_to_days(age_str):
+    if type(age_str) is str:
+        parts = age_str.split()
+        num = int(parts[0])
+        unit = parts[1]
+        if 'day' in unit:
+            return num
+        elif 'week' in unit:
+            return 7 * num
+        elif 'month' in unit:
+            return 30 * num
+        elif 'year' in unit:
+            return 365 * num
+    else:
+        return np.nan

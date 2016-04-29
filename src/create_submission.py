@@ -5,44 +5,11 @@ Created on Apr 26, 2016
 '''
 
 from classifiers.decision_tree_predictor import DecisionTreePredictor
-import numpy as np
-import pandas as pd
-from util import measure_log_loss_of_predictor, get_data, split_data
+from util import measure_log_loss_of_predictor, get_data, split_data, \
+    clean_data
 
 
 BEST_SCORE = 0.94061
-
-
-def clean_data(data, is_test=False):
-    drop_cols = ['OutcomeSubtype', 'Name', 'DateTime']
-    data = data.drop(drop_cols, axis=1)
-    categorical_columns = [
-        "OutcomeType", "AnimalType", "SexuponOutcome", "Breed", "Color"]
-    for categorical_column in categorical_columns:
-        data[categorical_column] = data[categorical_column].astype('category')
-    data['AgeuponOutcome'] = data['AgeuponOutcome'].apply(convert_age_to_days)
-
-    data = pd.get_dummies(
-        data, columns=["AnimalType", "SexuponOutcome", "Breed", "Color"])
-
-    return data
-
-
-def convert_age_to_days(age_str):
-    if type(age_str) is str:
-        parts = age_str.split()
-        num = int(parts[0])
-        unit = parts[1]
-        if 'day' in unit:
-            return num
-        elif 'week' in unit:
-            return 7 * num
-        elif 'month' in unit:
-            return 30 * num
-        elif 'year' in unit:
-            return 365 * num
-    else:
-        return np.nan
 
 
 if __name__ == '__main__':

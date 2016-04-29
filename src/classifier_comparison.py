@@ -12,13 +12,11 @@ from classifiers.ada_boost_predictor import AdaBoostPredictor
 from classifiers.decision_tree_predictor import DecisionTreePredictor
 from classifiers.linear_descriminant_analysis_predictor \
     import LinearDiscriminantAnalysisPredictor
-from classifiers.linear_svm_predictor import LinearSVMPredictor
 from classifiers.naive_bayes_predictor import NaiveBayesPredictor
 from classifiers.nearest_neighbors_predictor import NearestNeighborsPredictor
 from classifiers.quadratic_descriminant_analysis_predictor \
     import QuadraticDiscriminantAnalysisPredictor
 from classifiers.random_forest_predictor import RandomForestPredictor
-from classifiers.rbf_svm_predictor import RBF_SVMPredictor
 from util import get_data, split_data, measure_log_loss_of_predictor, \
     clean_data
 

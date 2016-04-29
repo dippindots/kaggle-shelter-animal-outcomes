@@ -75,18 +75,25 @@ def get_is_named(name):
         return 0.0
 
 
+def get_month(date_time):
+    return date_time.month
+
+
 def clean_data(data):
     data['Name'] = data['Name'].apply(get_is_named)
+    data['Month'] = data['DateTime'].apply(get_month)
     drop_cols = ['OutcomeSubtype', 'DateTime']
     data = data.drop(drop_cols, axis=1)
     categorical_columns = [
-        "OutcomeType", "AnimalType", "SexuponOutcome", "Breed", "Color"]
+        "OutcomeType", "AnimalType", "SexuponOutcome", "Breed", "Color",
+        'Month']
     for categorical_column in categorical_columns:
         data[categorical_column] = data[categorical_column].astype('category')
     data['AgeuponOutcome'] = data['AgeuponOutcome'].apply(convert_age_to_days)
 
     data = pd.get_dummies(
-        data, columns=["AnimalType", "SexuponOutcome", "Breed", "Color"])
+        data, columns=["AnimalType", "SexuponOutcome", "Breed", "Color",
+                       'Month'])
 
     return data
 

@@ -8,40 +8,81 @@ from sklearn.feature_selection import SelectKBest
 from sklearn.feature_selection import chi2
 
 from classifiers.random_forest_predictor import RandomForestPredictor
-from util import measure_log_loss_of_predictor, get_data, split_data, \
-    preprocess_data
+import numpy as np
+from util import log_loss, get_data, split_data, preprocess_data
 
 
 BEST_SCORE = 0.82221
 
 
 if __name__ == '__main__':
-    train_data = get_data('../data/train.csv', 'train')
-    test_data = get_data('../data/test.csv', 'test')
-    all_data = train_data.append(test_data)
-    all_data = preprocess_data(all_data)
+    predictors = {
+        'Cat': RandomForestPredictor(), 'Dog': RandomForestPredictor()}
+    test_data_sets = {}
+    k_bests = {}
+    all_predictions_df = None
+    all_y_test = None
 
-    train_data = all_data[all_data['tag'] == 'train']
-    train_data = train_data.drop(['tag'], axis=1)
-    train_data = train_data.dropna()
-    test_data = all_data[all_data['tag'] == 'test']
-    test_data = test_data.drop(['OutcomeType', 'tag'], axis=1)
-    test_data = test_data.fillna(test_data.mean())
+    # Iterate over AnimalType
+    for animal_type in ['Cat', 'Dog']:
+        train_data = get_data('../data/train.csv', 'train')
+        test_data = get_data('../data/test.csv', 'test')
+        all_data = train_data.append(test_data)
+        all_data = all_data[all_data['AnimalType'] == animal_type]
+        all_data = preprocess_data(all_data)
 
-    X_train, y_train, X_test, y_test = split_data(train_data)
-    k_best = SelectKBest(chi2, k=10)
-    X_train = k_best.fit_transform(X_train, y_train)
-    X_test = k_best.transform(X_test)
+        train_data = all_data[all_data['tag'] == 'train']
+        train_data = train_data.drop(['tag'], axis=1)
+        train_data = train_data.dropna()
+        test_data = all_data[all_data['tag'] == 'test']
+        test_data = test_data.drop(['OutcomeType', 'tag'], axis=1)
+        test_data = test_data.fillna(test_data.mean())
+        test_data_sets[animal_type] = test_data
 
-    predictor = RandomForestPredictor()
-    ll = measure_log_loss_of_predictor(
-        X_train, y_train, X_test, y_test, predictor)
+        X_train, y_train, X_test, y_test = split_data(train_data)
+        if all_y_test is None:
+            all_y_test = y_test.ravel()
+        else:
+            all_y_test = np.append(all_y_test, y_test.ravel())
+        k_best = SelectKBest(chi2, k=10)
+        X_train = k_best.fit_transform(X_train, y_train)
+        k_bests[animal_type] = k_best
+        X_test = k_best.transform(X_test)
+
+        predictor = predictors[animal_type]
+
+        predictor.fit(X_train, y_train)
+        predictions_df = predictor.predict(X_test)
+        if all_predictions_df is None:
+            all_predictions_df = predictions_df
+        else:
+            all_predictions_df = all_predictions_df.append(predictions_df)
+
+    possible_outcomes = [
+        'Adoption', 'Died', 'Euthanasia', 'Return_to_owner', 'Transfer']
+    ll = log_loss(y_test, 'OutcomeType', predictions_df, possible_outcomes)
+
     print "score: %.5f" % ll
 
     if ll < BEST_SCORE:
-        test_data = k_best.transform(test_data)
-        test_predictions = predictor.predict(test_data)
-        columns = ['ID', 'Adoption', 'Died',
-                   'Euthanasia', 'Return_to_owner', 'Transfer']
+        all_test_predictions = None
+        # Iterate over AnimalType
+        for animal_type in ['Cat', 'Dog']:
+            test_data = test_data_sets[animal_type]
+            index = test_data.index.values
+            k_best = k_bests[animal_type]
+            test_data = k_best.transform(test_data)
+            predictor = predictors[animal_type]
+            test_predictions = predictor.predict(test_data)
+            test_predictions['ID'] = index
+            test_predictions = test_predictions.set_index('ID')
+            if all_test_predictions is None:
+                all_test_predictions = test_predictions
+            else:
+                all_test_predictions = all_test_predictions.append(
+                    test_predictions)
+        all_test_predictions = all_test_predictions.sort_index()
+        columns = [
+            'Adoption', 'Died', 'Euthanasia', 'Return_to_owner', 'Transfer']
         test_predictions.to_csv('../submissions/my_submission.csv',
-                                index=False, columns=columns)
+                                index=True, columns=columns)

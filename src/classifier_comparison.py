@@ -15,14 +15,12 @@ from classifiers.ada_boost_predictor import AdaBoostPredictor
 from classifiers.decision_tree_predictor import DecisionTreePredictor
 from classifiers.linear_descriminant_analysis_predictor \
     import LinearDiscriminantAnalysisPredictor
-from classifiers.linear_svm_predictor import LinearSVMPredictor
 from classifiers.naive_bayes_predictor import NaiveBayesPredictor
 from classifiers.nearest_neighbors_predictor import NearestNeighborsPredictor
 from classifiers.quadratic_descriminant_analysis_predictor \
     import QuadraticDiscriminantAnalysisPredictor
 from classifiers.random_forest_predictor import RandomForestPredictor
-from util import get_data, split_data, measure_log_loss_of_predictor, \
-    preprocess_data
+from util import get_data, split_data, log_loss, preprocess_data
 
 
 if __name__ == '__main__':
@@ -60,6 +58,11 @@ if __name__ == '__main__':
         # iterate over classifiers
         for name, clf in zip(names, classifiers):
             print "\t{} {}".format(name, time.ctime())
-            ll = measure_log_loss_of_predictor(
-                X_train, y_train, X_test, y_test, clf)
+            clf.fit(X_train, y_train)
+            predictions_df = clf.predict(X_test)
+            possible_outcomes = [
+                'Adoption', 'Died', 'Euthanasia', 'Return_to_owner', 'Transfer']
+            ll = log_loss(
+                y_test, 'OutcomeType', predictions_df, possible_outcomes)
+
             print "\t\tscore: %.5f\n" % ll

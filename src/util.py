@@ -111,7 +111,7 @@ def is_pit_bull(breed):
 
 
 def preprocess_data(data):
-    data['Name'] = data['Name'].apply(get_is_named)
+    data['IsNamed'] = data['Name'].apply(get_is_named)
     data['Month'] = data['DateTime'].apply(get_month)
 
     if 'AnimalType' in data.columns:
@@ -123,7 +123,7 @@ def preprocess_data(data):
     data['IsBlack'] = data['Color'].apply(is_black)
     data['IsPitBull'] = data['Breed'].apply(is_pit_bull)
 
-    drop_cols = ['OutcomeSubtype', 'DateTime', 'SexuponOutcome']
+    drop_cols = ['OutcomeSubtype', 'DateTime', 'SexuponOutcome', 'Name']
     data = data.drop(drop_cols, axis=1)
     categorical_columns = ["OutcomeType", "Breed", 'Month',
                            "Color"]

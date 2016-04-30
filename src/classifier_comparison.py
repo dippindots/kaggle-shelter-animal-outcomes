@@ -21,7 +21,7 @@ from classifiers.quadratic_descriminant_analysis_predictor \
     import QuadraticDiscriminantAnalysisPredictor
 from classifiers.random_forest_predictor import RandomForestPredictor
 from util import get_data, split_data, measure_log_loss_of_predictor, \
-    clean_data
+    preprocess_data
 
 
 if __name__ == '__main__':
@@ -39,7 +39,7 @@ if __name__ == '__main__':
         QuadraticDiscriminantAnalysisPredictor()]
     # Slow: LinearSVMPredictor(), RBF_SVMPredictor()
     train_data = get_data('../data/train.csv')
-    train_data = clean_data(train_data)
+    train_data = preprocess_data(train_data)
     train_data = train_data.dropna()
     X_train, y_train, X_test, y_test = split_data(train_data)
     # k

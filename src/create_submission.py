@@ -9,17 +9,17 @@ from sklearn.feature_selection import chi2
 
 from classifiers.random_forest_predictor import RandomForestPredictor
 from util import measure_log_loss_of_predictor, get_data, split_data, \
-    clean_data
+    preprocess_data
 
 
-BEST_SCORE = 0.92471
+BEST_SCORE = 0.88390
 
 
 if __name__ == '__main__':
     train_data = get_data('../data/train.csv', 'train')
     test_data = get_data('../data/test.csv', 'test')
     all_data = train_data.append(test_data)
-    all_data = clean_data(all_data)
+    all_data = preprocess_data(all_data)
 
     train_data = all_data[all_data['tag'] == 'train']
     train_data = train_data.drop(['tag'], axis=1)

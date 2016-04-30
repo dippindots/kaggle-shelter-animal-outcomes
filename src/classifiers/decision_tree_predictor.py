@@ -10,7 +10,7 @@ from sklearn import grid_search
 from sklearn import tree
 
 from classifiers.predictor_base import PredictorBase
-from util import get_data, clean_data
+from util import get_data, preprocess_data
 
 
 class DecisionTreePredictor(PredictorBase):
@@ -38,7 +38,7 @@ class DecisionTreePredictor(PredictorBase):
         decision_tree = tree.DecisionTreeClassifier()
         clf = grid_search.GridSearchCV(decision_tree, parameters)
         train_data = get_data('../../data/train.csv')
-        train_data = clean_data(train_data)
+        train_data = preprocess_data(train_data)
         train_data = train_data.dropna()
         X = train_data.drop(['OutcomeType'], axis=1)
         y = train_data['OutcomeType']

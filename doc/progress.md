@@ -8,6 +8,7 @@ Best predictors:
     04/28/2016  NearestNeighborsPredictor   1.00052         1.00036       66  Submission04
     04/28/2016  DecisionTreePredictor       0.94061         0.90950       59  Submission05
     04/29/2016  DecisionTreePredictor       0.92471         0.90939       58  Submission06
+    04/29/2016  RandomForestPredictor       0.88390         0.86738       50  Submission07
 
 Submission05: Started using DecisionTreeClassifier(max_depth=6).
 Submission06: Broke down SexuponOutcome into IsIntact and IsMale.

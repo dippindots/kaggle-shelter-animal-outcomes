@@ -112,7 +112,7 @@ def is_male(sex_upon_outcome):
         return 0.5
 
 
-def clean_data(data):
+def preprocess_data(data):
     data['Name'] = data['Name'].apply(get_is_named)
     data['Month'] = data['DateTime'].apply(get_month)
     data['IsDog'] = data['AnimalType'].apply(is_dog)

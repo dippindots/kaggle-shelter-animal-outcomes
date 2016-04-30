@@ -20,11 +20,11 @@ class RandomForestPredictor(PredictorBase):
     Random Forest
     '''
 
-    def __init__(self):
-        # n_estimators
-        # 320: 0.85407
+    def __init__(self, animal_type):
+        self.animal_type = animal_type
         self.clf = RandomForestClassifier(
             max_depth=8, n_estimators=320, max_features=4)
+        self.k_best_k = 16
 
     def fit(self, X_train, y_train):
         self.clf.fit(X_train, y_train)
@@ -37,21 +37,29 @@ class RandomForestPredictor(PredictorBase):
 
     def find_best_params(self):
         parameters = {
-            'n_estimators': [2, 5, 10, 20, 40, 80, 160, 320, 640, 1280],
-            'max_depth': [4, 8, 16],
-            'max_features': [1, 2, 4, 8]}
+            'n_estimators': [160, 320, 640, 1280],
+            'max_depth': [2, 4, 8, 16],
+            'max_features': [1, 2, 4, 8, self.k_best_k]}
         rf = RandomForestClassifier()
         clf = grid_search.GridSearchCV(rf, parameters)
         train_data = get_data('../../data/train.csv')
+        train_data = train_data[train_data['AnimalType'] == self.animal_type]
         train_data = preprocess_data(train_data)
         train_data = train_data.dropna()
         X = train_data.drop(['OutcomeType'], axis=1)
         y = train_data['OutcomeType']
-        k_best = SelectKBest(chi2, k=10)
+        k_best = SelectKBest(chi2, k=self.k_best_k)
         X = k_best.fit_transform(X, y)
         clf.fit(X, y)
         print clf.best_params_
 
+    def get_k_best_k(self):
+        return self.k_best_k
+
 if __name__ == '__main__':
-    predictor = RandomForestPredictor()
+    print 'Cat'
+    predictor = RandomForestPredictor('Cat')
+    predictor.find_best_params()
+    print 'Dog'
+    predictor = RandomForestPredictor('Dog')
     predictor.find_best_params()

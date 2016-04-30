@@ -37,3 +37,6 @@ class PredictorBase(object):
         predictions_df = pd.DataFrame(predictions_data)
 
         return predictions_df
+
+    def get_k_best_k(self):
+        return 10

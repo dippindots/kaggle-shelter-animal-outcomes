@@ -28,17 +28,20 @@ if __name__ == '__main__':
              "Random Forest", "AdaBoost", "Naive Bayes",
              "Linear Discriminant Analysis", "Quadratic Discriminant Analysis"]
     # Slow: "Linear SVM", "RBF SVM"
-    classifiers = [
-        NearestNeighborsPredictor(),
-        DecisionTreePredictor(),
-        RandomForestPredictor(),
-        AdaBoostPredictor(),
-        NaiveBayesPredictor(),
-        LinearDiscriminantAnalysisPredictor(),
-        QuadraticDiscriminantAnalysisPredictor()]
-    # Slow: LinearSVMPredictor(), RBF_SVMPredictor()
+    possible_outcomes = [
+        'Adoption', 'Died', 'Euthanasia', 'Return_to_owner', 'Transfer']
     # Iterate over AnimalType
     for animal_type in ['Cat', 'Dog']:
+        classifiers = [
+            NearestNeighborsPredictor(),
+            DecisionTreePredictor(),
+            RandomForestPredictor(animal_type),
+            AdaBoostPredictor(),
+            NaiveBayesPredictor(),
+            LinearDiscriminantAnalysisPredictor(),
+            QuadraticDiscriminantAnalysisPredictor()]
+        # Slow: LinearSVMPredictor(), RBF_SVMPredictor()
+
         train_data = get_data('../data/train.csv')
         print animal_type
         train_data = train_data[train_data['AnimalType'] == animal_type]
@@ -51,17 +54,16 @@ if __name__ == '__main__':
         #  6: 0.84462 (no warning)
         #  8: 0.85657 (1 warning)
         # 10: 0.89024 (1 warning)
-        k_best = SelectKBest(chi2, k=8)
-        X_train = k_best.fit_transform(X_train, y_train)
-        X_test = k_best.transform(X_test)
 
         # iterate over classifiers
         for name, clf in zip(names, classifiers):
+            k_best = SelectKBest(chi2, k=clf.get_k_best_k())
+            clf_X_train = k_best.fit_transform(X_train, y_train)
+            clf_X_test = k_best.transform(X_test)
+
             print "\t{} {}".format(name, time.ctime())
-            clf.fit(X_train, y_train)
-            predictions_df = clf.predict(X_test)
-            possible_outcomes = [
-                'Adoption', 'Died', 'Euthanasia', 'Return_to_owner', 'Transfer']
+            clf.fit(clf_X_train, y_train)
+            predictions_df = clf.predict(clf_X_test)
             ll = log_loss(
                 y_test, 'OutcomeType', predictions_df, possible_outcomes)
 

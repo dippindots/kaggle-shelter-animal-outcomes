@@ -27,3 +27,6 @@ class QuadraticDiscriminantAnalysisPredictor(PredictorBase):
         predictions_df = self.bundle_predictions(predictions)
 
         return predictions_df
+
+    def get_k_best_k(self):
+        return 4

@@ -44,12 +44,12 @@ if __name__ == '__main__':
             all_y_test = y_test.ravel()
         else:
             all_y_test = np.append(all_y_test, y_test.ravel())
-        k_best = SelectKBest(chi2, k=10)
+        predictor = predictors[animal_type]
+
+        k_best = SelectKBest(chi2, k=predictor.get_k_best_k())
         X_train = k_best.fit_transform(X_train, y_train)
         k_bests[animal_type] = k_best
         X_test = k_best.transform(X_test)
-
-        predictor = predictors[animal_type]
 
         predictor.fit(X_train, y_train)
         predictions_df = predictor.predict(X_test)

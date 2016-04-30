@@ -44,8 +44,10 @@ if __name__ == '__main__':
     X_train, y_train, X_test, y_test = split_data(train_data)
     # k
     #  5: 0.92539 (no warning)
+    #  6: 0.84462 (no warning)
+    #  8: 0.85657 (1 warning)
     # 10: 0.89024 (1 warning)
-    k_best = SelectKBest(chi2, k=10)
+    k_best = SelectKBest(chi2, k=6)
     X_train = k_best.fit_transform(X_train, y_train)
     X_test = k_best.transform(X_test)
 

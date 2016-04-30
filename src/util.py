@@ -115,12 +115,16 @@ def is_male(sex_upon_outcome):
 def preprocess_data(data):
     data['Name'] = data['Name'].apply(get_is_named)
     data['Month'] = data['DateTime'].apply(get_month)
-    data['IsDog'] = data['AnimalType'].apply(is_dog)
+
+    if 'AnimalType' in data.columns:
+        data['IsDog'] = data['AnimalType'].apply(is_dog)
+        data = data.drop(['AnimalType'], axis=1)
+
     data['IsIntact'] = data['SexuponOutcome'].apply(is_intact)
     data['IsMale'] = data['SexuponOutcome'].apply(is_male)
     data['IsBlack'] = data['Color'].apply(is_black)
 
-    drop_cols = ['OutcomeSubtype', 'DateTime', 'AnimalType', 'SexuponOutcome']
+    drop_cols = ['OutcomeSubtype', 'DateTime', 'SexuponOutcome']
     data = data.drop(drop_cols, axis=1)
     categorical_columns = ["OutcomeType", "Breed", 'Month',
                            "Color"]

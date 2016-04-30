@@ -15,6 +15,7 @@ from classifiers.ada_boost_predictor import AdaBoostPredictor
 from classifiers.decision_tree_predictor import DecisionTreePredictor
 from classifiers.linear_descriminant_analysis_predictor \
     import LinearDiscriminantAnalysisPredictor
+from classifiers.linear_svm_predictor import LinearSVMPredictor
 from classifiers.naive_bayes_predictor import NaiveBayesPredictor
 from classifiers.nearest_neighbors_predictor import NearestNeighborsPredictor
 from classifiers.quadratic_descriminant_analysis_predictor \
@@ -38,22 +39,27 @@ if __name__ == '__main__':
         LinearDiscriminantAnalysisPredictor(),
         QuadraticDiscriminantAnalysisPredictor()]
     # Slow: LinearSVMPredictor(), RBF_SVMPredictor()
-    train_data = get_data('../data/train.csv')
-    train_data = preprocess_data(train_data)
-    train_data = train_data.dropna()
-    X_train, y_train, X_test, y_test = split_data(train_data)
-    # k
-    #  5: 0.92539 (no warning)
-    #  6: 0.84462 (no warning)
-    #  8: 0.85657 (1 warning)
-    # 10: 0.89024 (1 warning)
-    k_best = SelectKBest(chi2, k=6)
-    X_train = k_best.fit_transform(X_train, y_train)
-    X_test = k_best.transform(X_test)
+    # Iterate over AnimalType
+    for animal_type in ['Cat', 'Dog']:
+        train_data = get_data('../data/train.csv')
+        print animal_type
+        train_data = train_data[train_data['AnimalType'] == animal_type]
+        train_data = train_data.drop(['AnimalType'], axis=1)
+        train_data = preprocess_data(train_data)
+        train_data = train_data.dropna()
+        X_train, y_train, X_test, y_test = split_data(train_data)
+        # k
+        #  5: 0.92539 (no warning)
+        #  6: 0.84462 (no warning)
+        #  8: 0.85657 (1 warning)
+        # 10: 0.89024 (1 warning)
+        k_best = SelectKBest(chi2, k=8)
+        X_train = k_best.fit_transform(X_train, y_train)
+        X_test = k_best.transform(X_test)
 
-    # iterate over classifiers
-    for name, clf in zip(names, classifiers):
-        print name, time.ctime()
-        ll = measure_log_loss_of_predictor(
-            X_train, y_train, X_test, y_test, clf)
-        print "\tscore: %.5f\n" % ll
+        # iterate over classifiers
+        for name, clf in zip(names, classifiers):
+            print "\t{} {}".format(name, time.ctime())
+            ll = measure_log_loss_of_predictor(
+                X_train, y_train, X_test, y_test, clf)
+            print "\t\tscore: %.5f\n" % ll

@@ -30,7 +30,7 @@ class RandomForestPredictor(PredictorBase):
             raise RuntimeError("Incorrect animal type")
 
         self.clf = RandomForestClassifier(**args)
-        self.k_best_k = 16
+        self.k_best_k = 32
 
     def fit(self, X_train, y_train):
         self.clf.fit(X_train, y_train)
@@ -45,7 +45,7 @@ class RandomForestPredictor(PredictorBase):
         parameters = {
             'n_estimators': [160, 320, 640, 1280],
             'max_depth': [2, 4, 8, 16],
-            'max_features': [1, 2, 4, 8, self.k_best_k]}
+            'max_features': [1, 2, 4, 8, 16, self.k_best_k]}
         rf = RandomForestClassifier()
         clf = grid_search.GridSearchCV(rf, parameters)
         train_data = get_data('../../data/train.csv')

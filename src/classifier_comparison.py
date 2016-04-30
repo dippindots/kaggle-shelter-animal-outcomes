@@ -49,11 +49,6 @@ if __name__ == '__main__':
         train_data = preprocess_data(train_data)
         train_data = train_data.dropna()
         X_train, y_train, X_test, y_test = split_data(train_data)
-        # k
-        #  5: 0.92539 (no warning)
-        #  6: 0.84462 (no warning)
-        #  8: 0.85657 (1 warning)
-        # 10: 0.89024 (1 warning)
 
         # iterate over classifiers
         for name, clf in zip(names, classifiers):
@@ -67,4 +62,5 @@ if __name__ == '__main__':
             ll = log_loss(
                 y_test, 'OutcomeType', predictions_df, possible_outcomes)
 
-            print "\t\tscore: %.5f\n" % ll
+            print "\t\tscore: %.5f" % ll
+            print "\t\t{}\n".format(X_train.columns[k_best.get_support()])

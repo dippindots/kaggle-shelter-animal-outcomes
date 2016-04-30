@@ -103,6 +103,13 @@ def is_male(sex_upon_outcome):
         return 0.5
 
 
+def is_pit_bull(breed):
+    if 'Pit Bull' in breed:
+        return 1.0
+    else:
+        return 0.0
+
+
 def preprocess_data(data):
     data['Name'] = data['Name'].apply(get_is_named)
     data['Month'] = data['DateTime'].apply(get_month)
@@ -114,6 +121,7 @@ def preprocess_data(data):
     data['IsIntact'] = data['SexuponOutcome'].apply(is_intact)
     data['IsMale'] = data['SexuponOutcome'].apply(is_male)
     data['IsBlack'] = data['Color'].apply(is_black)
+    data['IsPitBull'] = data['Breed'].apply(is_pit_bull)
 
     drop_cols = ['OutcomeSubtype', 'DateTime', 'SexuponOutcome']
     data = data.drop(drop_cols, axis=1)

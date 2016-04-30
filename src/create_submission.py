@@ -12,7 +12,7 @@ from util import measure_log_loss_of_predictor, get_data, split_data, \
     preprocess_data
 
 
-BEST_SCORE = 0.85608
+BEST_SCORE = 0.82221
 
 
 if __name__ == '__main__':

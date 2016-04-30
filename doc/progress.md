@@ -10,8 +10,10 @@ Best predictors:
     04/29/2016  DecisionTreePredictor       0.92471         0.90939       58  Submission06
     04/29/2016  RandomForestPredictor       0.88390         0.86738       50  Submission07
     04/29/2016  RandomForestPredictor       0.85608         0.84534       47  Submission08
+    04/29/2016  RandomForestPredictor       0.82221         0.84454       46  Submission09
 
 Submission05: Started using DecisionTreeClassifier(max_depth=6).
 Submission06: Broke down SexuponOutcome into IsIntact and IsMale.
 Submission07: Started using SelectKBest.
 Submission08: Started using GridSearchCV on RandomForestPredictor.
+Submission09: Set n_estimators on RandomForestClassifier.

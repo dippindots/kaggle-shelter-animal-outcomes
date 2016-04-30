@@ -1,8 +1,8 @@
 '''
 Created on Apr 27, 2016
 
-MyLLScore:     0.85608
-KaggleLLScore: 0.84534
+MyLLScore:     0.82221
+KaggleLLScore: 0.84454
 
 @author: Paul Reiners
 '''
@@ -21,8 +21,10 @@ class RandomForestPredictor(PredictorBase):
     '''
 
     def __init__(self):
+        # n_estimators
+        # 320: 0.85407
         self.clf = RandomForestClassifier(
-            max_depth=8, n_estimators=160, max_features=4)
+            max_depth=8, n_estimators=320, max_features=4)
 
     def fit(self, X_train, y_train):
         self.clf.fit(X_train, y_train)
@@ -35,7 +37,7 @@ class RandomForestPredictor(PredictorBase):
 
     def find_best_params(self):
         parameters = {
-            'n_estimators': [2, 5, 10, 20, 40, 80, 160],
+            'n_estimators': [2, 5, 10, 20, 40, 80, 160, 320, 640, 1280],
             'max_depth': [4, 8, 16],
             'max_features': [1, 2, 4, 8]}
         rf = RandomForestClassifier()

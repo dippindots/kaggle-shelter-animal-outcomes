@@ -17,7 +17,8 @@ BEST_SCORE = 0.82221
 
 if __name__ == '__main__':
     predictors = {
-        'Cat': RandomForestPredictor(), 'Dog': RandomForestPredictor()}
+        'Cat': RandomForestPredictor('Cat'),
+        'Dog': RandomForestPredictor('Dog')}
     test_data_sets = {}
     k_bests = {}
     all_predictions_df = None
@@ -60,7 +61,8 @@ if __name__ == '__main__':
 
     possible_outcomes = [
         'Adoption', 'Died', 'Euthanasia', 'Return_to_owner', 'Transfer']
-    ll = log_loss(y_test, 'OutcomeType', predictions_df, possible_outcomes)
+    ll = log_loss(
+        all_y_test, 'OutcomeType', all_predictions_df, possible_outcomes)
 
     print "score: %.5f" % ll
 
@@ -84,5 +86,5 @@ if __name__ == '__main__':
         all_test_predictions = all_test_predictions.sort_index()
         columns = [
             'Adoption', 'Died', 'Euthanasia', 'Return_to_owner', 'Transfer']
-        test_predictions.to_csv('../submissions/my_submission.csv',
-                                index=True, columns=columns)
+        all_test_predictions.to_csv('../submissions/my_submission.csv',
+                                    index=True, columns=columns)

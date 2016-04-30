@@ -22,8 +22,14 @@ class RandomForestPredictor(PredictorBase):
 
     def __init__(self, animal_type):
         self.animal_type = animal_type
-        self.clf = RandomForestClassifier(
-            max_depth=8, n_estimators=320, max_features=4)
+        if self.animal_type == "Cat":
+            args = {'max_features': 16, 'n_estimators': 160, 'max_depth': 4}
+        elif self.animal_type == "Dog":
+            args = {'max_features': 8, 'n_estimators': 320, 'max_depth': 8}
+        else:
+            raise RuntimeError("Incorrect animal type")
+
+        self.clf = RandomForestClassifier(**args)
         self.k_best_k = 16
 
     def fit(self, X_train, y_train):

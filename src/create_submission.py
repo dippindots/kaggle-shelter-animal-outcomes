@@ -4,9 +4,6 @@ Created on Apr 26, 2016
 @author: Paul Reiners
 '''
 
-from sklearn.feature_selection import SelectKBest
-from sklearn.feature_selection import chi2
-
 from classifiers.random_forest_predictor import RandomForestPredictor
 import numpy as np
 from util import log_loss, get_data, split_data, preprocess_data
@@ -20,7 +17,6 @@ if __name__ == '__main__':
         'Cat': RandomForestPredictor('Cat'),
         'Dog': RandomForestPredictor('Dog')}
     test_data_sets = {}
-    k_bests = {}
     all_predictions_df = None
     all_y_test = None
 
@@ -30,7 +26,8 @@ if __name__ == '__main__':
         test_data = get_data('../data/test.csv', 'test')
         all_data = train_data.append(test_data)
         all_data = all_data[all_data['AnimalType'] == animal_type]
-        all_data = preprocess_data(all_data)
+        all_data = all_data.drop(['AnimalType'], axis=1)
+        all_data = preprocess_data(all_data, animal_type)
 
         train_data = all_data[all_data['tag'] == 'train']
         train_data = train_data.drop(['tag'], axis=1)
@@ -46,11 +43,6 @@ if __name__ == '__main__':
         else:
             all_y_test = np.append(all_y_test, y_test.ravel())
         predictor = predictors[animal_type]
-
-        k_best = SelectKBest(chi2, k=predictor.get_k_best_k())
-        X_train = k_best.fit_transform(X_train, y_train)
-        k_bests[animal_type] = k_best
-        X_test = k_best.transform(X_test)
 
         predictor.fit(X_train, y_train)
         predictions_df = predictor.predict(X_test)
@@ -72,8 +64,6 @@ if __name__ == '__main__':
         for animal_type in ['Cat', 'Dog']:
             test_data = test_data_sets[animal_type]
             index = test_data.index.values
-            k_best = k_bests[animal_type]
-            test_data = k_best.transform(test_data)
             predictor = predictors[animal_type]
             test_predictions = predictor.predict(test_data)
             test_predictions['ID'] = index

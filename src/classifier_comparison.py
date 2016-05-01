@@ -8,9 +8,6 @@ Based on [Classifier comparison]
 '''
 import time
 
-from sklearn.feature_selection import SelectKBest
-from sklearn.feature_selection import chi2
-
 from classifiers.ada_boost_predictor import AdaBoostPredictor
 from classifiers.decision_tree_predictor import DecisionTreePredictor
 from classifiers.linear_descriminant_analysis_predictor \
@@ -46,15 +43,14 @@ if __name__ == '__main__':
         print animal_type
         train_data = train_data[train_data['AnimalType'] == animal_type]
         train_data = train_data.drop(['AnimalType'], axis=1)
-        train_data = preprocess_data(train_data)
+        train_data = preprocess_data(train_data, animal_type)
         train_data = train_data.dropna()
         X_train, y_train, X_test, y_test = split_data(train_data)
 
         # iterate over classifiers
         for name, clf in zip(names, classifiers):
-            k_best = SelectKBest(chi2, k=clf.get_k_best_k())
-            clf_X_train = k_best.fit_transform(X_train, y_train)
-            clf_X_test = k_best.transform(X_test)
+            clf_X_train = X_train
+            clf_X_test = X_test
 
             print "\t{} {}".format(name, time.ctime())
             clf.fit(clf_X_train, y_train)
@@ -63,4 +59,3 @@ if __name__ == '__main__':
                 y_test, 'OutcomeType', predictions_df, possible_outcomes)
 
             print "\t\tscore: %.5f" % ll
-            print "\t\t{}\n".format(X_train.columns[k_best.get_support()])

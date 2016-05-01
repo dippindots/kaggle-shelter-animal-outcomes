@@ -110,29 +110,30 @@ def is_pit_bull(breed):
         return 0.0
 
 
-def preprocess_data(data):
-    data['IsNamed'] = data['Name'].apply(get_is_named)
-    data['Month'] = data['DateTime'].apply(get_month)
-
-    if 'AnimalType' in data.columns:
-        data['IsDog'] = data['AnimalType'].apply(is_dog)
-        data = data.drop(['AnimalType'], axis=1)
-
-    data['IsIntact'] = data['SexuponOutcome'].apply(is_intact)
-    data['IsMale'] = data['SexuponOutcome'].apply(is_male)
-    data['IsBlack'] = data['Color'].apply(is_black)
-    data['IsPitBull'] = data['Breed'].apply(is_pit_bull)
-
-    drop_cols = ['OutcomeSubtype', 'DateTime', 'SexuponOutcome', 'Name']
-    data = data.drop(drop_cols, axis=1)
-    categorical_columns = ["OutcomeType", "Breed", 'Month',
-                           "Color"]
-    for categorical_column in categorical_columns:
-        data[categorical_column] = data[categorical_column].astype('category')
+def preprocess_data(data, animal_type):
+    # Cat
+    # Index([u'AgeuponOutcome', u'IsNamed', u'IsIntact',
+    #        u'Breed_Domestic Longhair Mix', u'Breed_Russian Blue Mix', u'Month_4',
+    #        u'Month_5', u'Month_7', u'Month_12', u'Color_Brown Tabby/Gray'],
+    #       dtype='object')
+    # Dog
+    # Index([u'AgeuponOutcome', u'IsNamed', u'IsIntact', u'IsPitBull',
+    #        u'Breed_Border Collie/Akita', u'Breed_Chow Chow/Basset Hound',
+    #        u'Breed_Golden Retriever/Standard Poodle',
+    #        u'Breed_Pembroke Welsh Corgi/Brittany', u'Breed_Pit Bull Mix',
+    #        u'Breed_Pit Bull/Pit Bull'],
+    #      dtype='object')
     data['AgeuponOutcome'] = data['AgeuponOutcome'].apply(convert_age_to_days)
+    data['IsNamed'] = data['Name'].apply(get_is_named)
+    data['IsIntact'] = data['SexuponOutcome'].apply(is_intact)
+    if animal_type == 'Dog':
+        data['IsPitBull'] = data['Breed'].apply(is_pit_bull)
 
-    data = pd.get_dummies(data, columns=["Breed", 'Month',
-                                         "Color"])
+    data["OutcomeType"] = data["OutcomeType"].astype('category')
+
+    drop_cols = ['OutcomeSubtype', 'DateTime',
+                 'SexuponOutcome', 'Name', 'Breed', 'Color']
+    data = data.drop(drop_cols, axis=1)
 
     return data
 

@@ -8,8 +8,6 @@ KaggleLLScore: 0.84454
 '''
 from sklearn import grid_search
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.feature_selection import SelectKBest
-from sklearn.feature_selection import chi2
 
 from classifiers.predictor_base import PredictorBase
 from util import get_data, preprocess_data
@@ -23,14 +21,13 @@ class RandomForestPredictor(PredictorBase):
     def __init__(self, animal_type):
         self.animal_type = animal_type
         if self.animal_type == "Cat":
-            args = {'max_features': 16, 'n_estimators': 160, 'max_depth': 4}
+            args = {'n_estimators': 160, 'max_depth': 4}
         elif self.animal_type == "Dog":
-            args = {'max_features': 8, 'n_estimators': 320, 'max_depth': 8}
+            args = {'n_estimators': 320, 'max_depth': 8}
         else:
             raise RuntimeError("Incorrect animal type")
 
         self.clf = RandomForestClassifier(**args)
-        self.k_best_k = 32
 
     def fit(self, X_train, y_train):
         self.clf.fit(X_train, y_train)
@@ -54,8 +51,6 @@ class RandomForestPredictor(PredictorBase):
         train_data = train_data.dropna()
         X = train_data.drop(['OutcomeType'], axis=1)
         y = train_data['OutcomeType']
-        k_best = SelectKBest(chi2, k=self.k_best_k)
-        X = k_best.fit_transform(X, y)
         clf.fit(X, y)
         print clf.best_params_
 

@@ -30,7 +30,7 @@ if __name__ == '__main__':
     # Iterate over AnimalType
     for animal_type in ['Cat', 'Dog']:
         classifiers = [
-            NearestNeighborsPredictor(),
+            NearestNeighborsPredictor(animal_type),
             DecisionTreePredictor(animal_type),
             RandomForestPredictor(animal_type),
             AdaBoostPredictor(),

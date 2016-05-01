@@ -4,7 +4,6 @@ Created on Apr 26, 2016
 @author: Paul Reiners
 '''
 
-from classifiers.decision_tree_predictor import DecisionTreePredictor
 from classifiers.random_forest_predictor import RandomForestPredictor
 import numpy as np
 from util import log_loss, get_data, split_data, preprocess_data

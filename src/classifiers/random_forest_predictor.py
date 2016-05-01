@@ -54,9 +54,6 @@ class RandomForestPredictor(PredictorBase):
         clf.fit(X, y)
         print clf.best_params_
 
-    def get_k_best_k(self):
-        return self.k_best_k
-
 if __name__ == '__main__':
     print 'Cat'
     predictor = RandomForestPredictor('Cat')

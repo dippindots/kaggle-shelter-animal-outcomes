@@ -110,6 +110,16 @@ def is_pit_bull(breed):
         return 0.0
 
 
+def is_dangerous(breed):
+    dangerous_breeds = [
+        'Great Dane', 'Boxer', 'Wolf Hybrid', 'Malamute', 'Husky', 'Mastiff',
+        'Doberman Pinscher', 'German Shepherd', 'Rottweiler', 'Pit Bull']
+    for dangerous_breed in dangerous_breeds:
+        if dangerous_breed in breed:
+            return 1.0
+    return 0.0
+
+
 def preprocess_data(data, animal_type):
     # Cat
     # Index([u'AgeuponOutcome', u'IsNamed', u'IsIntact',
@@ -128,6 +138,7 @@ def preprocess_data(data, animal_type):
     data['IsIntact'] = data['SexuponOutcome'].apply(is_intact)
     if animal_type == 'Dog':
         data['IsPitBull'] = data['Breed'].apply(is_pit_bull)
+        data['IsDangerous'] = data['Breed'].apply(is_dangerous)
 
     data["OutcomeType"] = data["OutcomeType"].astype('category')
 

@@ -145,18 +145,21 @@ def is_mix(breed):
         return 0.0
 
 
-def preprocess_data(data, animal_type):
+def commmon_preprocess_data(data, animal_type):
     data['AgeuponOutcome'] = data['AgeuponOutcome'].apply(convert_age_to_days)
     data['IsNamed'] = data['Name'].apply(get_is_named)
     data['IsIntact'] = data['SexuponOutcome'].apply(is_intact)
+    data["OutcomeType"] = data["OutcomeType"].astype('category')
+    month = data['DateTime'].apply(get_month)
     if animal_type == 'Dog':
         data['IsPitBull'] = data['Breed'].apply(is_pit_bull)
         data['IsDangerous'] = data['Breed'].apply(is_dangerous)
     else:
-        month = data['DateTime'].apply(get_month)
         data['IsSpring'] = month.apply(is_spring)
 
-    data["OutcomeType"] = data["OutcomeType"].astype('category')
+
+def preprocess_data(data, animal_type):
+    commmon_preprocess_data(data, animal_type)
 
     drop_cols = ['OutcomeSubtype', 'DateTime',
                  'SexuponOutcome', 'Name', 'Breed', 'Color']

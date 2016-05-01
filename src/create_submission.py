@@ -4,6 +4,7 @@ Created on Apr 26, 2016
 @author: Paul Reiners
 '''
 
+from classifiers.decision_tree_predictor import DecisionTreePredictor
 from classifiers.random_forest_predictor import RandomForestPredictor
 import numpy as np
 from util import log_loss, get_data, split_data, preprocess_data
@@ -15,7 +16,7 @@ BEST_SCORE = 0.82221
 if __name__ == '__main__':
     predictors = {
         'Cat': RandomForestPredictor('Cat'),
-        'Dog': RandomForestPredictor('Dog')}
+        'Dog': DecisionTreePredictor('Dog')}
     test_data_sets = {}
     all_predictions_df = None
     all_y_test = None

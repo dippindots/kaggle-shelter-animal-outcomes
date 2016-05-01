@@ -18,9 +18,10 @@ class DecisionTreePredictor(PredictorBase):
     Uses decision tree.
     '''
 
-    def __init__(self):
-        self.clf = tree.DecisionTreeClassifier(
-            max_depth=6, criterion='gini', max_features=None)
+    def __init__(self, animal_type):
+        self.animal_type = animal_type
+        args = {'criterion': 'entropy', 'max_depth': 6}
+        self.clf = tree.DecisionTreeClassifier(**args)
 
     def fit(self, X_train, y_train):
         self.clf.fit(X_train, y_train)
@@ -33,12 +34,13 @@ class DecisionTreePredictor(PredictorBase):
 
     def find_best_params(self):
         parameters = {
-            'criterion': ('gini', 'entropy'), 'max_depth': [3, 6, 12],
-            'max_features': ("auto", "sqrt", "log2", None)}
+            'criterion': ('gini', 'entropy'), 'max_depth': [3, 6, 12]}
         decision_tree = tree.DecisionTreeClassifier()
         clf = grid_search.GridSearchCV(decision_tree, parameters)
         train_data = get_data('../../data/train.csv')
-        train_data = preprocess_data(train_data)
+        train_data = train_data[train_data['AnimalType'] == self.animal_type]
+        train_data = train_data.drop(['AnimalType'], axis=1)
+        train_data = preprocess_data(train_data, self.animal_type)
         train_data = train_data.dropna()
         X = train_data.drop(['OutcomeType'], axis=1)
         y = train_data['OutcomeType']
@@ -46,5 +48,6 @@ class DecisionTreePredictor(PredictorBase):
         print clf.best_params_
 
 if __name__ == '__main__':
-    decision_tree_predictor = DecisionTreePredictor()
+    print 'Dog'
+    decision_tree_predictor = DecisionTreePredictor('Dog')
     decision_tree_predictor.find_best_params()

@@ -176,9 +176,12 @@ def commmon_preprocess_data(data, animal_type):
     data['IsMix'] = data['Breed'].apply(is_mix)
     data['Breed'] = data['Breed'].apply(remove_mix)
 
-    data['Month'] = data['DateTime'].apply(get_month)
+    data['Month'] = month
 
     def is_sporting_dog(breed):
+        return is_dog_type(breed, 'Sporting Group')
+
+    def is_dog_type(breed, dog_type):
         if animal_type == 'Cat':
             return 0.0
         else:
@@ -190,10 +193,14 @@ def commmon_preprocess_data(data, animal_type):
                 group = dog_breed.iloc[0]['American Kennel Club']
                 group_parts = group.split(',')
                 for group_part in group_parts:
-                    if group_part.strip() == 'Sporting Group':
+                    if group_part.strip() == dog_type:
                         return 1.0
             return 0.0
     data['IsSportingDog'] = data['Breed'].apply(is_sporting_dog)
+
+    def is_toy_dog(breed):
+        return is_dog_type(breed, 'Toy Group')
+    data['IsToyDog'] = data['Breed'].apply(is_toy_dog)
 
 
 def preprocess_data(data, animal_type):

@@ -240,7 +240,8 @@ def preprocess_data(data, animal_type):
              'IsChristmas'])
     else:
         keep_cols.extend(['AgeuponOutcome', 'IsNamed',
-                          'IsIntact', 'IsPitBull', 'IsDangerous', 'IsWeekend'])
+                          'IsIntact', 'IsPitBull', 'IsDangerous', 'IsWeekend',
+                          'Toy Group', 'Hound Group'])
 
     data = data.loc[:, keep_cols]
 

@@ -129,18 +129,33 @@ def is_doodle_dog(breed):
 
 
 def is_spring(month):
-    return month == 4 or month == 5
+    if month == 4 or month == 5:
+        return 1.0
+    elif month == 3 or month == 6:
+        return 0.5
+    else:
+        return 0.0
+
+
+def is_christmas(month):
+    if month == 12:
+        return 1.0
+    else:
+        return 0.0
 
 
 def is_weekend(day_of_week):
-    return day_of_week == 5 or day_of_week == 6
+    if day_of_week == 5 or day_of_week == 6:
+        return 1.0
+    else:
+        return 0.0
 
 
 def is_dangerous(breed):
     dangerous_breeds = [
         'Great Dane', 'Boxer', 'Wolf Hybrid', 'Malamute', 'Husky', 'Mastiff',
-        'Doberman Pinscher', 'Doberman Pinsch', 'German Shepherd', 'Rottweiler',
-        'Pit Bull']
+        'Doberman Pinscher', 'Doberman Pinsch', 'German Shepherd',
+        'Rottweiler', 'Pit Bull']
     for dangerous_breed in dangerous_breeds:
         if dangerous_breed in breed:
             return 1.0
@@ -178,6 +193,7 @@ def commmon_preprocess_data(data, animal_type):
         'Breed'].apply(is_golden_retriever)
     data['IsDoodleDog'] = data['Breed'].apply(is_doodle_dog)
     data['IsSpring'] = month.apply(is_spring)
+    data['IsChristmas'] = month.apply(is_christmas)
 
     data['IsMale'] = data['SexuponOutcome'].apply(is_male)
 
@@ -222,7 +238,8 @@ def preprocess_data(data, animal_type):
         keep_cols = ['OutcomeType']
     if animal_type == 'Cat':
         keep_cols.extend(
-            ['AgeuponOutcome', 'IsNamed', 'IsIntact', 'IsSpring', 'IsWeekend'])
+            ['AgeuponOutcome', 'IsNamed', 'IsIntact', 'IsSpring', 'IsWeekend',
+             'IsChristmas'])
     else:
         keep_cols.extend(['AgeuponOutcome', 'IsNamed',
                           'IsIntact', 'IsPitBull', 'IsDangerous', 'IsWeekend'])

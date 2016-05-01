@@ -71,6 +71,10 @@ def get_month(date_time):
     return date_time.month
 
 
+def get_day_of_week(date_time):
+    return date_time.dayofweek
+
+
 def is_dog(animal_type):
     if animal_type == 'Dog':
         return 1.0
@@ -128,6 +132,10 @@ def is_spring(month):
     return month == 4 or month == 5
 
 
+def is_weekend(day_of_week):
+    return day_of_week == 5 or day_of_week == 6
+
+
 def is_dangerous(breed):
     dangerous_breeds = [
         'Great Dane', 'Boxer', 'Wolf Hybrid', 'Malamute', 'Husky', 'Mastiff',
@@ -177,6 +185,8 @@ def commmon_preprocess_data(data, animal_type):
     data['Breed'] = data['Breed'].apply(remove_mix)
 
     data['Month'] = month
+    data['DayOfWeek'] = data['DateTime'].apply(get_day_of_week)
+    data['IsWeekend'] = data['DayOfWeek'].apply(is_weekend)
 
     def is_sporting_dog(breed):
         return is_dog_type(breed, 'Sporting Group')
@@ -206,13 +216,16 @@ def commmon_preprocess_data(data, animal_type):
 def preprocess_data(data, animal_type):
     commmon_preprocess_data(data, animal_type)
 
-    keep_cols = ['OutcomeType', 'tag']
+    if 'tag' in data.columns:
+        keep_cols = ['OutcomeType', 'tag']
+    else:
+        keep_cols = ['OutcomeType']
     if animal_type == 'Cat':
         keep_cols.extend(
-            ['AgeuponOutcome', 'IsNamed', 'IsIntact', 'IsSpring'])
+            ['AgeuponOutcome', 'IsNamed', 'IsIntact', 'IsSpring', 'IsWeekend'])
     else:
         keep_cols.extend(['AgeuponOutcome', 'IsNamed',
-                          'IsIntact', 'IsPitBull', 'IsDangerous'])
+                          'IsIntact', 'IsPitBull', 'IsDangerous', 'IsWeekend'])
 
     data = data.loc[:, keep_cols]
 

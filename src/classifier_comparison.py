@@ -31,7 +31,7 @@ if __name__ == '__main__':
     for animal_type in ['Cat', 'Dog']:
         classifiers = [
             NearestNeighborsPredictor(),
-            DecisionTreePredictor(),
+            DecisionTreePredictor(animal_type),
             RandomForestPredictor(animal_type),
             AdaBoostPredictor(),
             NaiveBayesPredictor(),

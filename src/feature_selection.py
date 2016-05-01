@@ -15,7 +15,7 @@ def preprocess_data(data, animal_type):
 
     drop_cols = ['OutcomeSubtype', 'DateTime', 'SexuponOutcome', 'Name']
     data = data.drop(drop_cols, axis=1)
-    categorical_columns = ["Breed", 'Month', "Color"]
+    categorical_columns = ["Breed", 'Month', "Color", 'DayOfWeek']
     for categorical_column in categorical_columns:
         data[categorical_column] = data[categorical_column].astype('category')
     data = pd.get_dummies(data, columns=categorical_columns)

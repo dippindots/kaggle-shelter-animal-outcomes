@@ -16,7 +16,7 @@ BEST_SCORE = 0.82221
 if __name__ == '__main__':
     predictors = {
         'Cat': RandomForestPredictor('Cat'),
-        'Dog': DecisionTreePredictor('Dog')}
+        'Dog': RandomForestPredictor('Dog')}
     test_data_sets = {}
     all_predictions_df = None
     all_y_test = None

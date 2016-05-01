@@ -11,16 +11,19 @@ Alaskan Klee Kai,United States,
 Alaskan Malamute,United States,Working Group
 Alpine Dachsbracke,Austria ,
 American Akita,Japan/United States,Working Group 
+Akita,Japan/United States,Working Group 
 American Bulldog,United States ,
 American Cocker Spaniel,United States,Sporting Group
+Cocker Spaniel,United States,Sporting Group
 American English Coonhound,United States,Hound Group
 American Eskimo Dog,Germany,Non-Sporting Group
 American Foxhound,United States,Hound Group
 American Hairless Terrier,United States,FSS (Miscellaneous)
 American Pit Bull Terrier,United States,
 American Staffordshire Terrier,United States,Terrier Group 
-American Water Spaniel,United States,Sporting Group 
-Anatolian Shepherd Dog,Turkey,Working Group 
+American Water Spaniel,United States,Sporting Group
+Anatolian Shepherd Dog,Turkey,Working Group
+Anatol Shepherd,Turkey,Working Group
 Andalusian Hound,Spain,
 Anglo-Français de Petite Vénerie,France,
 Appenzeller Sennenhund,Switzerland,FSS
@@ -65,6 +68,7 @@ Bernese Mountain Dog,Switzerland,Working Group
 Billy,France,
 Black and Tan Coonhound,United States,Hound Group
 Black and Tan Virginia Foxhound,United States,
+Black Mouth Cur,,
 Black Norwegian Elkhound,Norway,
 Black Russian Terrier,Russia,Working Group
 Blackmouth Cur,United States,
@@ -102,6 +106,7 @@ Bulldog,United Kingdom (England),Non-sporting Group
 Bullmastiff,United Kingdom (England),Working Group
 Bully Kutta,Pakistan,
 Burgos Pointer,Spain,
+Cardigan Welsh Corgi,United Kingdom (Wales),Herding Group
 Cairn Terrier,United Kingdom (Scotland),Terrier Group
 Canaan Dog,Middle East Lebanon - Israel,Herding Group
 Canadian Eskimo Dog,Canada,
@@ -113,38 +118,48 @@ Cão Fila de São Miguel,Portugal,
 Carolina Dog,United States,
 Carpathian Shepherd Dog,Romania,
 Catahoula Cur,United States,FSS
+Catahoula,United States,FSS
 Catalan Sheepdog,Spain,
 Cavalier King Charles Spaniel,United Kingdom (England),Toy Group
 Central Asian Shepherd Dog,Russia,FSS
 Cesky Fousek,Czech Republic,
 Cesky Terrier,Czech Republic,Terrier Group
 Chesapeake Bay Retriever,United States,Sporting Group
+Chesa Bay Retr,United States,Sporting Group
 Chien Français Blanc et Noir,France,
 Chien Français Blanc et Orange,France,
 Chien Français Tricolore,France,
 Chihuahua,Mexico,Toy Group
+Chihuahua Shorthair,Mexico,Toy Group
+Chihuahua Longhair,Mexico,Toy Group
 Chilean Fox Terrier,Chile,
 Chinese Chongqing Dog,China,
 Chinese Crested Dog,China,Toy Group
 Chinese Imperial Dog,China,
+Chinese Sharpei,,
 Chinook,United States,Working Group
 Chippiparai,India,
 Chow Chow,China,Non-Sporting Group
 Cirneco dell'Etna,Italy,Hound Group
 Clumber Spaniel,United Kingdom (England),Sporting Group
+Collie Smooth,United Kingdom (Scotland),Herding Group
 Combai,India,
 Cretan Hound,Greece,
 Croatian Sheepdog,Croatia,
 Curly Coated Retriever,United Kingdom (England),Sporting Group
 Cursinu,Corsica (France), 
 Dachshund,Germany,Hound Group
+Dachshund Wirehair,Germany,Hound Group
+Dachshund Longhair,Germany,Hound Group
 Dalmatian,Croatia,Non-Sporting Group
 Dandie Dinmont Terrier,United Kingdom (Scotland),Terrier Group
 Decker Rat Terrier,United States,
 Deutsche Bracke,Germany,
 Doberman Pinscher,Germany,Working Group
+Doberman Pinsch,Germany,Working Group
 Dogo Argentino,Argentina ,FSS (Miscellaneous)
 Dogue de Bordeaux,France,Working Group
+Dogue De Bordeaux,France,Working Group
 Drentse Patrijshond,Netherlands,FSS
 Drever,Sweden,
 Dunker,Norway,
@@ -170,6 +185,7 @@ Finnish Hound,Finland,
 Finnish Lapphund,Finland,Herding Group
 Finnish Spitz,Finland,Non-Sporting Group
 Flat-Coated Retriever,United Kingdom,Sporting Group
+Flat Coat Retriever,United Kingdom,Sporting Group
 Fox Terrier,United Kingdom (England),Terrier Group
 French Brittany,France,
 French Bulldog,"United Kingdom (England), France",Non-Sporting Group
@@ -270,6 +286,7 @@ Mahratta Greyhound,India,
 Majorca Ratter,Spain,
 Majorca Shepherd Dog,Spain,
 Maltese,Italy,Toy Group
+Manchester Terrier,United Kingdom (England),"Terrier Group, Toy Group"
 Maremma Sheepdog,Italy,
 McNab,United States,
 Mexican Hairless Dog,Mexico,Non-Sporting Group
@@ -305,6 +322,7 @@ Old English Terrier,United Kingdom (England),
 Old German Shepherd Dog,Germany,
 Old Time Farm Shepherd,United States,
 Olde English Bulldogge,United States,
+English Bulldog,United States,
 Otterhound,United Kingdom (England),Hound Group
 Pachon Navarro,Spain,
 Pandikona,India,
@@ -320,9 +338,11 @@ Peruvian Hairless Dog,Peru,FSS (Miscellaneous)
 Pharaoh Hound,Malta,Hound Group
 Phu Quoc ridgeback dog,Vietnam,
 Picardy Spaniel,France,
+Pit Bull,United States,
 Plott Hound,United States,Hound Group
 Podenco Canario,Spain,FSS
 Pointer,United Kingdom (England),Sporting Group
+English Pointer,United Kingdom (England),Sporting Group
 Poitevin , France ,
 Polish Greyhound,Poland,
 Polish Hound,Poland,
@@ -332,6 +352,7 @@ Polish Tatra Sheepdog,Poland,
 Pomeranian,"Germany, Poland",Toy Group
 Pont-Audemer Spaniel,France,
 Poodle,"Germany, France","Non-Sporting Group, Toy Group"
+Miniature Poodle,"Germany, France",Non-Sporting Group
 Porcelaine,France,
 Portuguese Pointer,Portugal,FSS
 Portuguese Water Dog,Portugal,Working Group
@@ -344,6 +365,7 @@ Pumi,Hungary,FSS (Miscellaneous)
 Pungsan Dog,North Korea,
 Pyrenean Mastiff,Spain,FSS
 Pyrenean Shepherd,France,Herding Group
+Queensland Heeler,,
 Rafeiro do Alentejo,Portugal,FSS
 Rajapalayam,India,
 Rampur Greyhound,India,
@@ -352,6 +374,7 @@ Ratonero Bodeguero Andaluz,Spain,
 Ratonero Valenciano,Spain,
 Redbone Coonhound,United States,Hound Group
 Rhodesian Ridgeback,Zimbabwe,Hound Group
+Rhod Ridgeback,Zimbabwe,Hound Group
 Rottweiler,Germany,Working Group
 Russell Terrier,United Kingdom (England),Terrier Group
 Russian Spaniel,Russia,

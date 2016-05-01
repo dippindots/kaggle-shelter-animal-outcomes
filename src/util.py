@@ -131,7 +131,8 @@ def is_spring(month):
 def is_dangerous(breed):
     dangerous_breeds = [
         'Great Dane', 'Boxer', 'Wolf Hybrid', 'Malamute', 'Husky', 'Mastiff',
-        'Doberman Pinscher', 'German Shepherd', 'Rottweiler', 'Pit Bull']
+        'Doberman Pinscher', 'Doberman Pinsch', 'German Shepherd', 'Rottweiler',
+        'Pit Bull']
     for dangerous_breed in dangerous_breeds:
         if dangerous_breed in breed:
             return 1.0
@@ -145,7 +146,18 @@ def is_mix(breed):
         return 0.0
 
 
+def remove_mix(breed):
+    if breed.endswith('Mix'):
+        return breed[:-len('Mix')].strip()
+    else:
+        return breed
+
+
 def commmon_preprocess_data(data, animal_type):
+    dog_breeds = pd.read_csv('../doc/dog_breeds.csv')
+    dog_breeds['American Kennel Club'] = dog_breeds[
+        'American Kennel Club'].fillna('')
+
     data['AgeuponOutcome'] = data['AgeuponOutcome'].apply(convert_age_to_days)
     data['IsNamed'] = data['Name'].apply(get_is_named)
     data['IsIntact'] = data['SexuponOutcome'].apply(is_intact)
@@ -160,8 +172,28 @@ def commmon_preprocess_data(data, animal_type):
     data['IsSpring'] = month.apply(is_spring)
 
     data['IsMale'] = data['SexuponOutcome'].apply(is_male)
+
     data['IsMix'] = data['Breed'].apply(is_mix)
+    data['Breed'] = data['Breed'].apply(remove_mix)
+
     data['Month'] = data['DateTime'].apply(get_month)
+
+    def is_sporting_dog(breed):
+        if animal_type == 'Cat':
+            return 0.0
+        else:
+            parts = breed.split('/')
+            for part in parts:
+                dog_breed = dog_breeds.loc[dog_breeds['Breed'] == part]
+                if len(dog_breed) < 1:
+                    return 0.0
+                group = dog_breed.iloc[0]['American Kennel Club']
+                group_parts = group.split(',')
+                for group_part in group_parts:
+                    if group_part.strip() == 'Sporting Group':
+                        return 1.0
+            return 0.0
+    data['IsSportingDog'] = data['Breed'].apply(is_sporting_dog)
 
 
 def preprocess_data(data, animal_type):

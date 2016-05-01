@@ -204,9 +204,6 @@ def commmon_preprocess_data(data, animal_type):
     data['DayOfWeek'] = data['DateTime'].apply(get_day_of_week)
     data['IsWeekend'] = data['DayOfWeek'].apply(is_weekend)
 
-    def is_sporting_dog(breed):
-        return is_dog_type(breed, 'Sporting Group')
-
     def is_dog_type(breed, dog_type):
         if animal_type == 'Cat':
             return 0.0
@@ -222,11 +219,12 @@ def commmon_preprocess_data(data, animal_type):
                     if group_part.strip() == dog_type:
                         return 1.0
             return 0.0
-    data['IsSportingDog'] = data['Breed'].apply(is_sporting_dog)
 
-    def is_toy_dog(breed):
-        return is_dog_type(breed, 'Toy Group')
-    data['IsToyDog'] = data['Breed'].apply(is_toy_dog)
+    groups = ['Sporting Group', 'Toy Group', 'Herding Group', 'Hound Group',
+              'Non-Sporting Group', 'Terrier Group', 'Working Group']
+    for group in groups:
+        data[group] = data['Breed'].apply(
+            lambda breed: is_dog_type(breed, group))
 
 
 def preprocess_data(data, animal_type):

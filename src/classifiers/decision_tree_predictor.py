@@ -37,7 +37,7 @@ class DecisionTreePredictor(PredictorBase):
             'criterion': ('gini', 'entropy'), 'max_depth': [3, 6, 12]}
         decision_tree = tree.DecisionTreeClassifier()
         clf = grid_search.GridSearchCV(decision_tree, parameters)
-        train_data = get_data('../../data/train.csv')
+        train_data = get_data('../data/train.csv')
         train_data = train_data[train_data['AnimalType'] == self.animal_type]
         train_data = train_data.drop(['AnimalType'], axis=1)
         train_data = preprocess_data(train_data, self.animal_type)
@@ -50,4 +50,7 @@ class DecisionTreePredictor(PredictorBase):
 if __name__ == '__main__':
     print 'Dog'
     decision_tree_predictor = DecisionTreePredictor('Dog')
+    decision_tree_predictor.find_best_params()
+    print 'Cat'
+    decision_tree_predictor = DecisionTreePredictor('Cat')
     decision_tree_predictor.find_best_params()

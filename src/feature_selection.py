@@ -9,7 +9,7 @@ import pandas as pd
 
 from util import get_data, split_data, get_is_named, get_month, \
     is_intact, is_male, is_black, is_pit_bull, convert_age_to_days, \
-    is_dangerous
+    is_dangerous, is_spring
 
 
 def preprocess_data(data, animal_type):
@@ -22,6 +22,8 @@ def preprocess_data(data, animal_type):
         data['IsBlack'] = data['Color'].apply(is_black)
         data['IsPitBull'] = data['Breed'].apply(is_pit_bull)
         data['IsDangerous'] = data['Breed'].apply(is_dangerous)
+    else:
+        data['IsSpring'] = data['Month'].apply(is_spring)
     data["OutcomeType"] = data["OutcomeType"].astype('category')
     data['AgeuponOutcome'] = data['AgeuponOutcome'].apply(convert_age_to_days)
 
@@ -48,7 +50,7 @@ if __name__ == '__main__':
         train_data = train_data.dropna()
         X_train, y_train, X_test, y_test = split_data(train_data)
 
-        k_best = SelectKBest(chi2, k=20)
+        k_best = SelectKBest(chi2)
         clf_X_train = k_best.fit_transform(X_train, y_train)
 
         print "{}".format(X_train.columns[k_best.get_support()])

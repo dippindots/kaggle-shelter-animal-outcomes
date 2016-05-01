@@ -110,6 +110,10 @@ def is_pit_bull(breed):
         return 0.0
 
 
+def is_spring(month):
+    return month == 4 or month == 5
+
+
 def is_dangerous(breed):
     dangerous_breeds = [
         'Great Dane', 'Boxer', 'Wolf Hybrid', 'Malamute', 'Husky', 'Mastiff',
@@ -139,6 +143,9 @@ def preprocess_data(data, animal_type):
     if animal_type == 'Dog':
         data['IsPitBull'] = data['Breed'].apply(is_pit_bull)
         data['IsDangerous'] = data['Breed'].apply(is_dangerous)
+    else:
+        month = data['DateTime'].apply(get_month)
+        data['IsSpring'] = month.apply(is_spring)
 
     data["OutcomeType"] = data["OutcomeType"].astype('category')
 

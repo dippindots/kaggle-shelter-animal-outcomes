@@ -151,19 +151,31 @@ def commmon_preprocess_data(data, animal_type):
     data['IsIntact'] = data['SexuponOutcome'].apply(is_intact)
     data["OutcomeType"] = data["OutcomeType"].astype('category')
     month = data['DateTime'].apply(get_month)
-    if animal_type == 'Dog':
-        data['IsPitBull'] = data['Breed'].apply(is_pit_bull)
-        data['IsDangerous'] = data['Breed'].apply(is_dangerous)
-    else:
-        data['IsSpring'] = month.apply(is_spring)
+    data['IsPitBull'] = data['Breed'].apply(is_pit_bull)
+    data['IsDangerous'] = data['Breed'].apply(is_dangerous)
+    data['IsBlack'] = data['Color'].apply(is_black)
+    data['IsGoldenRetriever'] = data[
+        'Breed'].apply(is_golden_retriever)
+    data['IsDoodleDog'] = data['Breed'].apply(is_doodle_dog)
+    data['IsSpring'] = month.apply(is_spring)
+
+    data['IsMale'] = data['SexuponOutcome'].apply(is_male)
+    data['IsMix'] = data['Breed'].apply(is_mix)
+    data['Month'] = data['DateTime'].apply(get_month)
 
 
 def preprocess_data(data, animal_type):
     commmon_preprocess_data(data, animal_type)
 
-    drop_cols = ['OutcomeSubtype', 'DateTime',
-                 'SexuponOutcome', 'Name', 'Breed', 'Color']
-    data = data.drop(drop_cols, axis=1)
+    keep_cols = ['OutcomeType', 'tag']
+    if animal_type == 'Cat':
+        keep_cols.extend(
+            ['AgeuponOutcome', 'IsNamed', 'IsIntact', 'IsSpring'])
+    else:
+        keep_cols.extend(['AgeuponOutcome', 'IsNamed',
+                          'IsIntact', 'IsPitBull', 'IsDangerous'])
+
+    data = data.loc[:, keep_cols]
 
     return data
 

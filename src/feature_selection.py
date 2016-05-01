@@ -7,24 +7,11 @@ from sklearn.feature_selection import SelectKBest
 from sklearn.feature_selection import chi2
 import pandas as pd
 
-from util import get_data, split_data, is_male, is_black, \
-    is_golden_retriever, is_doodle_dog, is_mix, commmon_preprocess_data, \
-    get_month
+from util import get_data, split_data, commmon_preprocess_data
 
 
 def preprocess_data(data, animal_type):
     commmon_preprocess_data(data, animal_type)
-
-    data['IsMale'] = data['SexuponOutcome'].apply(is_male)
-    if animal_type == "Dog":
-        data['IsBlack'] = data['Color'].apply(is_black)
-        data['IsGoldenRetriever'] = data[
-            'Breed'].apply(is_golden_retriever)
-        data['IsDoodleDog'] = data['Breed'].apply(is_doodle_dog)
-    else:
-        pass
-    data['IsMix'] = data['Breed'].apply(is_mix)
-    data['Month'] = data['DateTime'].apply(get_month)
 
     drop_cols = ['OutcomeSubtype', 'DateTime', 'SexuponOutcome', 'Name']
     data = data.drop(drop_cols, axis=1)

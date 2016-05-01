@@ -21,9 +21,9 @@ class RandomForestPredictor(PredictorBase):
     def __init__(self, animal_type):
         self.animal_type = animal_type
         if self.animal_type == "Cat":
-            args = {'n_estimators': 160, 'max_depth': 4}
+            args = {'n_estimators': 640, 'max_depth': 4}
         elif self.animal_type == "Dog":
-            args = {'n_estimators': 320, 'max_depth': 8}
+            args = {'n_estimators': 320, 'max_depth': 4}
         else:
             raise RuntimeError("Incorrect animal type")
 
@@ -41,13 +41,13 @@ class RandomForestPredictor(PredictorBase):
     def find_best_params(self):
         parameters = {
             'n_estimators': [160, 320, 640, 1280],
-            'max_depth': [2, 4, 8, 16],
-            'max_features': [1, 2, 4, 8, 16, self.k_best_k]}
+            'max_depth': [2, 4, 8, 16]}
         rf = RandomForestClassifier()
         clf = grid_search.GridSearchCV(rf, parameters)
         train_data = get_data('../../data/train.csv')
         train_data = train_data[train_data['AnimalType'] == self.animal_type]
-        train_data = preprocess_data(train_data)
+        train_data = train_data.drop(['AnimalType'], axis=1)
+        train_data = preprocess_data(train_data, self.animal_type)
         train_data = train_data.dropna()
         X = train_data.drop(['OutcomeType'], axis=1)
         y = train_data['OutcomeType']

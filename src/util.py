@@ -110,6 +110,20 @@ def is_pit_bull(breed):
         return 0.0
 
 
+def is_golden_retriever(breed):
+    if 'Golden Retriever' in breed:
+        return 1.0
+    else:
+        return 0.0
+
+
+def is_doodle_dog(breed):
+    if 'Poodle' in breed and ('Labrador' in breed or 'Retriever' in breed):
+        return 1.0
+    else:
+        return 0.0
+
+
 def is_spring(month):
     return month == 4 or month == 5
 
@@ -124,19 +138,14 @@ def is_dangerous(breed):
     return 0.0
 
 
+def is_mix(breed):
+    if "Mix" in breed:
+        return 1.0
+    else:
+        return 0.0
+
+
 def preprocess_data(data, animal_type):
-    # Cat
-    # Index([u'AgeuponOutcome', u'IsNamed', u'IsIntact',
-    #        u'Breed_Domestic Longhair Mix', u'Breed_Russian Blue Mix', u'Month_4',
-    #        u'Month_5', u'Month_7', u'Month_12', u'Color_Brown Tabby/Gray'],
-    #       dtype='object')
-    # Dog
-    # Index([u'AgeuponOutcome', u'IsNamed', u'IsIntact', u'IsPitBull',
-    #        u'Breed_Border Collie/Akita', u'Breed_Chow Chow/Basset Hound',
-    #        u'Breed_Golden Retriever/Standard Poodle',
-    #        u'Breed_Pembroke Welsh Corgi/Brittany', u'Breed_Pit Bull Mix',
-    #        u'Breed_Pit Bull/Pit Bull'],
-    #      dtype='object')
     data['AgeuponOutcome'] = data['AgeuponOutcome'].apply(convert_age_to_days)
     data['IsNamed'] = data['Name'].apply(get_is_named)
     data['IsIntact'] = data['SexuponOutcome'].apply(is_intact)

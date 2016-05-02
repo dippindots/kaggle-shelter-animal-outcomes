@@ -22,7 +22,8 @@ from core.learning.classifiers.quadratic_descriminant_analysis_predictor \
 from core.learning.classifiers.random_forest_predictor \
     import RandomForestPredictor
 from core.preprocessing.feature_extraction_scaling import get_data
-from core.util import split_data, preprocess_data
+from core.preprocessing.sampling import split_data
+from core.util import preprocess_data
 
 
 if __name__ == '__main__':

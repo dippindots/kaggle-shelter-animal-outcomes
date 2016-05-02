@@ -8,7 +8,8 @@ from core.evaluation import log_loss
 from core.learning.classifiers.random_forest_predictor \
     import RandomForestPredictor
 from core.preprocessing.feature_extraction_scaling import get_data
-from core.util import split_data, preprocess_data
+from core.preprocessing.sampling import split_data
+from core.util import preprocess_data
 import numpy as np
 
 

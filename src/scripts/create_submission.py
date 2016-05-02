@@ -29,13 +29,10 @@ if __name__ == '__main__':
         train_data = get_data('../data/train.csv', 'train')
         test_data = get_data('../data/test.csv', 'test')
         all_data = train_data.append(test_data)
-        all_data = all_data[all_data['AnimalType'] == animal_type]
-        all_data = all_data.drop(['AnimalType'], axis=1)
         all_data = select_features(all_data, animal_type)
 
         train_data = all_data[all_data['tag'] == 'train']
         train_data = train_data.drop(['tag'], axis=1)
-        train_data = train_data.dropna()
         test_data = all_data[all_data['tag'] == 'test']
         test_data = test_data.drop(['OutcomeType', 'tag'], axis=1)
         test_data = test_data.fillna(test_data.mean())

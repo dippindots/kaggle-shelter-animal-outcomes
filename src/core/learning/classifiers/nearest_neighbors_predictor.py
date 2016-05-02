@@ -43,10 +43,7 @@ class NearestNeighborsPredictor(PredictorBase):
         knn = KNeighborsClassifier()
         clf = grid_search.GridSearchCV(knn, parameters)
         train_data = get_data('../data/train.csv')
-        train_data = train_data[train_data['AnimalType'] == self.animal_type]
-        train_data = train_data.drop(['AnimalType'], axis=1)
         train_data = select_features(train_data, self.animal_type)
-        train_data = train_data.dropna()
         X = train_data.drop(['OutcomeType'], axis=1)
         y = train_data['OutcomeType']
         clf.fit(X, y)

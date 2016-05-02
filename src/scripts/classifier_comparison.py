@@ -47,10 +47,7 @@ if __name__ == '__main__':
 
         train_data = get_data('../data/train.csv')
         print animal_type
-        train_data = train_data[train_data['AnimalType'] == animal_type]
-        train_data = train_data.drop(['AnimalType'], axis=1)
         train_data = select_features(train_data, animal_type)
-        train_data = train_data.dropna()
         X_train, y_train, X_test, y_test = split_data(train_data)
 
         # iterate over classifiers

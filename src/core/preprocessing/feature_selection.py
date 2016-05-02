@@ -9,6 +9,9 @@ import pandas as pd
 
 
 def select_features(data, animal_type):
+    data = data[data['AnimalType'] == animal_type]
+    data = data.drop(['AnimalType'], axis=1)
+
     extract_features(data, animal_type)
 
     if 'tag' in data.columns:
@@ -25,6 +28,7 @@ def select_features(data, animal_type):
                           'Toy Group', 'Hound Group'])
 
     data = data.loc[:, keep_cols]
+    data = data.dropna()
 
     return data
 

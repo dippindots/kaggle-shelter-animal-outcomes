@@ -8,12 +8,12 @@ from sklearn.feature_selection import chi2
 
 from core.preprocessing.feature_extraction_scaling import get_data
 from core.preprocessing.sampling import split_data
-from core.util import commmon_preprocess_data
+from core.util import extract_features
 import pandas as pd
 
 
 def preprocess_data(data, animal_type):
-    commmon_preprocess_data(data, animal_type)
+    extract_features(data, animal_type)
 
     drop_cols = ['OutcomeSubtype', 'DateTime', 'SexuponOutcome', 'Name']
     data = data.drop(drop_cols, axis=1)

@@ -7,22 +7,8 @@ from sklearn.feature_selection import SelectKBest
 from sklearn.feature_selection import chi2
 
 from core.preprocessing.feature_extraction_scaling import get_data
+from core.preprocessing.feature_selection import select_raw_features
 from core.preprocessing.sampling import split_data
-from core.preprocessing.feature_selection import extract_features
-import pandas as pd
-
-
-def select_features(data, animal_type):
-    extract_features(data, animal_type)
-
-    drop_cols = ['OutcomeSubtype', 'DateTime', 'SexuponOutcome', 'Name']
-    data = data.drop(drop_cols, axis=1)
-    categorical_columns = ["Breed", 'Month', "Color", 'DayOfWeek']
-    for categorical_column in categorical_columns:
-        data[categorical_column] = data[categorical_column].astype('category')
-    data = pd.get_dummies(data, columns=categorical_columns)
-
-    return data
 
 
 if __name__ == '__main__':
@@ -34,7 +20,7 @@ if __name__ == '__main__':
         print animal_type
         train_data = train_data[train_data['AnimalType'] == animal_type]
         train_data = train_data.drop(['AnimalType'], axis=1)
-        train_data = select_features(train_data, animal_type)
+        train_data = select_raw_features(train_data, animal_type)
         train_data = train_data.dropna()
         X_train, y_train, X_test, y_test = split_data(train_data)
 

@@ -10,7 +10,7 @@ from sklearn import grid_search
 from sklearn.neighbors import KNeighborsClassifier
 
 from classifiers.predictor_base import PredictorBase
-from core.preprocessing import get_data
+from core.preprocessing.feature_extraction_scaling import get_data
 from core.util import preprocess_data
 
 

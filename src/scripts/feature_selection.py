@@ -6,7 +6,7 @@ Created on Apr 30, 2016
 from sklearn.feature_selection import SelectKBest
 from sklearn.feature_selection import chi2
 
-from core.preprocessing import get_data
+from core.preprocessing.feature_extraction_scaling import get_data
 from core.util import split_data, commmon_preprocess_data
 import pandas as pd
 

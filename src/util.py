@@ -226,6 +226,21 @@ def commmon_preprocess_data(data, animal_type):
         data[group] = data['Breed'].apply(
             lambda breed: is_dog_type(breed, group))
 
+    def is_popular_dog_breed(breed):
+        # http://www.akc.org/news/the-most-popular-dog-breeds-in-america/
+        popular_breeds = [
+            'Labrador Retriever', 'German Shepherd', 'Golden Retriever',
+            'American Bulldog', 'Beagle', 'French Bulldog',
+            'Yorkshire Terrier', 'Poodle']
+        if animal_type == 'Cat':
+            return 0.0
+        else:
+            for popular_breed in popular_breeds:
+                if popular_breed in breed:
+                    return 1.0
+            return 0.0
+    data['IsPopularDog'] = data['Breed'].apply(is_popular_dog_breed)
+
 
 def preprocess_data(data, animal_type):
     commmon_preprocess_data(data, animal_type)

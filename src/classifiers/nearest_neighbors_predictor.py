@@ -10,7 +10,7 @@ from sklearn import grid_search
 from sklearn.neighbors import KNeighborsClassifier
 
 from classifiers.predictor_base import PredictorBase
-from util import get_data, preprocess_data
+from core.util import get_data, preprocess_data
 
 
 class NearestNeighborsPredictor(PredictorBase):

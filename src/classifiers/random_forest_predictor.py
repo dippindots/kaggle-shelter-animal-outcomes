@@ -10,7 +10,7 @@ from sklearn import grid_search
 from sklearn.ensemble import RandomForestClassifier
 
 from classifiers.predictor_base import PredictorBase
-from util import get_data, preprocess_data
+from core.util import get_data, preprocess_data
 
 
 class RandomForestPredictor(PredictorBase):

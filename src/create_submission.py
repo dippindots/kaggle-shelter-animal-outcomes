@@ -6,7 +6,7 @@ Created on Apr 26, 2016
 
 from classifiers.random_forest_predictor import RandomForestPredictor
 import numpy as np
-from util import log_loss, get_data, split_data, preprocess_data
+from core.util import log_loss, get_data, split_data, preprocess_data
 
 
 BEST_SCORE = 0.82221

@@ -17,7 +17,7 @@ from classifiers.nearest_neighbors_predictor import NearestNeighborsPredictor
 from classifiers.quadratic_descriminant_analysis_predictor \
     import QuadraticDiscriminantAnalysisPredictor
 from classifiers.random_forest_predictor import RandomForestPredictor
-from util import get_data, split_data, log_loss, preprocess_data
+from core.util import get_data, split_data, log_loss, preprocess_data
 
 
 if __name__ == '__main__':

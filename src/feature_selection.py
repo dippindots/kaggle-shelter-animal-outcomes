@@ -7,7 +7,7 @@ from sklearn.feature_selection import SelectKBest
 from sklearn.feature_selection import chi2
 import pandas as pd
 
-from util import get_data, split_data, commmon_preprocess_data
+from core.util import get_data, split_data, commmon_preprocess_data
 
 
 def preprocess_data(data, animal_type):

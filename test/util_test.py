@@ -5,7 +5,7 @@ Created on Apr 26, 2016
 '''
 import unittest
 import pandas as pd
-from core.util import log_loss
+from core.preprocessing.feature_selection import log_loss
 
 
 class util_test(unittest.TestCase):

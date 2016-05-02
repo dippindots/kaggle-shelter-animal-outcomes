@@ -7,7 +7,7 @@ from core.preprocessing.feature_extraction_scaling \
     import extract_features
 
 
-def preprocess_data(data, animal_type):
+def select_features(data, animal_type):
     extract_features(data, animal_type)
 
     if 'tag' in data.columns:

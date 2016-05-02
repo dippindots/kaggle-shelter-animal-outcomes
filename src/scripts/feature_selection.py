@@ -8,11 +8,11 @@ from sklearn.feature_selection import chi2
 
 from core.preprocessing.feature_extraction_scaling import get_data
 from core.preprocessing.sampling import split_data
-from core.util import extract_features
+from core.preprocessing.feature_selection import extract_features
 import pandas as pd
 
 
-def preprocess_data(data, animal_type):
+def select_features(data, animal_type):
     extract_features(data, animal_type)
 
     drop_cols = ['OutcomeSubtype', 'DateTime', 'SexuponOutcome', 'Name']
@@ -34,7 +34,7 @@ if __name__ == '__main__':
         print animal_type
         train_data = train_data[train_data['AnimalType'] == animal_type]
         train_data = train_data.drop(['AnimalType'], axis=1)
-        train_data = preprocess_data(train_data, animal_type)
+        train_data = select_features(train_data, animal_type)
         train_data = train_data.dropna()
         X_train, y_train, X_test, y_test = split_data(train_data)
 

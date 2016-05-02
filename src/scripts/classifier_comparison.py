@@ -23,7 +23,7 @@ from core.learning.classifiers.random_forest_predictor \
     import RandomForestPredictor
 from core.preprocessing.feature_extraction_scaling import get_data
 from core.preprocessing.sampling import split_data
-from core.util import preprocess_data
+from core.preprocessing.feature_selection import select_features
 
 
 if __name__ == '__main__':
@@ -49,7 +49,7 @@ if __name__ == '__main__':
         print animal_type
         train_data = train_data[train_data['AnimalType'] == animal_type]
         train_data = train_data.drop(['AnimalType'], axis=1)
-        train_data = preprocess_data(train_data, animal_type)
+        train_data = select_features(train_data, animal_type)
         train_data = train_data.dropna()
         X_train, y_train, X_test, y_test = split_data(train_data)
 

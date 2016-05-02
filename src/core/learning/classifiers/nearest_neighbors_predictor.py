@@ -11,7 +11,7 @@ from sklearn.neighbors import KNeighborsClassifier
 
 from core.learning.classifiers.predictor_base import PredictorBase
 from core.preprocessing.feature_extraction_scaling import get_data
-from core.util import preprocess_data
+from core.preprocessing.feature_selection import select_features
 
 
 class NearestNeighborsPredictor(PredictorBase):
@@ -45,7 +45,7 @@ class NearestNeighborsPredictor(PredictorBase):
         train_data = get_data('../data/train.csv')
         train_data = train_data[train_data['AnimalType'] == self.animal_type]
         train_data = train_data.drop(['AnimalType'], axis=1)
-        train_data = preprocess_data(train_data, self.animal_type)
+        train_data = select_features(train_data, self.animal_type)
         train_data = train_data.dropna()
         X = train_data.drop(['OutcomeType'], axis=1)
         y = train_data['OutcomeType']

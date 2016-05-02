@@ -4,12 +4,12 @@ Created on Apr 26, 2016
 @author: Paul Reiners
 '''
 
-from core.evaluation import log_loss
 from core.learning.classifiers.random_forest_predictor \
     import RandomForestPredictor
+from core.learning.performance_metrics import log_loss
 from core.preprocessing.feature_extraction_scaling import get_data
-from core.preprocessing.sampling import split_data
 from core.preprocessing.feature_selection import select_features
+from core.preprocessing.sampling import split_data
 import numpy as np
 
 

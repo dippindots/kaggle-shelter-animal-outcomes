@@ -8,7 +8,6 @@ Based on [Classifier comparison]
 '''
 import time
 
-from core.evaluation import log_loss
 from core.learning.classifiers.ada_boost_predictor import AdaBoostPredictor
 from core.learning.classifiers.decision_tree_predictor \
     import DecisionTreePredictor
@@ -21,9 +20,10 @@ from core.learning.classifiers.quadratic_descriminant_analysis_predictor \
     import QuadraticDiscriminantAnalysisPredictor
 from core.learning.classifiers.random_forest_predictor \
     import RandomForestPredictor
+from core.learning.performance_metrics import log_loss
 from core.preprocessing.feature_extraction_scaling import get_data
-from core.preprocessing.sampling import split_data
 from core.preprocessing.feature_selection import select_features
+from core.preprocessing.sampling import split_data
 
 
 if __name__ == '__main__':

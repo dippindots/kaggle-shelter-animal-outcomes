@@ -8,7 +8,7 @@ KaggleLLScore:
 '''
 from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis
 
-from classifiers.predictor_base import PredictorBase
+from core.learning.classifiers.predictor_base import PredictorBase
 
 
 class QuadraticDiscriminantAnalysisPredictor(PredictorBase):

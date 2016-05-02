@@ -8,7 +8,7 @@ KaggleLLScore:
 '''
 from sklearn.naive_bayes import GaussianNB
 
-from classifiers.predictor_base import PredictorBase
+from core.learning.classifiers.predictor_base import PredictorBase
 
 
 class NaiveBayesPredictor(PredictorBase):

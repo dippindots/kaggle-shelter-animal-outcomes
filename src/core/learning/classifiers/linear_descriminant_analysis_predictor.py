@@ -9,7 +9,7 @@ KaggleLLScore:
 from sklearn import grid_search
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 
-from classifiers.predictor_base import PredictorBase
+from core.learning.classifiers.predictor_base import PredictorBase
 from core.preprocessing.feature_extraction_scaling import get_data
 from core.util import preprocess_data
 

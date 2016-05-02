@@ -4,8 +4,9 @@ Created on Apr 26, 2016
 @author: Paul Reiners
 '''
 
-from classifiers.random_forest_predictor import RandomForestPredictor
 from core.evaluation import log_loss
+from core.learning.classifiers.random_forest_predictor \
+    import RandomForestPredictor
 from core.preprocessing.feature_extraction_scaling import get_data
 from core.util import split_data, preprocess_data
 import numpy as np

@@ -9,7 +9,7 @@ KaggleLLScore: 1.00036
 from sklearn import grid_search
 from sklearn.neighbors import KNeighborsClassifier
 
-from classifiers.predictor_base import PredictorBase
+from core.learning.classifiers.predictor_base import PredictorBase
 from core.preprocessing.feature_extraction_scaling import get_data
 from core.util import preprocess_data
 

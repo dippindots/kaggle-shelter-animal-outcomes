@@ -8,16 +8,19 @@ Based on [Classifier comparison]
 '''
 import time
 
-from classifiers.ada_boost_predictor import AdaBoostPredictor
-from classifiers.decision_tree_predictor import DecisionTreePredictor
-from classifiers.linear_descriminant_analysis_predictor \
-    import LinearDiscriminantAnalysisPredictor
-from classifiers.naive_bayes_predictor import NaiveBayesPredictor
-from classifiers.nearest_neighbors_predictor import NearestNeighborsPredictor
-from classifiers.quadratic_descriminant_analysis_predictor \
-    import QuadraticDiscriminantAnalysisPredictor
-from classifiers.random_forest_predictor import RandomForestPredictor
 from core.evaluation import log_loss
+from core.learning.classifiers.ada_boost_predictor import AdaBoostPredictor
+from core.learning.classifiers.decision_tree_predictor \
+    import DecisionTreePredictor
+from core.learning.classifiers.linear_descriminant_analysis_predictor \
+    import LinearDiscriminantAnalysisPredictor
+from core.learning.classifiers.naive_bayes_predictor import NaiveBayesPredictor
+from core.learning.classifiers.nearest_neighbors_predictor \
+    import NearestNeighborsPredictor
+from core.learning.classifiers.quadratic_descriminant_analysis_predictor \
+    import QuadraticDiscriminantAnalysisPredictor
+from core.learning.classifiers.random_forest_predictor \
+    import RandomForestPredictor
 from core.preprocessing.feature_extraction_scaling import get_data
 from core.util import split_data, preprocess_data
 

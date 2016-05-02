@@ -8,7 +8,7 @@ KaggleLLScore:
 '''
 from sklearn.ensemble import AdaBoostClassifier
 
-from classifiers.predictor_base import PredictorBase
+from core.learning.classifiers.predictor_base import PredictorBase
 
 
 class AdaBoostPredictor(PredictorBase):

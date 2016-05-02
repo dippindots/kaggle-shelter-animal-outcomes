@@ -1,13 +1,14 @@
 '''
 Created on Apr 30, 2016
 
-@author: paulreiners
+@author: Paul Reiners
 '''
 from sklearn.feature_selection import SelectKBest
 from sklearn.feature_selection import chi2
-import pandas as pd
 
-from core.util import get_data, split_data, commmon_preprocess_data
+from core.preprocessing import get_data
+from core.util import split_data, commmon_preprocess_data
+import pandas as pd
 
 
 def preprocess_data(data, animal_type):

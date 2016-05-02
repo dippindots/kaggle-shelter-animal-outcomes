@@ -10,7 +10,8 @@ from sklearn import grid_search
 from sklearn import tree
 
 from classifiers.predictor_base import PredictorBase
-from core.util import get_data, preprocess_data
+from core.preprocessing import get_data
+from core.util import preprocess_data
 
 
 class DecisionTreePredictor(PredictorBase):

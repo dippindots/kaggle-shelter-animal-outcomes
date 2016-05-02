@@ -18,7 +18,8 @@ from classifiers.quadratic_descriminant_analysis_predictor \
     import QuadraticDiscriminantAnalysisPredictor
 from classifiers.random_forest_predictor import RandomForestPredictor
 from core.evaluation import log_loss
-from core.util import get_data, split_data, preprocess_data
+from core.preprocessing import get_data
+from core.util import split_data, preprocess_data
 
 
 if __name__ == '__main__':

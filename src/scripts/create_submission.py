@@ -6,7 +6,8 @@ Created on Apr 26, 2016
 
 from classifiers.random_forest_predictor import RandomForestPredictor
 from core.evaluation import log_loss
-from core.util import get_data, split_data, preprocess_data
+from core.preprocessing import get_data
+from core.util import split_data, preprocess_data
 import numpy as np
 
 

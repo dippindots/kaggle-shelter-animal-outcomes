@@ -11,18 +11,6 @@ import numpy as np
 import pandas as pd
 
 
-def get_data(file_path, tag=None):
-    dtype = {'Name': str}
-    data = pd.read_csv(
-        file_path, dtype=dtype, parse_dates=['DateTime'], index_col=0)
-    data.Name = data.Name.fillna('')
-    data.SexuponOutcome = data.SexuponOutcome.fillna('')
-    if tag:
-        data['tag'] = tag
-
-    return data
-
-
 def split_data(train_data):
     X = train_data.drop(['OutcomeType'], axis=1)
     y = train_data['OutcomeType']

@@ -181,7 +181,8 @@ def commmon_preprocess_data(data, animal_type):
     dog_breeds['American Kennel Club'] = dog_breeds[
         'American Kennel Club'].fillna('')
 
-    data['AgeuponOutcome'] = data['AgeuponOutcome'].apply(convert_age_to_days)
+    data['AgeuponOutcome'] = data['AgeuponOutcome'].apply(preprocess_age)
+
     data['IsNamed'] = data['Name'].apply(get_is_named)
     data['IsIntact'] = data['SexuponOutcome'].apply(is_intact)
     data["OutcomeType"] = data["OutcomeType"].astype('category')
@@ -261,6 +262,14 @@ def preprocess_data(data, animal_type):
     data = data.loc[:, keep_cols]
 
     return data
+
+
+def preprocess_age(age_str):
+    days = convert_age_to_days(age_str)
+    if np.isnan(days):
+        return days
+    else:
+        return log(1 + days)
 
 
 def convert_age_to_days(age_str):

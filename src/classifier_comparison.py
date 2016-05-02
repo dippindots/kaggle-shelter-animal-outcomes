@@ -35,7 +35,7 @@ if __name__ == '__main__':
             RandomForestPredictor(animal_type),
             AdaBoostPredictor(),
             NaiveBayesPredictor(),
-            LinearDiscriminantAnalysisPredictor(),
+            LinearDiscriminantAnalysisPredictor(animal_type),
             QuadraticDiscriminantAnalysisPredictor()]
         # Slow: LinearSVMPredictor(), RBF_SVMPredictor()
 

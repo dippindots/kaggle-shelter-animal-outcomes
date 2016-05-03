@@ -6,6 +6,8 @@ KaggleLLScore:
 
 @author: Paul Reiners
 '''
+import time
+
 from sklearn import grid_search
 from sklearn.svm import SVC
 
@@ -34,7 +36,7 @@ class LinearSVMPredictor(PredictorBase):
         return predictions_df
 
     def find_best_params(self):
-        parameters = {'C': [0.025, 1.0]}
+        parameters = {'kernel': ["linear"], 'C': [0.025, 1.0]}
         svc = SVC()
         clf = grid_search.GridSearchCV(svc, parameters)
         train_data = get_data('../data/train.csv')
@@ -45,9 +47,9 @@ class LinearSVMPredictor(PredictorBase):
         print clf.best_params_
 
 if __name__ == '__main__':
-    print 'Cat'
+    print "{} {}".format('Cat', time.ctime())
     predictor = LinearSVMPredictor('Cat')
     predictor.find_best_params()
-    print 'Dog'
+    print "{} {}".format('Dog', time.ctime())
     predictor = LinearSVMPredictor('Dog')
     predictor.find_best_params()

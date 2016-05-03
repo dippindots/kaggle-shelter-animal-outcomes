@@ -272,16 +272,40 @@ def extract_date_time_features(data, animal_type):
     return data
 
 
+def extract_color_features(data, animal_type):
+    data['IsBlack'] = data['Color'].apply(is_black)
+
+    def is_color(actual_color, expected_color, expected_animal_type):
+        if animal_type == expected_animal_type:
+            if actual_color == expected_color:
+                return 1.0
+            elif expected_color in actual_color:
+                return 0.5
+            else:
+                return 0.0
+        else:
+            return 0.0
+
+    def is_cat_color(actual_color, possible_color):
+        return is_color(actual_color, possible_color, 'Cat')
+
+    def is_brown_tabby(actual_color):
+        return is_cat_color(actual_color, 'Brown Tabby')
+    data['IsBrownTabby'] = data['Color'].apply(is_brown_tabby)
+
+    return data
+
+
 def extract_features(data, animal_type):
     data = extract_breed_features(data, animal_type)
     data = extract_date_time_features(data, animal_type)
+    data = extract_color_features(data, animal_type)
 
     data['AgeuponOutcome'] = data['AgeuponOutcome'].apply(preprocess_age)
 
     data['IsNamed'] = data['Name'].apply(get_is_named)
     data['IsIntact'] = data['SexuponOutcome'].apply(is_intact)
     data["OutcomeType"] = data["OutcomeType"].astype('category')
-    data['IsBlack'] = data['Color'].apply(is_black)
 
     data['IsMale'] = data['SexuponOutcome'].apply(is_male)
 

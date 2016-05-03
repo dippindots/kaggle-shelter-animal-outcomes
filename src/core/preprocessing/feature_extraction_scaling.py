@@ -253,26 +253,38 @@ def extract_breed_features(data, animal_type):
     return data
 
 
+def get_hour(date_time):
+    return date_time.hour
+
+
+def extract_date_time_features(data, animal_type):
+    month = data['DateTime'].apply(get_month)
+    data['IsSpring'] = month.apply(is_spring)
+    data['IsChristmas'] = month.apply(is_christmas)
+    data['Month'] = month
+    data['DayOfWeek'] = data['DateTime'].apply(get_day_of_week)
+    data['IsWeekend'] = data['DayOfWeek'].apply(is_weekend)
+    data['IsMonday'] = data['DayOfWeek'].apply(is_monday)
+    data['IsWednesday'] = data['DayOfWeek'].apply(is_wednesday)
+    hour = data['DateTime'].apply(get_hour)
+    data['Hour'] = hour
+
+    return data
+
+
 def extract_features(data, animal_type):
     data = extract_breed_features(data, animal_type)
+    data = extract_date_time_features(data, animal_type)
 
     data['AgeuponOutcome'] = data['AgeuponOutcome'].apply(preprocess_age)
 
     data['IsNamed'] = data['Name'].apply(get_is_named)
     data['IsIntact'] = data['SexuponOutcome'].apply(is_intact)
     data["OutcomeType"] = data["OutcomeType"].astype('category')
-    month = data['DateTime'].apply(get_month)
     data['IsBlack'] = data['Color'].apply(is_black)
-    data['IsSpring'] = month.apply(is_spring)
-    data['IsChristmas'] = month.apply(is_christmas)
 
     data['IsMale'] = data['SexuponOutcome'].apply(is_male)
 
-    data['Month'] = month
-    data['DayOfWeek'] = data['DateTime'].apply(get_day_of_week)
-    data['IsWeekend'] = data['DayOfWeek'].apply(is_weekend)
-    data['IsMonday'] = data['DayOfWeek'].apply(is_monday)
-    data['IsWednesday'] = data['DayOfWeek'].apply(is_wednesday)
     data = data.fillna(data.mean())
 
     mms = MinMaxScaler()

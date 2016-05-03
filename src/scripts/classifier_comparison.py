@@ -47,7 +47,7 @@ if __name__ == '__main__':
             NaiveBayesPredictor(),
             LinearDiscriminantAnalysisPredictor(animal_type),
             QuadraticDiscriminantAnalysisPredictor(),
-            LinearSVMPredictor(animal_type), RBF_SVMPredictor()]
+            LinearSVMPredictor(animal_type), RBF_SVMPredictor(animal_type)]
 
         train_data = get_data('../data/train.csv')
         print animal_type

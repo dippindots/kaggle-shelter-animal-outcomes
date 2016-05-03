@@ -24,8 +24,8 @@ def select_features(data, animal_type):
              'IsBrownTabby_Gray', 'IsNamed', 'IsIntact'])
     else:
         keep_cols.extend(
-            ['AgeuponOutcome', 'IsDangerous', 'IsPitBull', 'IsWeekend',
-             'IsNamed', 'IsIntact'])
+            ['AgeuponOutcome', 'IsDangerous', 'IsPitBull',
+             'IsBorderCollieAkita', 'IsWeekend', 'IsNamed', 'IsIntact'])
 
     data = data.loc[:, keep_cols]
     data = data.dropna()

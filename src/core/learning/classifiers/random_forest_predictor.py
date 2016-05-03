@@ -22,7 +22,7 @@ class RandomForestPredictor(PredictorBase):
     def __init__(self, animal_type):
         self.animal_type = animal_type
         if self.animal_type == "Cat":
-            args = {'n_estimators': 320, 'max_depth': 8}
+            args = {'n_estimators': 80, 'max_depth': 8}
         elif self.animal_type == "Dog":
             args = {'n_estimators': 160, 'max_depth': 6}
         else:
@@ -41,8 +41,8 @@ class RandomForestPredictor(PredictorBase):
 
     def find_best_params(self):
         parameters = {
-            'n_estimators': [160, 320, 640],
-            'max_depth': range(5, 9)}
+            'n_estimators': [80, 160, 320, 640],
+            'max_depth': range(5, 10)}
         rf = RandomForestClassifier()
         clf = grid_search.GridSearchCV(rf, parameters)
         train_data = get_data('../data/train.csv')

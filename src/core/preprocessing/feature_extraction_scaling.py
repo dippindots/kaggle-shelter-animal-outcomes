@@ -55,6 +55,8 @@ def is_intact(sex_upon_outcome):
 def is_black(color):
     if color == 'Black':
         return 1.0
+    elif 'Black' in color:
+        return 0.5
     else:
         return 0.0
 

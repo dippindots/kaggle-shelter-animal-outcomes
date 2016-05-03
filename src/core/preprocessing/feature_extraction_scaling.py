@@ -208,6 +208,18 @@ def extract_breed_features(data, animal_type):
             return 0.0
     data['IsPopularDog'] = data['Breed'].apply(is_popular_dog_breed)
 
+    def is_domestic_long_hair(breed):
+        if animal_type == 'Cat':
+            if breed == 'Domestic Longhair':
+                return 1.0
+            elif 'Domestic Longhair' in breed:
+                return 0.5
+            else:
+                return 0.0
+        else:
+            return 0.0
+    data['IsDomesticLonghair'] = data['Breed'].apply(is_domestic_long_hair)
+
     return data
 
 

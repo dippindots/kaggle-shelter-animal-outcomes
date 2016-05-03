@@ -71,8 +71,10 @@ def is_male(sex_upon_outcome):
 
 
 def is_pit_bull(breed):
-    if 'Pit Bull' in breed:
+    if breed == 'Pit Bull' or breed == 'American Pit Bull Terrier':
         return 1.0
+    elif 'Pit Bull' in breed:
+        return 0.5
     else:
         return 0.0
 
@@ -102,6 +104,20 @@ def is_spring(month):
 
 def is_christmas(month):
     if month == 12:
+        return 1.0
+    else:
+        return 0.0
+
+
+def is_monday(day_of_week):
+    if day_of_week == 1:
+        return 1.0
+    else:
+        return 0.0
+
+
+def is_wednesday(day_of_week):
+    if day_of_week == 3:
         return 1.0
     else:
         return 0.0
@@ -150,7 +166,6 @@ def extract_features(data, animal_type):
     data['IsIntact'] = data['SexuponOutcome'].apply(is_intact)
     data["OutcomeType"] = data["OutcomeType"].astype('category')
     month = data['DateTime'].apply(get_month)
-    data['IsPitBull'] = data['Breed'].apply(is_pit_bull)
     data['IsDangerous'] = data['Breed'].apply(is_dangerous)
     data['IsBlack'] = data['Color'].apply(is_black)
     data['IsGoldenRetriever'] = data[
@@ -163,10 +178,13 @@ def extract_features(data, animal_type):
 
     data['IsMix'] = data['Breed'].apply(is_mix)
     data['Breed'] = data['Breed'].apply(remove_mix)
+    data['IsPitBull'] = data['Breed'].apply(is_pit_bull)
 
     data['Month'] = month
     data['DayOfWeek'] = data['DateTime'].apply(get_day_of_week)
     data['IsWeekend'] = data['DayOfWeek'].apply(is_weekend)
+    data['IsMonday'] = data['DayOfWeek'].apply(is_monday)
+    data['IsWednesday'] = data['DayOfWeek'].apply(is_wednesday)
 
     def is_dog_type(breed, dog_type):
         if animal_type == 'Cat':

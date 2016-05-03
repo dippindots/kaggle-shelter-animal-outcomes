@@ -24,7 +24,7 @@ if __name__ == '__main__':
         train_data = train_data.dropna()
         X_train, y_train, _, _ = split_data(train_data)
 
-        k_best = SelectKBest(chi2, k=10)
+        k_best = SelectKBest(chi2, k=20)
         clf_X_train = k_best.fit_transform(X_train, y_train)
 
         print "{}".format(X_train.columns[k_best.get_support()])

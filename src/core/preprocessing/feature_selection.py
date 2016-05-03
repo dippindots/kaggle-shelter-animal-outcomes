@@ -21,10 +21,11 @@ def select_features(data, animal_type):
     if animal_type == 'Cat':
         keep_cols.extend(
             ['AgeuponOutcome', 'IsNamed', 'IsIntact', 'IsSpring',
-             'IsWeekend'])
+             'IsChristmas', 'IsWeekend', 'IsMonday'])
     else:
-        keep_cols.extend(['AgeuponOutcome', 'IsNamed',
-                          'IsIntact', 'IsPitBull', 'IsDangerous', 'IsWeekend'])
+        keep_cols.extend(['AgeuponOutcome', 'IsNamed', 'IsIntact',
+                          'IsPitBull', 'IsDangerous', 'IsWeekend',
+                          'IsWednesday'])
 
     data = data.loc[:, keep_cols]
     data = data.dropna()

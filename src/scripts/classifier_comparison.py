@@ -23,6 +23,7 @@ from core.learning.classifiers.quadratic_descriminant_analysis_predictor \
     import QuadraticDiscriminantAnalysisPredictor
 from core.learning.classifiers.random_forest_predictor \
     import RandomForestPredictor
+from core.learning.classifiers.rbf_svm_predictor import RBF_SVMPredictor
 from core.learning.performance_metrics import log_loss
 from core.preprocessing.feature_extraction_scaling import get_data
 from core.preprocessing.feature_selection import select_features
@@ -33,8 +34,7 @@ if __name__ == '__main__':
     names = ["Nearest Neighbors", "Decision Tree",
              "Random Forest", "AdaBoost", "Naive Bayes",
              "Linear Discriminant Analysis", "Quadratic Discriminant Analysis",
-             "Linear SVM"]
-    # Slow: , "RBF SVM"
+             "Linear SVM", "RBF SVM"]
     possible_outcomes = [
         'Adoption', 'Died', 'Euthanasia', 'Return_to_owner', 'Transfer']
     # Iterate over AnimalType
@@ -47,8 +47,7 @@ if __name__ == '__main__':
             NaiveBayesPredictor(),
             LinearDiscriminantAnalysisPredictor(animal_type),
             QuadraticDiscriminantAnalysisPredictor(),
-            LinearSVMPredictor(animal_type)]
-        # Slow: , RBF_SVMPredictor()
+            LinearSVMPredictor(animal_type), RBF_SVMPredictor()]
 
         train_data = get_data('../data/train.csv')
         print animal_type

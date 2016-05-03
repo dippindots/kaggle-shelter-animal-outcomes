@@ -10,7 +10,7 @@ KaggleLLScore:
 '''
 from sklearn.svm import SVC
 
-from classifiers.predictor_base import PredictorBase
+from core.learning.classifiers.predictor_base import PredictorBase
 
 
 class RBF_SVMPredictor(PredictorBase):

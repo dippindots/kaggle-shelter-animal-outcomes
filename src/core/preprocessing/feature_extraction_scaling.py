@@ -208,17 +208,43 @@ def extract_breed_features(data, animal_type):
             return 0.0
     data['IsPopularDog'] = data['Breed'].apply(is_popular_dog_breed)
 
-    def is_domestic_long_hair(breed):
-        if animal_type == 'Cat':
-            if breed == 'Domestic Longhair':
+    def is_cat_breed(actual_breed, possible_breed):
+        return is_breed(actual_breed, possible_breed, 'Cat')
+
+    def is_dog_breed(actual_breed, possible_breed):
+        return is_breed(actual_breed, possible_breed, 'Dog')
+
+    def is_breed(actual_breed, possible_breed, actual_animal_type):
+        if animal_type == actual_animal_type:
+            if actual_breed == possible_breed:
                 return 1.0
-            elif 'Domestic Longhair' in breed:
+            elif possible_breed in actual_breed:
                 return 0.5
             else:
                 return 0.0
         else:
             return 0.0
+
+    def is_domestic_long_hair(actual_breed):
+        return is_cat_breed(actual_breed, 'Domestic Longhair')
     data['IsDomesticLonghair'] = data['Breed'].apply(is_domestic_long_hair)
+
+    def is_domestic_short_hair(actual_breed):
+        return is_cat_breed(actual_breed, 'Domestic Shorthair')
+    data['IsDomesticShorthair'] = data['Breed'].apply(is_domestic_short_hair)
+
+    def is_siamese(actual_breed):
+        return is_cat_breed(actual_breed, 'Siamese')
+    data['IsSiamese'] = data['Breed'].apply(is_siamese)
+
+    def is_domestic_short_hair_siamese(actual_breed):
+        return is_cat_breed(actual_breed, 'Domestic Shorthair/Siamese')
+    data['IsDomesticShorthair_Siamese'] = data[
+        'Breed'].apply(is_domestic_short_hair_siamese)
+
+    def is_border_collie(actual_breed):
+        return is_dog_breed(actual_breed, 'Border Collie')
+    data['IsBorderCollie'] = data['Breed'].apply(is_border_collie)
 
     return data
 

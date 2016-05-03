@@ -46,7 +46,8 @@ if __name__ == '__main__':
             AdaBoostPredictor(),
             NaiveBayesPredictor(),
             LinearDiscriminantAnalysisPredictor(animal_type),
-            QuadraticDiscriminantAnalysisPredictor(), LinearSVMPredictor()]
+            QuadraticDiscriminantAnalysisPredictor(),
+            LinearSVMPredictor(animal_type)]
         # Slow: , RBF_SVMPredictor()
 
         train_data = get_data('../data/train.csv')

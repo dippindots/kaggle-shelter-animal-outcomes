@@ -157,36 +157,19 @@ def remove_mix(breed):
         return breed
 
 
-def extract_features(data, animal_type):
+def extract_breed_features(data, animal_type):
     dog_breeds = pd.read_csv('../doc/dog_breeds.csv')
     dog_breeds['American Kennel Club'] = dog_breeds[
         'American Kennel Club'].fillna('')
-
-    data['AgeuponOutcome'] = data['AgeuponOutcome'].apply(preprocess_age)
-
-    data['IsNamed'] = data['Name'].apply(get_is_named)
-    data['IsIntact'] = data['SexuponOutcome'].apply(is_intact)
-    data["OutcomeType"] = data["OutcomeType"].astype('category')
-    month = data['DateTime'].apply(get_month)
     data['IsDangerous'] = data['Breed'].apply(is_dangerous)
-    data['IsBlack'] = data['Color'].apply(is_black)
     data['IsDoodleDog'] = data['Breed'].apply(is_doodle_dog)
-    data['IsSpring'] = month.apply(is_spring)
-    data['IsChristmas'] = month.apply(is_christmas)
-
-    data['IsMale'] = data['SexuponOutcome'].apply(is_male)
 
     data['IsMix'] = data['Breed'].apply(is_mix)
     data['Breed'] = data['Breed'].apply(remove_mix)
+
     data['IsPitBull'] = data['Breed'].apply(is_pit_bull)
     data['IsGoldenRetriever'] = data[
         'Breed'].apply(is_golden_retriever)
-
-    data['Month'] = month
-    data['DayOfWeek'] = data['DateTime'].apply(get_day_of_week)
-    data['IsWeekend'] = data['DayOfWeek'].apply(is_weekend)
-    data['IsMonday'] = data['DayOfWeek'].apply(is_monday)
-    data['IsWednesday'] = data['DayOfWeek'].apply(is_wednesday)
 
     def is_dog_type(breed, dog_type):
         if animal_type == 'Cat':
@@ -224,6 +207,30 @@ def extract_features(data, animal_type):
                     return 1.0
             return 0.0
     data['IsPopularDog'] = data['Breed'].apply(is_popular_dog_breed)
+
+    return data
+
+
+def extract_features(data, animal_type):
+    data = extract_breed_features(data, animal_type)
+
+    data['AgeuponOutcome'] = data['AgeuponOutcome'].apply(preprocess_age)
+
+    data['IsNamed'] = data['Name'].apply(get_is_named)
+    data['IsIntact'] = data['SexuponOutcome'].apply(is_intact)
+    data["OutcomeType"] = data["OutcomeType"].astype('category')
+    month = data['DateTime'].apply(get_month)
+    data['IsBlack'] = data['Color'].apply(is_black)
+    data['IsSpring'] = month.apply(is_spring)
+    data['IsChristmas'] = month.apply(is_christmas)
+
+    data['IsMale'] = data['SexuponOutcome'].apply(is_male)
+
+    data['Month'] = month
+    data['DayOfWeek'] = data['DateTime'].apply(get_day_of_week)
+    data['IsWeekend'] = data['DayOfWeek'].apply(is_weekend)
+    data['IsMonday'] = data['DayOfWeek'].apply(is_monday)
+    data['IsWednesday'] = data['DayOfWeek'].apply(is_wednesday)
     data = data.fillna(data.mean())
 
     mms = MinMaxScaler()

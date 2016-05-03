@@ -80,8 +80,10 @@ def is_pit_bull(breed):
 
 
 def is_golden_retriever(breed):
-    if 'Golden Retriever' in breed:
+    if breed == 'Golden Retriever':
         return 1.0
+    elif 'Golden Retriever' in breed:
+        return 0.5
     else:
         return 0.0
 
@@ -168,8 +170,6 @@ def extract_features(data, animal_type):
     month = data['DateTime'].apply(get_month)
     data['IsDangerous'] = data['Breed'].apply(is_dangerous)
     data['IsBlack'] = data['Color'].apply(is_black)
-    data['IsGoldenRetriever'] = data[
-        'Breed'].apply(is_golden_retriever)
     data['IsDoodleDog'] = data['Breed'].apply(is_doodle_dog)
     data['IsSpring'] = month.apply(is_spring)
     data['IsChristmas'] = month.apply(is_christmas)
@@ -179,6 +179,8 @@ def extract_features(data, animal_type):
     data['IsMix'] = data['Breed'].apply(is_mix)
     data['Breed'] = data['Breed'].apply(remove_mix)
     data['IsPitBull'] = data['Breed'].apply(is_pit_bull)
+    data['IsGoldenRetriever'] = data[
+        'Breed'].apply(is_golden_retriever)
 
     data['Month'] = month
     data['DayOfWeek'] = data['DateTime'].apply(get_day_of_week)

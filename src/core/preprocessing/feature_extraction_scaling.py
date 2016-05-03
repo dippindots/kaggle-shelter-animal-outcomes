@@ -3,8 +3,6 @@ Created on May 2, 2016
 
 @author: Paul Reiners
 '''
-from math import log
-
 import numpy as np
 import pandas as pd
 
@@ -208,10 +206,8 @@ def extract_features(data, animal_type):
 
 def preprocess_age(age_str):
     days = convert_age_to_days(age_str)
-    if np.isnan(days):
-        return days
-    else:
-        return log(1 + days)
+
+    return days
 
 
 def convert_age_to_days(age_str):

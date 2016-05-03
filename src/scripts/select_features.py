@@ -5,6 +5,7 @@ Created on Apr 30, 2016
 '''
 from sklearn.feature_selection import SelectKBest
 from sklearn.feature_selection import chi2
+from sklearn.preprocessing import MinMaxScaler
 
 from core.preprocessing.feature_extraction_scaling import get_data
 from core.preprocessing.feature_selection import select_raw_features
@@ -22,7 +23,11 @@ if __name__ == '__main__':
         train_data = train_data.drop(['AnimalType'], axis=1)
         train_data = select_raw_features(train_data, animal_type)
         train_data = train_data.dropna()
-        X_train, y_train, X_test, y_test = split_data(train_data)
+        X_train, y_train, _, _ = split_data(train_data)
+
+        mms = MinMaxScaler()
+        X_train['AgeuponOutcome'] = mms.fit_transform(
+            X_train['AgeuponOutcome'].reshape(-1, 1))
 
         k_best = SelectKBest(chi2, k=10)
         clf_X_train = k_best.fit_transform(X_train, y_train)

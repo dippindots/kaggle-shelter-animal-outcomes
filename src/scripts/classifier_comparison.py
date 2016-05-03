@@ -8,6 +8,8 @@ Based on [Classifier comparison]
 '''
 import time
 
+from sklearn.preprocessing import MinMaxScaler
+
 from core.learning.classifiers.ada_boost_predictor import AdaBoostPredictor
 from core.learning.classifiers.decision_tree_predictor \
     import DecisionTreePredictor
@@ -49,6 +51,13 @@ if __name__ == '__main__':
         print animal_type
         train_data = select_features(train_data, animal_type)
         X_train, y_train, X_test, y_test = split_data(train_data)
+
+        mms = MinMaxScaler()
+        mms.fit(X_train['AgeuponOutcome'].reshape(-1, 1))
+        X_train['AgeuponOutcome'] = mms.transform(
+            X_train['AgeuponOutcome'].reshape(-1, 1))
+        X_test['AgeuponOutcome'] = mms.transform(
+            X_test['AgeuponOutcome'].reshape(-1, 1))
 
         # iterate over classifiers
         for name, clf in zip(names, classifiers):

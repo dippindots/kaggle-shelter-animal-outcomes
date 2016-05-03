@@ -246,6 +246,10 @@ def extract_breed_features(data, animal_type):
         return is_dog_breed(actual_breed, 'Border Collie')
     data['IsBorderCollie'] = data['Breed'].apply(is_border_collie)
 
+    def is_akita(actual_breed):
+        return is_dog_breed(actual_breed, 'Akita')
+    data['IsAkita'] = data['Breed'].apply(is_akita)
+
     return data
 
 

@@ -297,6 +297,10 @@ def extract_color_features(data, animal_type):
         return is_cat_color(actual_color, 'Gray')
     data['IsGray'] = data['Color'].apply(is_gray)
 
+    def is_brown_tabby_gray(actual_color):
+        return is_cat_color(actual_color, 'Brown Tabby/Gray')
+    data['IsBrownTabby_Gray'] = data['Color'].apply(is_brown_tabby_gray)
+
     return data
 
 

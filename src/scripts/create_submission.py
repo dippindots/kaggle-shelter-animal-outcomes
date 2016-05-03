@@ -4,8 +4,6 @@ Created on Apr 26, 2016
 @author: Paul Reiners
 '''
 
-from sklearn.preprocessing import MinMaxScaler
-
 from core.learning.classifiers.random_forest_predictor \
     import RandomForestPredictor
 from core.learning.performance_metrics import log_loss
@@ -37,17 +35,9 @@ if __name__ == '__main__':
         train_data = train_data.drop(['tag'], axis=1)
         test_data = all_data[all_data['tag'] == 'test']
         test_data = test_data.drop(['OutcomeType', 'tag'], axis=1)
-        test_data = test_data.fillna(test_data.mean())
         test_data_sets[animal_type] = test_data
 
         X_train, y_train, X_test, y_test = split_data(train_data)
-
-        mms = MinMaxScaler()
-        mms.fit(X_train['AgeuponOutcome'].reshape(-1, 1))
-        X_train['AgeuponOutcome'] = mms.transform(
-            X_train['AgeuponOutcome'].reshape(-1, 1))
-        X_test['AgeuponOutcome'] = mms.transform(
-            X_test['AgeuponOutcome'].reshape(-1, 1))
 
         if all_y_test is None:
             all_y_test = y_test.ravel()
@@ -74,8 +64,6 @@ if __name__ == '__main__':
         # Iterate over AnimalType
         for animal_type in ['Cat', 'Dog']:
             test_data = test_data_sets[animal_type]
-            test_data['AgeuponOutcome'] = mms.transform(
-                test_data['AgeuponOutcome'].reshape(-1, 1))
 
             index = test_data.index.values
             predictor = predictors[animal_type]

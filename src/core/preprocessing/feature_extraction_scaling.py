@@ -3,6 +3,8 @@ Created on May 2, 2016
 
 @author: Paul Reiners
 '''
+from sklearn.preprocessing import MinMaxScaler
+
 import numpy as np
 import pandas as pd
 
@@ -202,6 +204,13 @@ def extract_features(data, animal_type):
                     return 1.0
             return 0.0
     data['IsPopularDog'] = data['Breed'].apply(is_popular_dog_breed)
+    data = data.fillna(data.mean())
+
+    mms = MinMaxScaler()
+    data['AgeuponOutcome'] = mms.fit_transform(
+        data['AgeuponOutcome'].reshape(-1, 1))
+
+    return data
 
 
 def preprocess_age(age_str):

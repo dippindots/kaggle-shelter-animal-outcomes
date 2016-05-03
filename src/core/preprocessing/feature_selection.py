@@ -12,7 +12,7 @@ def select_features(data, animal_type):
     data = data[data['AnimalType'] == animal_type]
     data = data.drop(['AnimalType'], axis=1)
 
-    extract_features(data, animal_type)
+    data = extract_features(data, animal_type)
 
     if 'tag' in data.columns:
         keep_cols = ['OutcomeType', 'tag']
@@ -21,10 +21,10 @@ def select_features(data, animal_type):
     if animal_type == 'Cat':
         keep_cols.extend(
             ['AgeuponOutcome', 'IsNamed', 'IsIntact', 'IsSpring',
-             'IsChristmas', 'IsWeekend'])
+             'IsWeekend'])
     else:
         keep_cols.extend(['AgeuponOutcome', 'IsNamed',
-                          'IsIntact', 'IsPitBull', 'IsWeekend'])
+                          'IsIntact', 'IsPitBull', 'IsDangerous', 'IsWeekend'])
 
     data = data.loc[:, keep_cols]
     data = data.dropna()
@@ -33,7 +33,7 @@ def select_features(data, animal_type):
 
 
 def select_raw_features(data, animal_type):
-    extract_features(data, animal_type)
+    data = extract_features(data, animal_type)
 
     drop_cols = ['OutcomeSubtype', 'DateTime', 'SexuponOutcome', 'Name']
     data = data.drop(drop_cols, axis=1)

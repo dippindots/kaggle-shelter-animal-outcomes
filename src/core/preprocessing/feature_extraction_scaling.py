@@ -261,6 +261,21 @@ def get_hour(date_time):
     return date_time.hour
 
 
+def is_midnight(hour):
+    return is_hour(hour, 0)
+
+
+def is_8_am(hour):
+    return is_hour(hour, 8)
+
+
+def is_hour(hour, expected_hour):
+    if hour == expected_hour:
+        return 1.0
+    else:
+        return 0.0
+
+
 def extract_date_time_features(data, animal_type):
     month = data['DateTime'].apply(get_month)
     data['IsSpring'] = month.apply(is_spring)
@@ -272,6 +287,8 @@ def extract_date_time_features(data, animal_type):
     data['IsWednesday'] = data['DayOfWeek'].apply(is_wednesday)
     hour = data['DateTime'].apply(get_hour)
     data['Hour'] = hour
+    data['IsMidnight'] = data['Hour'].apply(is_midnight)
+    data['IsEightAM'] = data['Hour'].apply(is_8_am)
 
     return data
 

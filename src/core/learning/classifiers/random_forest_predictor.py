@@ -21,7 +21,7 @@ class RandomForestPredictor(PredictorBase):
 
     def __init__(self, animal_type):
         self.animal_type = animal_type
-        self.base_args = {'random_state': 1, 'n_jobs': 2}
+        self.base_args = {'random_state': 1}
         args = self.base_args.copy()
         if self.animal_type == "Cat":
             args.update(

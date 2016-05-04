@@ -269,6 +269,14 @@ def is_8_am(hour):
     return is_hour(hour, 8)
 
 
+def is_9_am(hour):
+    return is_hour(hour, 9)
+
+
+def is_10_am(hour):
+    return is_hour(hour, 10)
+
+
 def is_hour(hour, expected_hour):
     if hour == expected_hour:
         return 1.0
@@ -289,6 +297,8 @@ def extract_date_time_features(data, animal_type):
     data['Hour'] = hour
     data['IsMidnight'] = data['Hour'].apply(is_midnight)
     data['IsEightAM'] = data['Hour'].apply(is_8_am)
+    data['IsNineAM'] = data['Hour'].apply(is_9_am)
+    data['IsTenAM'] = data['Hour'].apply(is_10_am)
 
     return data
 

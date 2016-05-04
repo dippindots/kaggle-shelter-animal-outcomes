@@ -79,15 +79,6 @@ def is_pit_bull(breed):
         return 0.0
 
 
-def is_golden_retriever(breed):
-    if breed == 'Golden Retriever':
-        return 1.0
-    elif 'Golden Retriever' in breed:
-        return 0.5
-    else:
-        return 0.0
-
-
 def is_doodle_dog(breed):
     if 'Poodle' in breed and ('Labrador' in breed or 'Retriever' in breed):
         return 1.0
@@ -168,8 +159,6 @@ def extract_breed_features(data, animal_type):
     data['Breed'] = data['Breed'].apply(remove_mix)
 
     data['IsPitBull'] = data['Breed'].apply(is_pit_bull)
-    data['IsGoldenRetriever'] = data[
-        'Breed'].apply(is_golden_retriever)
 
     def is_dog_type(breed, dog_type):
         if animal_type == 'Cat':
@@ -242,17 +231,13 @@ def extract_breed_features(data, animal_type):
     data['IsDomesticShorthair_Siamese'] = data[
         'Breed'].apply(is_domestic_short_hair_siamese)
 
-    def is_border_collie(actual_breed):
-        return is_dog_breed(actual_breed, 'Border Collie')
-    data['IsBorderCollie'] = data['Breed'].apply(is_border_collie)
-
-    def is_akita(actual_breed):
-        return is_dog_breed(actual_breed, 'Akita')
-    data['IsAkita'] = data['Breed'].apply(is_akita)
-
-    def is_border_collie_akita(actual_breed):
-        return is_dog_breed(actual_breed, 'Border Collie/Akita')
-    data['IsBorderCollieAkita'] = data['Breed'].apply(is_border_collie_akita)
+    dog_breeds = ['Border Collie', 'Akita',
+                  'Border Collie/Akita', 'Chow Chow', 'Golden Retriever',
+                  'Basset Hound', 'Great Pyrenees', 'Chow Chow/Basset Hound']
+    for dog_breed in dog_breeds:
+        feature_name = "Is" + dog_breed.replace(" ", "").replace("/", "_")
+        data[feature_name] = data['Breed'].apply(
+            lambda actual_breed: is_dog_breed(actual_breed, dog_breed))
 
     return data
 

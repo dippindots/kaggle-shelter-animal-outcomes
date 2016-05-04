@@ -320,7 +320,8 @@ def extract_features(data, animal_type):
 
     data['IsMale'] = data['SexuponOutcome'].apply(is_male)
 
-    data = data.fillna(data.mean())
+    data['AgeuponOutcome'] = data['AgeuponOutcome'].fillna(
+        data['AgeuponOutcome'].mean())
 
     mms = MinMaxScaler()
     data['AgeuponOutcome'] = mms.fit_transform(

@@ -21,7 +21,7 @@ class DecisionTreePredictor(PredictorBase):
 
     def __init__(self, animal_type):
         self.animal_type = animal_type
-        args = {'criterion': 'entropy', 'max_depth': 6}
+        args = {'criterion': 'entropy', 'max_depth': 6, 'random_state': 0}
         self.clf = tree.DecisionTreeClassifier(**args)
 
     def fit(self, X_train, y_train):

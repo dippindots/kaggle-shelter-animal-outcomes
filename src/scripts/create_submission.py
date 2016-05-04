@@ -13,7 +13,7 @@ from core.preprocessing.sampling import split_data
 import numpy as np
 
 
-BEST_SCORE = 0.79887
+BEST_SCORE = 0.79229
 
 
 if __name__ == '__main__':

@@ -342,12 +342,14 @@ def convert_age_to_days(age_str):
         num = int(parts[0])
         unit = parts[1]
         if 'day' in unit:
-            return num
+            result = num
         elif 'week' in unit:
-            return 7 * num
+            result = 7 * num
         elif 'month' in unit:
-            return 30 * num
+            result = 30 * num
         elif 'year' in unit:
-            return 365 * num
+            result = 365 * num
+
+        return float(result)
     else:
         return np.nan

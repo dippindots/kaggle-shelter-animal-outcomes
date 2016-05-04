@@ -270,6 +270,7 @@ def extract_date_time_features(data, animal_type):
     data['IsTenAM'] = data['Hour'].apply(lambda hour: is_hour(hour, 10))
     data['IsFivePM'] = data['Hour'].apply(lambda hour: is_hour(hour, 17))
     data['IsSixPM'] = data['Hour'].apply(lambda hour: is_hour(hour, 18))
+    data['IsThreePM'] = data['Hour'].apply(lambda hour: is_hour(hour, 15))
 
     return data
 

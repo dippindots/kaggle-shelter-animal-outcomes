@@ -27,6 +27,9 @@ if __name__ == '__main__':
     # Iterate over AnimalType
     for animal_type in ['Cat', 'Dog']:
         train_data = get_data('../data/train.csv', 'train')
+        train_data = train_data[train_data.SexuponOutcome.notnull()]
+        train_data = train_data[train_data.AgeuponOutcome.notnull()]
+
         test_data = get_data('../data/test.csv', 'test')
         all_data = train_data.append(test_data)
         all_data = select_features(all_data, animal_type)

@@ -14,7 +14,6 @@ def get_data(file_path, tag=None):
     data = pd.read_csv(
         file_path, dtype=dtype, parse_dates=['DateTime'], index_col=0)
     data.Name = data.Name.fillna('')
-    data.SexuponOutcome = data.SexuponOutcome.fillna('')
     if tag:
         data['tag'] = tag
 

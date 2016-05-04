@@ -95,8 +95,8 @@ def is_spring(month):
         return 0.0
 
 
-def is_christmas(month):
-    if month == 12:
+def is_month(actual_month, month_checking_for):
+    if actual_month == month_checking_for:
         return 1.0
     else:
         return 0.0
@@ -255,9 +255,10 @@ def is_hour(hour, expected_hour):
 
 def extract_date_time_features(data, animal_type):
     month = data['DateTime'].apply(get_month)
-    data['IsSpring'] = month.apply(is_spring)
-    data['IsChristmas'] = month.apply(is_christmas)
     data['Month'] = month
+    data['IsSpring'] = month.apply(is_spring)
+    data['IsChristmas'] = month.apply(lambda month: is_month(month, 12))
+    data['IsJuly'] = month.apply(lambda month: is_month(month, 7))
     data['DayOfWeek'] = data['DateTime'].apply(get_day_of_week)
     data['IsWeekend'] = data['DayOfWeek'].apply(is_weekend)
     data['IsMonday'] = data['DayOfWeek'].apply(is_monday)

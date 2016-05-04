@@ -1,8 +1,8 @@
 '''
 Created on Apr 27, 2016
 
-MyLLScore:     0.81721
-KaggleLLScore: 0.81486
+MyLLScore:     0.79887
+KaggleLLScore: 0.79934
 
 @author: Paul Reiners
 '''
@@ -22,7 +22,7 @@ class RandomForestPredictor(PredictorBase):
     def __init__(self, animal_type):
         self.animal_type = animal_type
         if self.animal_type == "Cat":
-            args = {'n_estimators': 40, 'max_depth': 8}
+            args = {'n_estimators': 80, 'max_depth': 9}
         elif self.animal_type == "Dog":
             args = {'n_estimators': 40, 'max_depth': 7}
         else:
@@ -41,8 +41,8 @@ class RandomForestPredictor(PredictorBase):
 
     def find_best_params(self):
         parameters = {
-            'n_estimators': [40, 80, 160, 320, 640],
-            'max_depth': range(5, 10)}
+            'n_estimators': [20, 40, 80],
+            'max_depth': range(6, 10)}
         rf = RandomForestClassifier()
         clf = grid_search.GridSearchCV(rf, parameters)
         train_data = get_data('../data/train.csv')

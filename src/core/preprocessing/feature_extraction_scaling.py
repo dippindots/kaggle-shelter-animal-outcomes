@@ -261,22 +261,6 @@ def get_hour(date_time):
     return date_time.hour
 
 
-def is_midnight(hour):
-    return is_hour(hour, 0)
-
-
-def is_8_am(hour):
-    return is_hour(hour, 8)
-
-
-def is_9_am(hour):
-    return is_hour(hour, 9)
-
-
-def is_10_am(hour):
-    return is_hour(hour, 10)
-
-
 def is_hour(hour, expected_hour):
     if hour == expected_hour:
         return 1.0
@@ -295,10 +279,12 @@ def extract_date_time_features(data, animal_type):
     data['IsWednesday'] = data['DayOfWeek'].apply(is_wednesday)
     hour = data['DateTime'].apply(get_hour)
     data['Hour'] = hour
-    data['IsMidnight'] = data['Hour'].apply(is_midnight)
-    data['IsEightAM'] = data['Hour'].apply(is_8_am)
-    data['IsNineAM'] = data['Hour'].apply(is_9_am)
-    data['IsTenAM'] = data['Hour'].apply(is_10_am)
+    data['IsMidnight'] = data['Hour'].apply(lambda hour: is_hour(hour, 0))
+    data['IsEightAM'] = data['Hour'].apply(lambda hour: is_hour(hour, 8))
+    data['IsNineAM'] = data['Hour'].apply(lambda hour: is_hour(hour, 9))
+    data['IsTenAM'] = data['Hour'].apply(lambda hour: is_hour(hour, 10))
+    data['IsFivePM'] = data['Hour'].apply(lambda hour: is_hour(hour, 17))
+    data['IsSixPM'] = data['Hour'].apply(lambda hour: is_hour(hour, 18))
 
     return data
 

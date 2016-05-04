@@ -1,6 +1,6 @@
 Best predictors:
-    Date        Type                       MyLLScore  KaggleLLScore  Percent  GithubTag
-    ======================================================================================
+    Date        Type                       MyLLScore  KaggleLLScore  Percent  Submission Tag
+    ========================================================================================
     04/27/2016  BaseLinePredictor          20.61577        20.25113           Submission00
     04/27/2016  NearestNeighborsPredictor  14.37823        13.94696           Submission01
     04/27/2016  NearestNeighborsPredictor   5.07153         5.20698           Submission02

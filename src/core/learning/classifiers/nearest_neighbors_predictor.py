@@ -39,7 +39,7 @@ class NearestNeighborsPredictor(PredictorBase):
         return predictions_df
 
     def find_best_params(self):
-        parameters = {'n_neighbors': [10, 20, 40, 60]}
+        parameters = {'n_neighbors': [5, 10, 20, 40, 60]}
         knn = KNeighborsClassifier()
         clf = grid_search.GridSearchCV(knn, parameters)
         train_data = get_data('../data/train.csv')

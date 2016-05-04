@@ -13,7 +13,7 @@ from core.preprocessing.sampling import split_data
 import numpy as np
 
 
-BEST_SCORE = 0.79229
+BEST_SCORE = 0.79955
 
 
 if __name__ == '__main__':
@@ -23,6 +23,7 @@ if __name__ == '__main__':
     test_data_sets = {}
     all_predictions_df = None
     all_y_test = None
+    train_data_sets = {}
 
     # Iterate over AnimalType
     for animal_type in ['Cat', 'Dog']:
@@ -39,6 +40,7 @@ if __name__ == '__main__':
         test_data = all_data[all_data['tag'] == 'test']
         test_data = test_data.drop(['OutcomeType', 'tag'], axis=1)
         test_data_sets[animal_type] = test_data
+        train_data_sets[animal_type] = train_data
 
         X_train, y_train, X_test, y_test = split_data(train_data)
 
@@ -70,7 +72,14 @@ if __name__ == '__main__':
 
             index = test_data.index.values
             predictor = predictors[animal_type]
+
+            # Retrain on *all* training data:
+            train_data = train_data_sets[animal_type]
+            X = train_data.drop(['OutcomeType'], axis=1)
+            y = train_data['OutcomeType']
+            predictor.fit(X, y)
             test_predictions = predictor.predict(test_data)
+
             test_predictions['ID'] = index
             test_predictions = test_predictions.set_index('ID')
             if all_test_predictions is None:

@@ -14,6 +14,7 @@ Best predictors:
     05/03/2016  RandomForestPredictor       0.81721         0.81486       40  Submission10
     05/04/2016  RandomForestPredictor       0.79887         0.79934       35  Submission11
     05/04/2016  RandomForestPredictor       0.79229         0.79204       34  Submission12
+    05/04/2016  RandomForestPredictor       0.79955         0.79167       35  Submission13
 
 Submission05: Started using DecisionTreeClassifier(max_depth=6).
 Submission06: Broke down SexuponOutcome into IsIntact and IsMale.
@@ -23,3 +24,4 @@ Submission09: Set n_estimators on RandomForestClassifier.
 Submission10: Started using hour of the day as a feature.
 Submission11: Added IsFivePM and IsSixPM features.
 Submission12: Added IsThreePM feature.
+Submission13: Retrain on *all* the training data.

@@ -6,8 +6,6 @@ Based on [Classifier comparison]
 
 @author: Paul Reiners
 '''
-import time
-
 from core.learning.classifiers.ada_boost_predictor import AdaBoostPredictor
 from core.learning.classifiers.decision_tree_predictor \
     import DecisionTreePredictor
@@ -48,7 +46,10 @@ if __name__ == '__main__':
             LinearSVMPredictor(animal_type), RBF_SVMPredictor(animal_type)]
 
         train_data = get_data('../data/train.csv')
-        print animal_type
+        train_data = train_data[train_data.SexuponOutcome.notnull()]
+        train_data = train_data[train_data.AgeuponOutcome.notnull()]
+
+        print "*", animal_type
         train_data = select_features(train_data, animal_type)
         X_train, y_train, X_test, y_test = split_data(train_data)
 
@@ -57,10 +58,10 @@ if __name__ == '__main__':
             clf_X_train = X_train
             clf_X_test = X_test
 
-            print "\t{} {}".format(name, time.ctime())
+            print " - {}".format(name)
             clf.fit(clf_X_train, y_train)
             predictions_df = clf.predict(clf_X_test)
             ll = log_loss(
                 y_test, 'OutcomeType', predictions_df, possible_outcomes)
 
-            print "\t\tscore: %.5f" % ll
+            print "   - score: %.5f" % ll

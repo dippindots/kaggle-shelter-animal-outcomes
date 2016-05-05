@@ -1,4 +1,4 @@
-Best predictors:
+Best scores:
     Date        Type                       MyLLScore  KaggleLLScore  Percent  Submission Tag
     ========================================================================================
     04/27/2016  BaseLinePredictor          20.61577        20.25113           Submission00

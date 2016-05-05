@@ -17,6 +17,8 @@ if __name__ == '__main__':
     # Iterate over AnimalType
     for animal_type in ['Cat', 'Dog']:
         train_data = get_data('../data/train.csv')
+        train_data = train_data[train_data.SexuponOutcome.notnull()]
+        train_data = train_data[train_data.AgeuponOutcome.notnull()]
         print animal_type
         train_data = train_data[train_data['AnimalType'] == animal_type]
         train_data = train_data.drop(['AnimalType'], axis=1)

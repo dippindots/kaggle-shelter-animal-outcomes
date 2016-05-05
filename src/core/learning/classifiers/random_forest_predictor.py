@@ -25,10 +25,10 @@ class RandomForestPredictor(PredictorBase):
         args = self.base_args.copy()
         if self.animal_type == "Cat":
             args.update(
-                {'n_estimators': 80, 'criterion': 'gini', 'max_depth': 11})
+                {'n_estimators': 160, 'criterion': 'gini', 'max_depth': 10})
         elif self.animal_type == "Dog":
             args.update(
-                {'n_estimators': 160, 'criterion': 'gini', 'max_depth': 8})
+                {'n_estimators': 160, 'criterion': 'gini', 'max_depth': 7})
         else:
             raise RuntimeError("Incorrect animal type")
 
@@ -45,11 +45,14 @@ class RandomForestPredictor(PredictorBase):
 
     def find_best_params(self):
         parameters = {
-            'n_estimators': [20, 40, 80, 160],
-            'max_depth': range(8, 13), 'criterion': ['entropy', 'gini']}
+            'n_estimators': [40, 80, 160, 320],
+            'max_depth': range(7, 13), 'criterion': ['entropy', 'gini']}
         rf = RandomForestClassifier(self.base_args)
         clf = grid_search.GridSearchCV(rf, parameters)
         train_data = get_data('../data/train.csv')
+        if 'SexuponOutcome' in train_data.columns:
+            train_data = train_data[train_data.SexuponOutcome.notnull()]
+        train_data = train_data[train_data.AgeuponOutcome.notnull()]
         train_data = select_features(train_data, self.animal_type)
         X = train_data.drop(['OutcomeType'], axis=1)
         y = train_data['OutcomeType']

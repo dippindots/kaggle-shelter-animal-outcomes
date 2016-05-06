@@ -2,7 +2,8 @@
 Shelter Animal Outcomes Kaggle Competition
 
 ## Report
-My report is available [here](https://github.com/paul-reiners/kaggle-shelter-animal-outcomes/blob/master/src/report.ipynb).
+My report is available [here](https://github.com/paul-reiners/kaggle-shelter-animal-outcomes/blob/master/src/report.ipynb) as an IPython Notebook.
+There is also a static PDF version [here](./doc/report.pdf), but it doesn't look as good.
 
 ## Data
 The data for this project is available [here](https://www.kaggle.com/c/shelter-animal-outcomes/data).  To run the Python scripts,

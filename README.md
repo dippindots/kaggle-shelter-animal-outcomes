@@ -14,6 +14,7 @@ is also another data file that I have created called
  (It will already be there if you have downloaded all the project files from GitHub.)
 
  ## Software and libraries
+ 
  * Python 2.7.11 :: Anaconda 4.0.0 (x86_64)
  * scikit-learn 0.17.1 
  * pandas 0.18.0

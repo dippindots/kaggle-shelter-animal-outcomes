@@ -11,6 +11,7 @@ import pandas as pd
 
 
 def select_features(data, animal_type):
+    """ Select features that give best score. """
     data = data[data['AnimalType'] == animal_type]
     data = data.drop(['AnimalType'], axis=1)
 

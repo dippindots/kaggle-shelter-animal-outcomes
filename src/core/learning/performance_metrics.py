@@ -1,6 +1,8 @@
 '''
 Created on May 2, 2016
 
+Performance metric used in Kaggle competition.
+
 @author: Paul Reiners
 '''
 from math import log

@@ -1,6 +1,8 @@
 '''
 Created on Apr 27, 2016
 
+Thin wrapper around RandomForestClassifier.
+
 MyLLScore:     0.79955
 KaggleLLScore: 0.79167
 
@@ -20,6 +22,7 @@ class RandomForestPredictor(PredictorBase):
     '''
 
     def __init__(self, animal_type):
+        """ Initialize class instance with type of animal. """
         self.animal_type = animal_type
         self.base_args = {'random_state': 1}
         args = self.base_args.copy()
@@ -35,15 +38,18 @@ class RandomForestPredictor(PredictorBase):
         self.clf = RandomForestClassifier(**args)
 
     def fit(self, X_train, y_train):
+        """ Fit the random forest model. """
         self.clf.fit(X_train, y_train)
 
     def predict(self, X_test):
+        """ Make prediction. """
         predictions = self.clf.predict_proba(X_test)
         predictions_df = self.bundle_predictions(predictions)
 
         return predictions_df
 
     def find_best_params(self):
+        """ Find best hyper-parameters for the classifier. """
         parameters = {
             'n_estimators': [40, 80, 160, 320],
             'max_depth': range(7, 13), 'criterion': ['entropy', 'gini']}

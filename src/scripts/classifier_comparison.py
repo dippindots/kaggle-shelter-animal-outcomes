@@ -4,6 +4,8 @@ Created on Apr 29, 2016
 Based on [Classifier comparison]
 (http://scikit-learn.org/stable/auto_examples/classification/plot_classifier_comparison.html).
 
+Measures the performance of various types of classifiers.
+
 @author: Paul Reiners
 '''
 from core.learning.classifiers.ada_boost_predictor import AdaBoostPredictor

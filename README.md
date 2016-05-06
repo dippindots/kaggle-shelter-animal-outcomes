@@ -13,17 +13,19 @@ is also another data file that I have created called
  that needs to be in the [doc directory](https://github.com/paul-reiners/kaggle-shelter-animal-outcomes/tree/master/doc).
  (It will already be there if you have downloaded all the project files from GitHub.)
 
- ## Software and libraries
+## Software and libraries
+ 
  * Python 2.7.11 :: Anaconda 4.0.0 (x86_64)
  * scikit-learn 0.17.1 
  * pandas 0.18.0
  * numpy 1.10.4
  * matplotlib 1.5.1
  
- ## Executing scripts
- There are three scripts you might be interested in running:
- * [select_features](./src/scripts/select_features.py)
- * [classifier_comparison](./src/scripts/classifier_comparison.py)
- * [create_submission](./src/scripts/create_submission.py)
+## Executing scripts
+There are three scripts you might be interested in running:
+
+* [select_features](./src/scripts/select_features.py)
+* [classifier_comparison](./src/scripts/classifier_comparison.py)
+* [create_submission](./src/scripts/create_submission.py)
  
- Each of these should be run from the [src](./src) directory.  None of them take command-line arguments.
+Each of these should be run from the [src](./src) directory.  None of them take command-line arguments.

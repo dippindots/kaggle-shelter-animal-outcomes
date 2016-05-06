@@ -1,6 +1,8 @@
 '''
 Created on Apr 30, 2016
 
+Uses SelectKBest to select best features.
+
 @author: Paul Reiners
 '''
 from sklearn.feature_selection import SelectKBest

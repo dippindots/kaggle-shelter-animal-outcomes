@@ -1,6 +1,8 @@
 '''
 Created on May 2, 2016
 
+Extract features from raw data and also scale.
+
 @author: Paul Reiners
 '''
 from sklearn.preprocessing import MinMaxScaler
@@ -10,6 +12,7 @@ import pandas as pd
 
 
 def get_data(file_path, tag=None):
+    """ Import data from file. """
     dtype = {'Name': str}
     data = pd.read_csv(
         file_path, dtype=dtype, parse_dates=['DateTime'], index_col=0)

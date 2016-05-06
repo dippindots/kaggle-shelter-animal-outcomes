@@ -1,6 +1,8 @@
 '''
 Created on Apr 26, 2016
 
+Functions for selecting best features.
+
 @author: Paul Reiners
 '''
 from core.preprocessing.feature_extraction_scaling \
@@ -35,6 +37,7 @@ def select_features(data, animal_type):
 
 
 def select_raw_features(data, animal_type):
+    """ Selects features present in the raw data."""
     data = extract_features(data, animal_type)
 
     drop_cols = ['OutcomeSubtype', 'DateTime', 'SexuponOutcome', 'Name']

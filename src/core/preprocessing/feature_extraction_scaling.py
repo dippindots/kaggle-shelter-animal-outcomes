@@ -310,6 +310,13 @@ def extract_color_features(data, animal_type):
     return data
 
 
+def get_popularity(name):
+    if len(name) == 0:
+        return 0.0
+    else:
+        return 0.0
+
+
 def extract_features(data, animal_type):
     data = extract_breed_features(data, animal_type)
     data = extract_date_time_features(data, animal_type)
@@ -318,6 +325,16 @@ def extract_features(data, animal_type):
     data['AgeuponOutcome'] = data['AgeuponOutcome'].apply(preprocess_age)
 
     data['IsNamed'] = data['Name'].apply(get_is_named)
+
+    name_counts = data.Name.value_counts(normalize=True)
+
+    def get_popularity(name):
+        if len(name) == 0:
+            return 0.5
+        else:
+            return name_counts[name]
+    data['NamePopularity'] = data['Name'].apply(get_popularity)
+
     data['IsIntact'] = data['SexuponOutcome'].apply(is_intact)
     data["OutcomeType"] = data["OutcomeType"].astype('category')
 

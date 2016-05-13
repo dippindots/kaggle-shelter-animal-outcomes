@@ -27,24 +27,13 @@ def select_features(data, animal_type):
         keep_cols = ['OutcomeType']
     if animal_type == 'Cat':
         keep_cols.extend(
-            ['AgeuponOutcome', 'IsDomesticLonghair', 'IsSpring', 'IsJanuary',
-             'IsWeekend', 'IsEightAM', 'IsNineAM', 'IsTenAM', 'IsFivePM',
-             'IsSixPM', 'IsThreePM', 'IsNamed', 'NamePopularity', 'NameLen',
-             'IsIntact', 'Breed_Domestic Longhair', 'Month_1', 'Month_4',
-             'Month_5', 'Month_12', 'DayOfWeek_5', 'DayOfWeek_6', 'Hour_8',
-             'Hour_9', 'Hour_10', 'Hour_11', 'Hour_14', 'Hour_15', 'Hour_17',
+            ['AgeuponOutcome', 'IsSpring', 'IsWeekend', 'IsNamed',
+             'NamePopularity', 'IsIntact', 'DayOfWeek_5', 'Hour_9', 'Hour_17',
              'Hour_18'])
     else:
         keep_cols.extend(
-            ['AgeuponOutcome', 'IsDangerous', 'IsPitBull', 'IsWeekend',
-             'IsMidnight', 'IsEightAM', 'IsNineAM', 'IsTenAM', 'IsFivePM',
-             'IsSixPM', 'IsNamed', 'NamePopularity', 'NameLen', 'IsIntact',
-             'Breed_Border Collie/Akita',
-             'Breed_Golden Retriever/Standard Poodle',
-             'Breed_Pembroke Welsh Corgi/Brittany', 'Breed_Pit Bull',
-             'Breed_Pit Bull/Pit Bull', 'Color_White/Pink', 'DayOfWeek_5',
-             'DayOfWeek_6', 'Hour_0', 'Hour_8', 'Hour_9', 'Hour_10', 'Hour_11',
-             'Hour_17', 'Hour_18', 'Hour_19'])
+            ['AgeuponOutcome', 'IsPitBull', 'NamePopularity', 'IsIntact',
+             'Breed_Pit Bull', 'Hour_18'])
 
     data = data.loc[:, keep_cols]
 

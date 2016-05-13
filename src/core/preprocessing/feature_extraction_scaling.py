@@ -259,21 +259,10 @@ def extract_date_time_features(data, animal_type):
     month = data['DateTime'].apply(get_month)
     data['Month'] = month
     data['IsSpring'] = month.apply(is_spring)
-    data['IsJanuary'] = month.apply(lambda month: is_month(month, 1))
-    data['IsJuly'] = month.apply(lambda month: is_month(month, 7))
     data['DayOfWeek'] = data['DateTime'].apply(get_day_of_week)
     data['IsWeekend'] = data['DayOfWeek'].apply(is_weekend)
-    data['IsMonday'] = data['DayOfWeek'].apply(is_monday)
-    data['IsWednesday'] = data['DayOfWeek'].apply(is_wednesday)
     hour = data['DateTime'].apply(get_hour)
     data['Hour'] = hour
-    data['IsMidnight'] = data['Hour'].apply(lambda hour: is_hour(hour, 0))
-    data['IsEightAM'] = data['Hour'].apply(lambda hour: is_hour(hour, 8))
-    data['IsNineAM'] = data['Hour'].apply(lambda hour: is_hour(hour, 9))
-    data['IsTenAM'] = data['Hour'].apply(lambda hour: is_hour(hour, 10))
-    data['IsFivePM'] = data['Hour'].apply(lambda hour: is_hour(hour, 17))
-    data['IsSixPM'] = data['Hour'].apply(lambda hour: is_hour(hour, 18))
-    data['IsThreePM'] = data['Hour'].apply(lambda hour: is_hour(hour, 15))
 
     return data
 

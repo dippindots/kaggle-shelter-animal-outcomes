@@ -1,7 +1,8 @@
 '''
 Created on Apr 26, 2016
 
-Trains models on test data.  If results are better than the best submission so far, models are run on test data and a new submission file is created.
+Trains models on test data.  If results are better than the best submission
+so far, models are run on test data and a new submission file is created.
 
 @author: Paul Reiners
 '''

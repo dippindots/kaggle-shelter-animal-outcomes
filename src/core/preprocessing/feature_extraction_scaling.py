@@ -234,7 +234,7 @@ def extract_breed_features(data, animal_type):
         'Breed'].apply(is_domestic_short_hair_siamese)
 
     dog_breeds = ['Border Collie', 'Akita',
-                  'Border Collie/Akita', 'Chow Chow', 'Golden Retriever',
+                  'Chow Chow', 'Golden Retriever',
                   'Basset Hound', 'Great Pyrenees', 'Chow Chow/Basset Hound']
     for dog_breed in dog_breeds:
         feature_name = "Is" + dog_breed.replace(" ", "").replace("/", "_")
@@ -259,7 +259,7 @@ def extract_date_time_features(data, animal_type):
     month = data['DateTime'].apply(get_month)
     data['Month'] = month
     data['IsSpring'] = month.apply(is_spring)
-    data['IsChristmas'] = month.apply(lambda month: is_month(month, 12))
+    data['IsJanuary'] = month.apply(lambda month: is_month(month, 1))
     data['IsJuly'] = month.apply(lambda month: is_month(month, 7))
     data['DayOfWeek'] = data['DateTime'].apply(get_day_of_week)
     data['IsWeekend'] = data['DayOfWeek'].apply(is_weekend)
@@ -317,13 +317,7 @@ def get_popularity(name):
         return 0.0
 
 
-def extract_features(data, animal_type):
-    data = extract_breed_features(data, animal_type)
-    data = extract_date_time_features(data, animal_type)
-    data = extract_color_features(data, animal_type)
-
-    data['AgeuponOutcome'] = data['AgeuponOutcome'].apply(preprocess_age)
-
+def extract_name_features(data, animal_type):
     data['IsNamed'] = data['Name'].apply(get_is_named)
 
     name_counts = data.Name.value_counts(normalize=True)
@@ -334,6 +328,17 @@ def extract_features(data, animal_type):
         else:
             return name_counts[name]
     data['NamePopularity'] = data['Name'].apply(get_popularity)
+
+    return data
+
+
+def extract_features(data, animal_type):
+    data = extract_breed_features(data, animal_type)
+    data = extract_date_time_features(data, animal_type)
+    data = extract_color_features(data, animal_type)
+    data = extract_name_features(data, animal_type)
+
+    data['AgeuponOutcome'] = data['AgeuponOutcome'].apply(preprocess_age)
 
     data['IsIntact'] = data['SexuponOutcome'].apply(is_intact)
     data["OutcomeType"] = data["OutcomeType"].astype('category')

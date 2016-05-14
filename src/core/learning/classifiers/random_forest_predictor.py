@@ -28,10 +28,10 @@ class RandomForestPredictor(PredictorBase):
         args = self.base_args.copy()
         if self.animal_type == "Cat":
             args.update(
-                {'n_estimators': 160, 'criterion': 'gini', 'max_depth': 10})
+                {'n_estimators': 80, 'criterion': 'gini', 'max_depth': 10})
         elif self.animal_type == "Dog":
             args.update(
-                {'n_estimators': 160, 'criterion': 'gini', 'max_depth': 7})
+                {'n_estimators': 80, 'criterion': 'entropy', 'max_depth': 8})
         else:
             raise RuntimeError("Incorrect animal type")
 

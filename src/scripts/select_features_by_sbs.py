@@ -10,6 +10,7 @@ from sklearn.neighbors import KNeighborsClassifier
 from core.preprocessing.feature_extraction_scaling import get_data
 from core.preprocessing.feature_selection import select_raw_features
 from core.preprocessing.sequential_backward_selection import SBS
+import matplotlib.pyplot as plt
 
 
 if __name__ == '__main__':
@@ -30,3 +31,14 @@ if __name__ == '__main__':
         knn = KNeighborsClassifier(n_neighbors=2)
         sbs = SBS(knn, k_features=1)
         sbs.fit(X_train.values, y_train.values)
+
+        k_feat = [len(k) for k in sbs.subsets_]
+        plt.plot(k_feat, sbs.scores_, marker='o')
+        plt.ylim([0.7, 1.1])
+        plt.ylabel('Accuracy')
+        plt.xlabel('Number of features')
+        plt.grid()
+        plt.show()
+
+        k5 = list(sbs.subsets_[8])
+        print(train_data.columns[1:][k5])

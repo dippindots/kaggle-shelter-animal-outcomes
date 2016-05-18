@@ -2045,14 +2045,6 @@ SUVORK5CYII=
     <td>1.01030</td>
   </tr>
 </table><p>The code for generating these scores is in <a href="https://github.com/paul-reiners/kaggle-shelter-animal-outcomes/blob/master/src/scripts/classifier_comparison.py"><code>scripts.classifier_comparison</code></a>.  As you can see, random forests performed best for both cats and dogs.</p>
-<p>For my random forest implementation, I used <code>sklearn.ensemble.RandomForestClassifier</code> with the following parameters:</p>
-<ul>
-<li>Cat: {'n_estimators': 160, 'criterion': 'gini', 'max_depth': 10}</li>
-<li>Dog: {'n_estimators': 160, 'criterion': 'gini', 'max_depth': 7}</li>
-</ul>
-<p>To find the best values for these parameters, I used <code>sklearn.grid_search.GridSearchCV</code>.</p>
-<p>My random forest code can be found in 
-<a href="https://github.com/paul-reiners/kaggle-shelter-animal-outcomes/blob/master/src/core/learning/classifiers/random_forest_predictor.py"><code>core.learning.classifiers.random_forest_predictor</code></a>.</p>
 <h3 id="Benchmark">Benchmark<a class="anchor-link" href="#Benchmark">&#182;</a></h3><p>The benchmark was provided by the Kaggle contest.  It is the score obtained when predicting that all animals in the test set are adopted.
 <img src="https://raw.githubusercontent.com/paul-reiners/kaggle-shelter-animal-outcomes/master/img/benchmark.tiff?token=ABcpq_lnHcFWJawl5E6X5rVMl4AeRaNzks5XNME4wA%3D%3D" alt="benchmark" title="Benchmark"></p>
 <h2 id="Methodology">Methodology<a class="anchor-link" href="#Methodology">&#182;</a></h2><h3 id="Data-Preprocessing">Data Preprocessing<a class="anchor-link" href="#Data-Preprocessing">&#182;</a></h3><p>First of all, note that we use scaling between 0.0 and 1.0 for all the features.  Most of our features are categorical and the scaling is a byproduct of the one-hot encoding we use on categorical features.  This leaves only the <em>AgeuponOutcome</em> feature.  We scale this using an <code>sklearn.preprocessing.MinMaxScaler</code>.  This scaling is essential for the SVMs and nearest neighbors algorithms to run effectively.</p>
@@ -2175,7 +2167,24 @@ Submission13: Retrain on *all* the training data.
 
 </code></pre>
 <p>(Unfortunately, I didn't record how I improved things on my first four submissions.)</p>
-<h2 id="Results">Results<a class="anchor-link" href="#Results">&#182;</a></h2><h3 id="Model-Evaluation-and-Validation">Model Evaluation and Validation<a class="anchor-link" href="#Model-Evaluation-and-Validation">&#182;</a></h3><p>Random forest models (separate ones for cats and dogs) worked best.  On the training data, the log-loss value was 0.79955.  On the Kaggle test data, the log-loss value was 0.79167.  Since the latter value is less than the former, no over-fitting occurred.</p>
+<h2 id="Results">Results<a class="anchor-link" href="#Results">&#182;</a></h2><h3 id="Model-Evaluation-and-Validation">Model Evaluation and Validation<a class="anchor-link" href="#Model-Evaluation-and-Validation">&#182;</a></h3><p>Random forest models (separate ones for cats and dogs) worked best (although I am also going to try XGBoost next) and that is what I ultimately ended up using.  For my random forest implementation, I used <code>sklearn.ensemble.RandomForestClassifier</code> with the following parameters:</p>
+<ul>
+<li>Cat: {'n_estimators': 160, 'criterion': 'gini', 'max_depth': 10}</li>
+<li>Dog: {'n_estimators': 160, 'criterion': 'gini', 'max_depth': 7}</li>
+</ul>
+<p>To find the best values for these parameters, I used <code>sklearn.grid_search.GridSearchCV</code>.</p>
+<p>My random forest code can be found in 
+<a href="https://github.com/paul-reiners/kaggle-shelter-animal-outcomes/blob/master/src/core/learning/classifiers/random_forest_predictor.py"><code>core.learning.classifiers.random_forest_predictor</code></a>.</p>
+<p>In summary, my end-to-end process was:</p>
+<ol>
+<li>Explore the data to find new features to exploit.</li>
+<li>Find a good selection of features both new and old.</li>
+<li>Find which classification algorithm worked best on that selection of features.</li>
+<li>Optimize the parameters of that algorithm.</li>
+<li>Train the algorithm and test it.</li>
+<li>Repeat the process.</li>
+</ol>
+<p>On the training data of my best model so far, the log-loss value is 0.79955.  On the Kaggle test data, the log-loss value is 0.79167.  Since the latter value is less than the former, no over-fitting occurred.</p>
 <p>Here is my current position on the <a href="https://www.kaggle.com/c/shelter-animal-outcomes/leaderboard">leader board</a>:</p>
 <p><img src="https://raw.githubusercontent.com/paul-reiners/kaggle-shelter-animal-outcomes/master/img/my-position.tiff?token=ABcpq4S8HIsUilamlRKAr995IUqhg6y3ks5XNQTOwA%3D%3D" alt="position"></p>
 <h3 id="Justification">Justification<a class="anchor-link" href="#Justification">&#182;</a></h3><p>My log-loss value of 0.79167 beats the benchmark value of 20.25113 by a factor of about 26.  This is a significant improvement.  However there are teams on the <a href="https://www.kaggle.com/c/shelter-animal-outcomes/leaderboard">leader board</a> that have done better.  At the time of writing, the leader has a log-loss score of 0.45175.  Now it's possible that some of the higher entries on the leader board are over-fitting, but it's impossible to know.</p>
@@ -3316,7 +3325,6 @@ dHR0dHRy8f8oGdjdU/8RAwAAAABJRU5ErkJggg==
 <a href="https://www.packtpub.com/big-data-and-business-intelligence/python-machine-learning"><em>Python Machine Learning</em></a>
 by <a href="http://sebastianraschka.com">Sebastian Raschka</a>.  I found some ideas in there that I would have liked to implement but didn't have time for.  In particular, I would have liked to have stream-lined my workflow with Pipelines.  There was no reason why I should have to run three or four scripts in succession to come up with results.  This could have all been automated with one script.</p>
 <p>Trying to climb a Kaggle leader board is quite addictive (very addictive, actually) and can turn into a game of diminishing returns (if I can only decrease my log-loss by 0.00014, I'll move up another slot on the leader board!).  Nevertheless, the Kaggle contest still has two months to go and I plan on continuing to improve my solution during that time.</p>
-<p>Finally, I have not looked at any scripts others have uploaded to Kaggle nor have I looked at the competition forum.  If I did well, I wanted to do well soley on my own.  However, this is kind of stupid from both competitive and learning points of view.  I may end up looking at them later.</p>
 <hr>
 <p>This project is dedicated to my dogs Edmund and Sophie who both had an <em>OutcomeType</em> of <em>Adoption</em> from the <a href="https://www.animalhumanesociety.org">Golden Valley Humane Society</a>.</p>
 <p><img src="https://raw.githubusercontent.com/paul-reiners/kaggle-shelter-animal-outcomes/master/img/SophieEdmund.jpg?token=ABcpq-9BQ6DDbidsHh0Jfl6F2Bw_-PrLks5XNTBSwA%3D%3D" alt="Edmund and Sophie" title="Optional title"></p>

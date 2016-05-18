@@ -185,6 +185,40 @@ div#notebook {
 <a href="http://www.austintexas.gov/department/animal-services">Austin Animal Center</a>, 
 we're asking Kagglers to predict the outcome for each animal.</p>
 </blockquote>
+<p>The possible outcomes and sub-outcomes are:</p>
+<ul>
+<li>Adoption<ul>
+<li>Foster</li>
+<li>Offsite</li>
+<li>Barn</li>
+</ul>
+</li>
+<li>Died<ul>
+<li>In Kennel</li>
+<li>In Foster</li>
+<li>Enroute</li>
+<li>At Vet</li>
+<li>In Surgery</li>
+</ul>
+</li>
+<li>Euthanasia<ul>
+<li>Suffering</li>
+<li>Aggressive</li>
+<li>Behavior</li>
+<li>Rabies Risk</li>
+<li>Medical</li>
+<li>Court/Investigation</li>
+</ul>
+</li>
+<li>Return_to_owner</li>
+<li>Transfer<ul>
+<li>Partner</li>
+<li>SCRP</li>
+<li>Barn</li>
+</ul>
+</li>
+</ul>
+<p>This is a classification problem.  The contestant needs to estimate, for each animal in the test set, the likelihood of each outcome (sub-outcomes are not predicted).</p>
 <h3 id="Metrics">Metrics<a class="anchor-link" href="#Metrics">&#182;</a></h3><p>As described on Kaggle:</p>
 <blockquote><p>Submissions are evaluated using the <a href="https://www.kaggle.com/wiki/MultiClassLogLoss">multi-class logarithmic loss</a>. Each incident has been labeled with one true class. For each animal, you must submit a set of predicted probabilities (one for every class). The formula is then,</p>
 <p>$$log loss = -\frac{1}{N}\sum_{i=1}^N\sum_{j=1}^My_{ij}\log(p_{ij}),$$</p>

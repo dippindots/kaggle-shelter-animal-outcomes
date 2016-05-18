@@ -24,7 +24,7 @@ class XGBPredictor(PredictorBase):
     def __init__(self, animal_type):
         """ Initialize class instance with type of animal. """
         self.animal_type = animal_type
-        self.base_args = {}
+        self.base_args = {'objective': 'multi:softprob'}
         args = self.base_args.copy()
         if self.animal_type == "Cat":
             args.update(

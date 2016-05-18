@@ -24,14 +24,14 @@ class XGBPredictor(PredictorBase):
     def __init__(self, animal_type):
         """ Initialize class instance with type of animal. """
         self.animal_type = animal_type
-        self.base_args = {'random_state': 1}
+        self.base_args = {}
         args = self.base_args.copy()
         if self.animal_type == "Cat":
             args.update(
-                {'max_depth': 3, 'n_estimators': 300, 'learning_rate': 0.05})
+                {'n_estimators': 600, 'learning_rate': 0.05, 'max_depth': 3})
         elif self.animal_type == "Dog":
             args.update(
-                {'max_depth': 3, 'n_estimators': 300, 'learning_rate': 0.05})
+                {'n_estimators': 75, 'learning_rate': 0.1, 'max_depth': 4})
         else:
             raise RuntimeError("Incorrect animal type")
 
@@ -51,8 +51,9 @@ class XGBPredictor(PredictorBase):
     def find_best_params(self):
         """ Find best hyper-parameters for the classifier. """
         parameters = {
-            'n_estimators': [150, 300, 600],
-            'max_depth': range(2, 5), 'learning_rate': [0.025, 0.050, 0.100]}
+            'n_estimators': [38, 75, 150, 300, 600, 1200],
+            'max_depth': range(2, 6),
+            'learning_rate': [0.025, 0.050, 0.100, 0.200]}
         rf = xgb.XGBClassifier(self.base_args)
         clf = grid_search.GridSearchCV(rf, parameters)
         train_data = get_data('../data/train.csv')

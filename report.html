@@ -2034,6 +2034,16 @@ SUVORK5CYII=
     <th>Dog</th>
   </tr>
   <tr>
+    <td>Random Forest</td>
+    <td>0.57658</td> 
+    <td>0.95536</td>
+  </tr>
+  <tr>
+    <td>XGBoost</td>
+    <td>0.59622</td> 
+    <td>0.97434</td>
+  </tr>
+  <tr>
     <td>Nearest Neighbors</td>
     <td>1.66271</td> 
     <td>1.29723</td>
@@ -2042,11 +2052,6 @@ SUVORK5CYII=
     <td>Decision Tree</td>
     <td>0.76244</td> 
     <td>1.16388</td>
-  </tr>
-  <tr>
-    <td>*Random Forest*</td>
-    <td>*0.57658*</td> 
-    <td>*0.95536*</td>
   </tr>
   <tr>
     <td>AdaBoost</td>
@@ -2078,7 +2083,7 @@ SUVORK5CYII=
     <td>0.67900</td> 
     <td>1.01030</td>
   </tr>
-</table><p>The code for generating these scores is in <a href="https://github.com/paul-reiners/kaggle-shelter-animal-outcomes/blob/master/src/scripts/classifier_comparison.py"><code>scripts.classifier_comparison</code></a>.  As you can see, random forests performed best for both cats and dogs.</p>
+</table><p>The code for generating these scores is in <a href="https://github.com/paul-reiners/kaggle-shelter-animal-outcomes/blob/master/src/scripts/classifier_comparison.py"><code>scripts.classifier_comparison</code></a>.  As you can see, random forests performed best at classifying both cats and dogs, but XGBoost was close behind.</p>
 <h3 id="Benchmark">Benchmark<a class="anchor-link" href="#Benchmark">&#182;</a></h3><p>The benchmark was provided by the Kaggle contest.  It is the score obtained when predicting that all animals in the test set are adopted.
 <img src="https://raw.githubusercontent.com/paul-reiners/kaggle-shelter-animal-outcomes/master/img/benchmark.tiff?token=ABcpq_lnHcFWJawl5E6X5rVMl4AeRaNzks5XNME4wA%3D%3D" alt="benchmark" title="Benchmark"></p>
 <h2 id="Methodology">Methodology<a class="anchor-link" href="#Methodology">&#182;</a></h2><h3 id="Data-Preprocessing">Data Preprocessing<a class="anchor-link" href="#Data-Preprocessing">&#182;</a></h3><p>First of all, note that we use scaling between 0.0 and 1.0 for all the features.  Most of our features are categorical and the scaling is a byproduct of the one-hot encoding we use on categorical features.  This leaves only the <em>AgeuponOutcome</em> feature.  We scale this using an <code>sklearn.preprocessing.MinMaxScaler</code>.  This scaling is essential for the SVMs and nearest neighbors algorithms to run effectively.</p>

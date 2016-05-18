@@ -22,6 +22,7 @@ from core.learning.classifiers.quadratic_descriminant_analysis_predictor \
 from core.learning.classifiers.random_forest_predictor \
     import RandomForestPredictor
 from core.learning.classifiers.rbf_svm_predictor import RBF_SVMPredictor
+from core.learning.classifiers.xgb_predictor import XGBPredictor
 from core.learning.performance_metrics import log_loss
 from core.preprocessing.feature_extraction_scaling import get_data
 from core.preprocessing.feature_selection import select_features
@@ -32,7 +33,7 @@ if __name__ == '__main__':
     names = ["Nearest Neighbors", "Decision Tree",
              "Random Forest", "AdaBoost", "Naive Bayes",
              "Linear Discriminant Analysis", "Quadratic Discriminant Analysis",
-             "Linear SVM", "RBF SVM"]
+             "Linear SVM", "RBF SVM", "XGBoost"]
     possible_outcomes = [
         'Adoption', 'Died', 'Euthanasia', 'Return_to_owner', 'Transfer']
     # Iterate over AnimalType
@@ -45,7 +46,8 @@ if __name__ == '__main__':
             NaiveBayesPredictor(),
             LinearDiscriminantAnalysisPredictor(animal_type),
             QuadraticDiscriminantAnalysisPredictor(),
-            LinearSVMPredictor(animal_type), RBF_SVMPredictor(animal_type)]
+            LinearSVMPredictor(animal_type), RBF_SVMPredictor(animal_type),
+            XGBPredictor(animal_type)]
 
         train_data = get_data('../data/train.csv')
         train_data = train_data[train_data.SexuponOutcome.notnull()]

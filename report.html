@@ -2113,7 +2113,7 @@ SUVORK5CYII=
 <p>There was only one missing value and that was in the training set, so I simply dropped that row.</p>
 <h4 id="AgeuponOutcome-field">AgeuponOutcome field<a class="anchor-link" href="#AgeuponOutcome-field">&#182;</a></h4><p>For the training set, I simply dropped the rows with missing values.
 I then converted all of the values to days and scaled it using <code>sklearn.preprocessing.MinMaxScaler</code>.
-For the test set, I used the mean age for missing values.</p>
+For the test set, I used the mean age for missing values. I tried logarithmic scaling on the age variable, but leaving it as it was worked better.</p>
 <h4 id="Breed-field">Breed field<a class="anchor-link" href="#Breed-field">&#182;</a></h4><p>This is a categorical variable.  I used one-hot encoding to break this up into numeric features.  In particular, I used the <code>get_dummies</code> method implemented in pandas.</p>
 <p>For cats, I pretty much left this field alone, although I did create the following features:</p>
 <ul>

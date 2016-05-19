@@ -5,6 +5,7 @@ Extract features from raw data and also scale.
 
 @author: Paul Reiners
 '''
+from numpy import log
 from sklearn.preprocessing import MinMaxScaler
 
 import numpy as np
@@ -321,25 +322,36 @@ def extract_name_features(data, animal_type):
     return data
 
 
+def extract_age_upon_outcome_features(data):
+    data['AgeuponOutcome'] = data['AgeuponOutcome'].apply(preprocess_age)
+
+    data['AgeuponOutcome'] = data['AgeuponOutcome'].fillna(
+        data['AgeuponOutcome'].mean())
+    # Can't take the log of 0.
+    data['LogAgeuponOutcome'] = data['AgeuponOutcome'].apply(
+        lambda age_in_days: log(age_in_days + 0.01))
+
+    mms = MinMaxScaler()
+    data['AgeuponOutcome'] = mms.fit_transform(
+        data['AgeuponOutcome'].reshape(-1, 1))
+    mms_log = MinMaxScaler()
+    data['LogAgeuponOutcome'] = mms_log.fit_transform(
+        data['LogAgeuponOutcome'].reshape(-1, 1))
+
+    return data
+
+
 def extract_features(data, animal_type):
     data = extract_breed_features(data, animal_type)
     data = extract_date_time_features(data, animal_type)
     data = extract_color_features(data, animal_type)
     data = extract_name_features(data, animal_type)
-
-    data['AgeuponOutcome'] = data['AgeuponOutcome'].apply(preprocess_age)
+    data = extract_age_upon_outcome_features(data)
 
     data['IsIntact'] = data['SexuponOutcome'].apply(is_intact)
     data["OutcomeType"] = data["OutcomeType"].astype('category')
 
     data['IsMale'] = data['SexuponOutcome'].apply(is_male)
-
-    data['AgeuponOutcome'] = data['AgeuponOutcome'].fillna(
-        data['AgeuponOutcome'].mean())
-
-    mms = MinMaxScaler()
-    data['AgeuponOutcome'] = mms.fit_transform(
-        data['AgeuponOutcome'].reshape(-1, 1))
 
     return data
 

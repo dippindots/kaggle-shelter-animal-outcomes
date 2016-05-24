@@ -324,9 +324,11 @@ def extract_name_features(data, animal_type):
 
 def extract_age_upon_outcome_features(data):
     data['AgeuponOutcome'] = data['AgeuponOutcome'].apply(preprocess_age)
-
     data['AgeuponOutcome'] = data['AgeuponOutcome'].fillna(
         data['AgeuponOutcome'].mean())
+    data['IsAdult'] = data['AgeuponOutcome'].apply(
+        lambda age_in_days: 0 if age_in_days < 365 else 1)
+
     # Can't take the log of 0.
     data['LogAgeuponOutcome'] = data['AgeuponOutcome'].apply(
         lambda age_in_days: log(age_in_days + 0.01))

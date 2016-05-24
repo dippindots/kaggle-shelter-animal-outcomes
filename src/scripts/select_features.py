@@ -26,9 +26,23 @@ if __name__ == '__main__':
         train_data = train_data.drop(['AnimalType'], axis=1)
         train_data = select_raw_features(train_data, animal_type)
         train_data = train_data.dropna()
-        X_train, y_train, _, _ = split_data(train_data)
 
-        k_best = SelectKBest(chi2)
-        clf_X_train = k_best.fit_transform(X_train, y_train)
+        # Kittens and puppies
+        print "\tnot adult"
+        baby_data = train_data[train_data['IsAdult'] == 0]
+        X_baby_train, y_baby_train, _, _ = split_data(baby_data)
 
-        print "{}".format(X_train.columns[k_best.get_support()])
+        baby_k_best = SelectKBest(chi2)
+        baby_k_best.fit_transform(X_baby_train, y_baby_train)
+
+        print "\t{}".format(X_baby_train.columns[baby_k_best.get_support()])
+
+        # Adults
+        print "\tAdult"
+        adult_data = train_data[train_data['IsAdult'] == 1]
+        X_adult_train, y_adult_train, _, _ = split_data(adult_data)
+
+        adult_k_best = SelectKBest(chi2)
+        adult_k_best.fit_transform(X_adult_train, y_adult_train)
+
+        print "\t{}".format(X_adult_train.columns[adult_k_best.get_support()])

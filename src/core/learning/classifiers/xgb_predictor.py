@@ -21,19 +21,31 @@ class XGBPredictor(PredictorBase):
     XGB
     '''
 
-    def __init__(self, animal_type):
+    def __init__(self, animal_type, is_adult):
         """ Initialize class instance with type of animal. """
         self.animal_type = animal_type
+        self.is_adult = is_adult
         self.base_args = {'objective': 'multi:softprob'}
         args = self.base_args.copy()
         if self.animal_type == "Cat":
-            args.update(
-                {'n_estimators': 600, 'learning_rate': 0.05, 'max_depth': 3})
+            if self.is_adult == 0:
+                updated_args = {
+                    'n_estimators': 1200, 'learning_rate': 0.05,
+                    'max_depth': 2}
+            else:
+                updated_args = {
+                    'n_estimators': 38, 'learning_rate': 0.2, 'max_depth': 2}
         elif self.animal_type == "Dog":
-            args.update(
-                {'n_estimators': 75, 'learning_rate': 0.1, 'max_depth': 4})
+            if self.is_adult == 0:
+                updated_args = {
+                    'n_estimators': 75, 'learning_rate': 0.025, 'max_depth': 4}
+            else:
+                updated_args = {
+                    'n_estimators': 75, 'learning_rate': 0.025, 'max_depth': 4}
         else:
             raise RuntimeError("Incorrect animal type")
+
+        args.update(updated_args)
 
         self.clf = xgb.XGBClassifier(**args)
 
@@ -60,16 +72,17 @@ class XGBPredictor(PredictorBase):
         if 'SexuponOutcome' in train_data.columns:
             train_data = train_data[train_data.SexuponOutcome.notnull()]
         train_data = train_data[train_data.AgeuponOutcome.notnull()]
-        train_data = select_features(train_data, self.animal_type)
+        train_data = select_features(
+            train_data, self.animal_type, self.is_adult)
         X = train_data.drop(['OutcomeType'], axis=1)
         y = train_data['OutcomeType']
         clf.fit(X, y)
         print clf.best_params_
 
 if __name__ == '__main__':
-    print 'Cat'
-    predictor = XGBPredictor('Cat')
-    predictor.find_best_params()
-    print 'Dog'
-    predictor = XGBPredictor('Dog')
-    predictor.find_best_params()
+    for animal_type in ['Cat', 'Dog']:
+        print animal_type
+        for is_adult in [0, 1]:
+            print '\t' + str(is_adult)
+            predictor = XGBPredictor(animal_type, is_adult)
+            predictor.find_best_params()

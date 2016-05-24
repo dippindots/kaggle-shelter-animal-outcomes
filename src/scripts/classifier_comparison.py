@@ -38,34 +38,36 @@ if __name__ == '__main__':
         'Adoption', 'Died', 'Euthanasia', 'Return_to_owner', 'Transfer']
     # Iterate over AnimalType
     for animal_type in ['Cat', 'Dog']:
-        classifiers = [
-            NearestNeighborsPredictor(animal_type),
-            DecisionTreePredictor(animal_type),
-            RandomForestPredictor(animal_type),
-            AdaBoostPredictor(),
-            NaiveBayesPredictor(),
-            LinearDiscriminantAnalysisPredictor(animal_type),
-            QuadraticDiscriminantAnalysisPredictor(),
-            LinearSVMPredictor(animal_type), RBF_SVMPredictor(animal_type),
-            XGBPredictor(animal_type)]
-
-        train_data = get_data('../data/train.csv')
-        train_data = train_data[train_data.SexuponOutcome.notnull()]
-        train_data = train_data[train_data.AgeuponOutcome.notnull()]
-
         print "*", animal_type
-        train_data = select_features(train_data, animal_type)
-        X_train, y_train, X_test, y_test = split_data(train_data)
+        for is_adult in [0, 1]:
+            print " -", is_adult
+            classifiers = [
+                NearestNeighborsPredictor(animal_type),
+                DecisionTreePredictor(animal_type),
+                RandomForestPredictor(animal_type),
+                AdaBoostPredictor(),
+                NaiveBayesPredictor(),
+                LinearDiscriminantAnalysisPredictor(animal_type),
+                QuadraticDiscriminantAnalysisPredictor(),
+                LinearSVMPredictor(animal_type), RBF_SVMPredictor(animal_type),
+                XGBPredictor(animal_type)]
 
-        # iterate over classifiers
-        for name, clf in zip(names, classifiers):
-            clf_X_train = X_train
-            clf_X_test = X_test
+            train_data = get_data('../data/train.csv')
+            train_data = train_data[train_data.SexuponOutcome.notnull()]
+            train_data = train_data[train_data.AgeuponOutcome.notnull()]
 
-            print " - {}".format(name)
-            clf.fit(clf_X_train, y_train)
-            predictions_df = clf.predict(clf_X_test)
-            ll = log_loss(
-                y_test, 'OutcomeType', predictions_df, possible_outcomes)
+            train_data = select_features(train_data, animal_type, is_adult)
+            X_train, y_train, X_test, y_test = split_data(train_data)
 
-            print "   - score: %.5f" % ll
+            # iterate over classifiers
+            for name, clf in zip(names, classifiers):
+                clf_X_train = X_train
+                clf_X_test = X_test
+
+                print " - {}".format(name)
+                clf.fit(clf_X_train, y_train)
+                predictions_df = clf.predict(clf_X_test)
+                ll = log_loss(
+                    y_test, 'OutcomeType', predictions_df, possible_outcomes)
+
+                print "   - score: %.5f" % ll

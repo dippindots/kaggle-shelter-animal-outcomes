@@ -50,7 +50,7 @@ if __name__ == '__main__':
                 LinearDiscriminantAnalysisPredictor(animal_type),
                 QuadraticDiscriminantAnalysisPredictor(),
                 LinearSVMPredictor(animal_type), RBF_SVMPredictor(animal_type),
-                XGBPredictor(animal_type)]
+                XGBPredictor(animal_type, is_adult)]
 
             train_data = get_data('../data/train.csv')
             train_data = train_data[train_data.SexuponOutcome.notnull()]

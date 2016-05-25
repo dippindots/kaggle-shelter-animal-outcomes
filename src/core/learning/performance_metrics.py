@@ -6,6 +6,7 @@ Performance metric used in Kaggle competition.
 @author: Paul Reiners
 '''
 from math import log
+import pandas as pd
 
 
 def log_loss(truths, label_col_name, predictions_df, possible_labels):
@@ -36,3 +37,15 @@ def log_loss(truths, label_col_name, predictions_df, possible_labels):
             total += y * log(p)
 
     return -1.0 / n * total
+
+
+def bundle_predictions(predictions):
+    n = len(predictions)
+    predictions = predictions.transpose()
+    predictions_data = {
+        'ID': range(1, n + 1), 'Adoption': predictions[0],
+        'Died': predictions[1], 'Euthanasia': predictions[2],
+        'Return_to_owner': predictions[3], 'Transfer': predictions[4]}
+    predictions_df = pd.DataFrame(predictions_data)
+
+    return predictions_df

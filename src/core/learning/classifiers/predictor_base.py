@@ -4,7 +4,8 @@ Created on Apr 27, 2016
 @author: Paul Reiners
 '''
 import abc
-import pandas as pd
+
+from core.learning.performance_metrics import bundle_predictions
 
 
 class PredictorBase(object):
@@ -28,15 +29,7 @@ class PredictorBase(object):
         pass
 
     def bundle_predictions(self, predictions):
-        n = len(predictions)
-        predictions = predictions.transpose()
-        predictions_data = {
-            'ID': range(1, n + 1), 'Adoption': predictions[0],
-            'Died': predictions[1], 'Euthanasia': predictions[2],
-            'Return_to_owner': predictions[3], 'Transfer': predictions[4]}
-        predictions_df = pd.DataFrame(predictions_data)
-
-        return predictions_df
+        return bundle_predictions(predictions)
 
     def get_k_best_k(self):
         return 10

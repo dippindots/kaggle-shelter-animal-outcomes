@@ -17,3 +17,18 @@ if __name__ == '__main__':
     labels_df = pd.DataFrame(features_df['OutcomeType'])
     features_df = features_df.drop(['OutcomeType'], axis=1)
     print(labels_df.head(20))
+
+    def label_map(y):
+        if y == "Adoption":
+            return 4
+        elif y == "Died":
+            return 3
+        elif y == "Euthanasia":
+            return 2
+        elif y == "Return_to_owner":
+            return 1
+        else:
+            # Transfer
+            return 0
+    labels_df = labels_df.applymap(label_map)
+    print(labels_df.head())

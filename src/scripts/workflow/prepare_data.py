@@ -10,11 +10,13 @@ by Katie Malone
 '''
 import sklearn.cross_validation
 import sklearn.ensemble
+import sklearn.feature_selection
 import sklearn.linear_model
 from sklearn.preprocessing import MinMaxScaler
 import sklearn.tree
 
 from core.preprocessing.feature_extraction_scaling import preprocess_age
+import pandas as pd
 from scripts.workflow.utils import \
     get_features_and_labels, get_names_of_columns_to_transform, hot_encoder
 
@@ -101,3 +103,9 @@ if __name__ == '__main__':
         features_df.drop(feature, axis=1, inplace=True)
 
     print(features_df.head())
+
+    X = features_df
+    select = sklearn.feature_selection.SelectKBest(k=100)
+    selected_X = select.fit_transform(X, y)
+
+    print(selected_X.shape)

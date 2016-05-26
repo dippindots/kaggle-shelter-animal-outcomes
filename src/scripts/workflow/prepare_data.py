@@ -18,6 +18,8 @@ import sklearn.cross_validation
 import sklearn.ensemble
 import sklearn.feature_selection
 import sklearn.linear_model
+import sklearn.metrics
+import sklearn.pipeline
 from sklearn.preprocessing import MinMaxScaler
 import sklearn.tree
 
@@ -114,3 +116,27 @@ if __name__ == '__main__':
     selected_X = select.fit_transform(X, y)
 
     print(selected_X.shape)
+
+    #########################################################################
+    # Using Pipeline and GridSearchCV for More Compact and Comprehensive Code
+    #########################################################################
+    select = sklearn.feature_selection.SelectKBest(k=100)
+    clf = sklearn.ensemble.RandomForestClassifier()
+
+    steps = [('feature_selection', select),
+             ('random_forest', clf)]
+
+    pipeline = sklearn.pipeline.Pipeline(steps)
+
+    X_train, X_test, y_train, y_test = sklearn.cross_validation.train_test_split(
+        X, y, test_size=0.33, random_state=42)
+
+    # fit your pipeline on X_train and y_train
+    pipeline.fit(X_train, y_train)
+    # call pipeline.predict() on your X_test data to make a set of test
+    # predictions
+    y_prediction = pipeline.predict(X_test)
+    # test your predictions using sklearn.classification_report()
+    report = sklearn.metrics.classification_report(y_test, y_prediction)
+    # and print the report
+    print(report)

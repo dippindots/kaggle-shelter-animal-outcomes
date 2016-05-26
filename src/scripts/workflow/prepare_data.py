@@ -4,8 +4,14 @@ Created on May 25, 2016
 @author: Paul Reiners
 
 Based on
-["Workflows in Python: Getting data ready to build models"]
-(https://civisanalytics.com/blog/data-science/2015/12/17/workflows-in-python-getting-data-ready-to-build-models/)
+* ["Workflows in Python: Getting data ready to build models"]
+  (https://civisanalytics.com/blog/data-science/2015/12/17/workflows-in-python-getting-data-ready-to-build-models/)
+* ["Workflows in Python: Curating Features and Thinking Scientifically about
+    Algorithms"]
+  (https://civisanalytics.com/blog/data-science/2015/12/23/workflows-in-python-curating-features-and-thinking-scientifically-about-algorithms/)
+* ["Workflows in Python: Using Pipeline and GridSearchCV for More Compact and
+    Comprehensive Code"]
+  (https://civisanalytics.com/blog/data-science/2016/01/06/workflows-python-using-pipeline-gridsearchcv-for-compact-code/)
 by Katie Malone
 '''
 import sklearn.cross_validation
@@ -16,7 +22,6 @@ from sklearn.preprocessing import MinMaxScaler
 import sklearn.tree
 
 from core.preprocessing.feature_extraction_scaling import preprocess_age
-import pandas as pd
 from scripts.workflow.utils import \
     get_features_and_labels, get_names_of_columns_to_transform, hot_encoder
 

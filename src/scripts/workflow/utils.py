@@ -28,7 +28,6 @@ def hot_encoder(df, column_name):
     enc = sklearn.preprocessing.OneHotEncoder()
     enc.fit(column)
     new_column = enc.transform(column).toarray()
-    column_titles = []
     # making titles for the new columns, and appending them to dataframe
     for ii in range(len(new_column[0])):
         this_column_name = column_name + "_" + str(ii)

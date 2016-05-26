@@ -8,6 +8,11 @@ Based on
 (https://civisanalytics.com/blog/data-science/2015/12/17/workflows-in-python-getting-data-ready-to-build-models/)
 by Katie Malone
 '''
+import sklearn.cross_validation
+import sklearn.linear_model
+from sklearn.preprocessing import MinMaxScaler
+
+from core.preprocessing.feature_extraction_scaling import preprocess_age
 import numpy as np
 import pandas as pd
 
@@ -53,13 +58,33 @@ if __name__ == '__main__':
     for column in names_of_columns_to_transform:
         features_df = transform_feature(features_df, column)
 
+    def transform_age_upon_outcome(age_upon_outcome):
+        transformed_age_upon_outcome = age_upon_outcome.apply(preprocess_age)
+        transformed_age_upon_outcome = transformed_age_upon_outcome.fillna(
+            transformed_age_upon_outcome.mean())
+
+        mms = MinMaxScaler()
+        transformed_age_upon_outcome = mms.fit_transform(
+            transformed_age_upon_outcome.reshape(-1, 1))
+
+        return transformed_age_upon_outcome
+    features_df['AgeuponOutcome'] = transform_age_upon_outcome(
+        features_df['AgeuponOutcome'])
+
     print(features_df.head())
 
     # remove the "date_recorded" column--we're not going to make use
     # of time-series data today
     features_df.drop("DateTime", axis=1, inplace=True)
 
+    features_df.drop("OutcomeSubtype", axis=1, inplace=True)
+    features_df.drop("Name", axis=1, inplace=True)
+
     print(features_df.columns.values)
 
     X = features_df.as_matrix()
     y = labels_df["OutcomeType"].tolist()
+
+    clf = sklearn.linear_model.LogisticRegression()
+    score = sklearn.cross_validation.cross_val_score(clf, X, y)
+    print(score)

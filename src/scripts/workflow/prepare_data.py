@@ -15,13 +15,12 @@ from sklearn.preprocessing import MinMaxScaler
 import sklearn.tree
 
 from core.preprocessing.feature_extraction_scaling import preprocess_age
-import pandas as pd
+from scripts.workflow.utils import \
+    get_features_and_labels, get_names_of_columns_to_transform, hot_encoder
 
 
 if __name__ == '__main__':
-    features_df = pd.DataFrame.from_csv("../data/train.csv")
-    labels_df = pd.DataFrame(features_df['OutcomeType'])
-    features_df = features_df.drop(['OutcomeType'], axis=1)
+    features_df, labels_df = get_features_and_labels()
     print(labels_df.head(20))
 
     def label_map(y):
@@ -54,8 +53,7 @@ if __name__ == '__main__':
     # this is just a start!  Use some of the print( labels_df.head() )
     # output upstream to help you decide which columns get the
     # transformation
-    names_of_columns_to_transform = [
-        'AnimalType', 'SexuponOutcome', 'Breed', 'Color']
+    names_of_columns_to_transform = get_names_of_columns_to_transform()
     for column in names_of_columns_to_transform:
         features_df = transform_feature(features_df, column)
 
@@ -97,3 +95,8 @@ if __name__ == '__main__':
     clf = sklearn.ensemble.RandomForestClassifier()
     score = sklearn.cross_validation.cross_val_score(clf, X, y)
     print(score)
+
+    for feature in names_of_columns_to_transform:
+        features_df = hot_encoder(features_df, feature)
+
+    print(features_df.head())

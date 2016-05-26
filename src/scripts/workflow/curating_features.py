@@ -9,21 +9,16 @@ Based on
 (https://civisanalytics.com/blog/data-science/2015/12/23/workflows-in-python-curating-features-and-thinking-scientifically-about-algorithms/)
 by Katie Malone
 '''
-import sklearn.preprocessing
-import numpy as np
+from scripts.workflow.utils import \
+    get_features_and_labels, get_names_of_columns_to_transform, hot_encoder
 
 
 if __name__ == '__main__':
-    def hot_encoder(df, column_name):
-        column = df[column_name].tolist()
-        # needs to be an N x 1 numpy array
-        column = np.reshape(column, (len(column), 1))
-        enc = sklearn.preprocessing.OneHotEncoder()
-        enc.fit(column)
-        new_column = enc.transform(column).toarray()
-        column_titles = []
-        # making titles for the new columns, and appending them to dataframe
-        for ii in range(len(new_column[0])):
-            this_column_name = column_name + "_" + str(ii)
-            df[this_column_name] = new_column[:, ii]
-        return df
+    features_df, labels_df = get_features_and_labels()
+    print(features_df.columns.values)
+
+    names_of_columns_to_transform = get_names_of_columns_to_transform()
+    for feature in names_of_columns_to_transform:
+        features_df = hot_encoder(features_df, feature)
+
+    print(features_df.head())

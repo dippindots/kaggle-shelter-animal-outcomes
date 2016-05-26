@@ -15,7 +15,6 @@ from sklearn.preprocessing import MinMaxScaler
 import sklearn.tree
 
 from core.preprocessing.feature_extraction_scaling import preprocess_age
-import numpy as np
 import pandas as pd
 
 

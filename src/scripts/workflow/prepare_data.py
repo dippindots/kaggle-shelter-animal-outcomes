@@ -60,3 +60,6 @@ if __name__ == '__main__':
     features_df.drop("DateTime", axis=1, inplace=True)
 
     print(features_df.columns.values)
+
+    X = features_df.as_matrix()
+    y = labels_df["OutcomeType"].tolist()

@@ -98,5 +98,6 @@ if __name__ == '__main__':
 
     for feature in names_of_columns_to_transform:
         features_df = hot_encoder(features_df, feature)
+        features_df.drop(feature, axis=1, inplace=True)
 
     print(features_df.head())

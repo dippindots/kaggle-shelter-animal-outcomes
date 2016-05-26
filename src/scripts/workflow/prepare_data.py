@@ -9,8 +9,10 @@ Based on
 by Katie Malone
 '''
 import sklearn.cross_validation
+import sklearn.ensemble
 import sklearn.linear_model
 from sklearn.preprocessing import MinMaxScaler
+import sklearn.tree
 
 from core.preprocessing.feature_extraction_scaling import preprocess_age
 import numpy as np
@@ -86,5 +88,13 @@ if __name__ == '__main__':
     y = labels_df["OutcomeType"].tolist()
 
     clf = sklearn.linear_model.LogisticRegression()
+    score = sklearn.cross_validation.cross_val_score(clf, X, y)
+    print(score)
+
+    clf = sklearn.tree.DecisionTreeClassifier()
+    score = sklearn.cross_validation.cross_val_score(clf, X, y)
+    print(score)
+
+    clf = sklearn.ensemble.RandomForestClassifier()
     score = sklearn.cross_validation.cross_val_score(clf, X, y)
     print(score)

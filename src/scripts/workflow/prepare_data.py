@@ -32,3 +32,31 @@ if __name__ == '__main__':
             return 0
     labels_df = labels_df.applymap(label_map)
     print(labels_df.head())
+
+    def transform_feature(df, column_name):
+        unique_values = set(df[column_name].tolist())
+        transformer_dict = {}
+        for ii, value in enumerate(unique_values):
+            transformer_dict[value] = ii
+
+        def label_map(y):
+            return transformer_dict[y]
+        df[column_name] = df[column_name].apply(label_map)
+        return df
+
+    # list of column names indicating which columns to transform;
+    # this is just a start!  Use some of the print( labels_df.head() )
+    # output upstream to help you decide which columns get the
+    # transformation
+    names_of_columns_to_transform = [
+        'AnimalType', 'SexuponOutcome', 'Breed', 'Color']
+    for column in names_of_columns_to_transform:
+        features_df = transform_feature(features_df, column)
+
+    print(features_df.head())
+
+    # remove the "date_recorded" column--we're not going to make use
+    # of time-series data today
+    features_df.drop("DateTime", axis=1, inplace=True)
+
+    print(features_df.columns.values)

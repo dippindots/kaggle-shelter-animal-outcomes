@@ -121,4 +121,5 @@ if __name__ == '__main__':
     ll = log_loss(
         y_test, 'OutcomeType', y_prediction_df, possible_outcomes)
 
+    # BEST: 1.18994
     print "score: %.5f" % ll

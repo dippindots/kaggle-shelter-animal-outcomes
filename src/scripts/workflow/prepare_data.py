@@ -25,8 +25,9 @@ from sklearn.preprocessing import MinMaxScaler
 import sklearn.tree
 
 from core.preprocessing.feature_extraction_scaling import preprocess_age
+import pandas as pd
 from scripts.workflow.utils import \
-    get_features_and_labels, get_names_of_columns_to_transform, hot_encoder
+    get_features_and_labels, get_names_of_columns_to_transform
 
 
 if __name__ == '__main__':
@@ -48,24 +49,11 @@ if __name__ == '__main__':
     labels_df = labels_df.applymap(label_map)
     print(labels_df.head())
 
-    def transform_feature(df, column_name):
-        unique_values = set(df[column_name].tolist())
-        transformer_dict = {}
-        for ii, value in enumerate(unique_values):
-            transformer_dict[value] = ii
-
-        def label_map(y):
-            return transformer_dict[y]
-        df[column_name] = df[column_name].apply(label_map)
-        return df
-
     # list of column names indicating which columns to transform;
     # this is just a start!  Use some of the print( labels_df.head() )
     # output upstream to help you decide which columns get the
     # transformation
     names_of_columns_to_transform = get_names_of_columns_to_transform()
-    for column in names_of_columns_to_transform:
-        features_df = transform_feature(features_df, column)
 
     def transform_age_upon_outcome(age_upon_outcome):
         transformed_age_upon_outcome = age_upon_outcome.apply(preprocess_age)
@@ -94,21 +82,11 @@ if __name__ == '__main__':
     X = features_df.as_matrix()
     y = labels_df["OutcomeType"].tolist()
 
-    clf = sklearn.linear_model.LogisticRegression()
-    score = sklearn.cross_validation.cross_val_score(clf, X, y)
-    print(score)
-
-    clf = sklearn.tree.DecisionTreeClassifier()
-    score = sklearn.cross_validation.cross_val_score(clf, X, y)
-    print(score)
-
-    clf = sklearn.ensemble.RandomForestClassifier()
-    score = sklearn.cross_validation.cross_val_score(clf, X, y)
-    print(score)
-
-    for feature in names_of_columns_to_transform:
-        features_df = hot_encoder(features_df, feature)
-        features_df.drop(feature, axis=1, inplace=True)
+    for categorical_column in names_of_columns_to_transform:
+        features_df[categorical_column] = features_df[
+            categorical_column].astype('category')
+    features_df = pd.get_dummies(
+        features_df, columns=names_of_columns_to_transform)
 
     print(features_df.head())
 

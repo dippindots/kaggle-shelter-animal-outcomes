@@ -24,7 +24,8 @@ from sklearn.preprocessing import MinMaxScaler
 from core.learning.performance_metrics import bundle_predictions
 from core.learning.performance_metrics import log_loss
 
-from core.preprocessing.feature_extraction_scaling import preprocess_age
+from core.preprocessing.feature_extraction_scaling \
+    import preprocess_age, get_is_named
 import pandas as pd
 from scripts.workflow.utils import \
     get_features_and_labels, get_names_of_columns_to_transform
@@ -60,6 +61,8 @@ if __name__ == '__main__':
     features_df.drop("DateTime", axis=1, inplace=True)
 
     features_df.drop("OutcomeSubtype", axis=1, inplace=True)
+    features_df['Name'] = features_df['Name'].fillna('')
+    features_df['IsNamed'] = features_df['Name'].apply(get_is_named)
     features_df.drop("Name", axis=1, inplace=True)
 
     print(features_df.columns.values)
@@ -121,5 +124,5 @@ if __name__ == '__main__':
     ll = log_loss(
         y_test, 'OutcomeType', y_prediction_df, possible_outcomes)
 
-    # BEST: 1.18994
+    # BEST: 1.12855
     print "score: %.5f" % ll

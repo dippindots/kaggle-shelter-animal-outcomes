@@ -18,11 +18,11 @@ import sklearn.cross_validation
 import sklearn.ensemble
 import sklearn.feature_selection
 import sklearn.grid_search
-import sklearn.linear_model
 import sklearn.metrics
 import sklearn.pipeline
 from sklearn.preprocessing import MinMaxScaler
-import sklearn.tree
+from core.learning.performance_metrics import bundle_predictions
+from core.learning.performance_metrics import log_loss
 
 from core.preprocessing.feature_extraction_scaling import preprocess_age
 import pandas as pd
@@ -113,6 +113,12 @@ if __name__ == '__main__':
     cv = sklearn.grid_search.GridSearchCV(pipeline, param_grid=parameters)
 
     cv.fit(X_train, y_train)
-    y_predictions = cv.predict(X_test)
-    report = sklearn.metrics.classification_report(y_test, y_predictions)
-    print(report)
+    y_predictions = cv.predict_proba(X_test)
+
+    y_prediction_df = bundle_predictions(y_predictions)
+    possible_outcomes = [
+        'Adoption', 'Died', 'Euthanasia', 'Return_to_owner', 'Transfer']
+    ll = log_loss(
+        y_test, 'OutcomeType', y_prediction_df, possible_outcomes)
+
+    print "score: %.5f" % ll

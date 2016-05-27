@@ -17,6 +17,7 @@ by Katie Malone
 import sklearn.cross_validation
 import sklearn.ensemble
 import sklearn.feature_selection
+import sklearn.grid_search
 import sklearn.linear_model
 import sklearn.metrics
 import sklearn.pipeline
@@ -128,8 +129,9 @@ if __name__ == '__main__':
 
     pipeline = sklearn.pipeline.Pipeline(steps)
 
-    X_train, X_test, y_train, y_test = sklearn.cross_validation.train_test_split(
-        X, y, test_size=0.33, random_state=42)
+    X_train, X_test, y_train, y_test = \
+        sklearn.cross_validation.train_test_split(
+            X, y, test_size=0.33, random_state=42)
 
     # fit your pipeline on X_train and y_train
     pipeline.fit(X_train, y_train)
@@ -139,4 +141,15 @@ if __name__ == '__main__':
     # test your predictions using sklearn.classification_report()
     report = sklearn.metrics.classification_report(y_test, y_prediction)
     # and print the report
+    print(report)
+
+    parameters = dict(feature_selection__k=[100, 200],
+                      random_forest__n_estimators=[50, 100, 200],
+                      random_forest__min_samples_split=[2, 3, 4, 5, 10])
+
+    cv = sklearn.grid_search.GridSearchCV(pipeline, param_grid=parameters)
+
+    cv.fit(X_train, y_train)
+    y_predictions = cv.predict(X_test)
+    report = sklearn.metrics.classification_report(y_test, y_predictions)
     print(report)

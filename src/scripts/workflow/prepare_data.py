@@ -34,21 +34,6 @@ if __name__ == '__main__':
     features_df, labels_df = get_features_and_labels()
     print(labels_df.head(20))
 
-    def label_map(y):
-        if y == "Adoption":
-            return 4
-        elif y == "Died":
-            return 3
-        elif y == "Euthanasia":
-            return 2
-        elif y == "Return_to_owner":
-            return 1
-        else:
-            # Transfer
-            return 0
-    labels_df = labels_df.applymap(label_map)
-    print(labels_df.head())
-
     # list of column names indicating which columns to transform;
     # this is just a start!  Use some of the print( labels_df.head() )
     # output upstream to help you decide which columns get the

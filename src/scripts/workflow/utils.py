@@ -12,6 +12,7 @@ import pandas as pd
 def get_features_and_labels():
     features_df = pd.DataFrame.from_csv("../data/train.csv")
     labels_df = pd.DataFrame(features_df['OutcomeType'])
+    labels_df['OutcomeType'] = labels_df['OutcomeType'].astype('category')
     features_df = features_df.drop(['OutcomeType'], axis=1)
 
     return (features_df, labels_df)

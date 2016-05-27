@@ -10,7 +10,8 @@ import pandas as pd
 
 
 def get_features_and_labels():
-    features_df = pd.DataFrame.from_csv("../data/train.csv")
+    features_df = pd.DataFrame.from_csv(
+        "../data/train.csv", parse_dates=['DateTime'])
     labels_df = pd.DataFrame(features_df['OutcomeType'])
     labels_df['OutcomeType'] = labels_df['OutcomeType'].astype('category')
     features_df = features_df.drop(['OutcomeType'], axis=1)
@@ -19,7 +20,8 @@ def get_features_and_labels():
 
 
 def get_names_of_columns_to_transform():
-    return ['AnimalType', 'SexuponOutcome', 'Breed', 'Color']
+    return ['AnimalType', 'SexuponOutcome', 'Breed', 'Color', 'Month',
+            'DayOfWeek', 'Hour']
 
 
 def hot_encoder(df, column_name):

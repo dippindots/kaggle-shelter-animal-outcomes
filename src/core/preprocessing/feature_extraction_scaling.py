@@ -256,7 +256,7 @@ def is_hour(hour, expected_hour):
         return 0.0
 
 
-def extract_date_time_features(data, animal_type):
+def extract_date_time_features(data):
     month = data['DateTime'].apply(get_month)
     data['Month'] = month
     data['IsSpring'] = month.apply(is_spring)

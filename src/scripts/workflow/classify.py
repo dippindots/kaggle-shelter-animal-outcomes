@@ -18,7 +18,6 @@ import sklearn.cross_validation
 import sklearn.ensemble
 import sklearn.feature_selection
 import sklearn.grid_search
-import sklearn.metrics
 import sklearn.pipeline
 from sklearn.preprocessing import MinMaxScaler
 from core.learning.performance_metrics import bundle_predictions
@@ -33,7 +32,6 @@ from scripts.workflow.utils import \
 
 if __name__ == '__main__':
     features_df, labels_df = get_features_and_labels()
-    print(labels_df.head(20))
 
     # list of column names indicating which columns to transform;
     # this is just a start!  Use some of the print( labels_df.head() )
@@ -54,8 +52,6 @@ if __name__ == '__main__':
     features_df['AgeuponOutcome'] = transform_age_upon_outcome(
         features_df['AgeuponOutcome'])
 
-    print(features_df.head())
-
     # remove the "date_recorded" column--we're not going to make use
     # of time-series data today
     features_df.drop("DateTime", axis=1, inplace=True)
@@ -64,8 +60,6 @@ if __name__ == '__main__':
     features_df['Name'] = features_df['Name'].fillna('')
     features_df['IsNamed'] = features_df['Name'].apply(get_is_named)
     features_df.drop("Name", axis=1, inplace=True)
-
-    print(features_df.columns.values)
 
     X = features_df.as_matrix()
     y = labels_df["OutcomeType"].tolist()
@@ -76,13 +70,7 @@ if __name__ == '__main__':
     features_df = pd.get_dummies(
         features_df, columns=names_of_columns_to_transform)
 
-    print(features_df.head())
-
     X = features_df
-    select = sklearn.feature_selection.SelectKBest(k=100)
-    selected_X = select.fit_transform(X, y)
-
-    print(selected_X.shape)
 
     #########################################################################
     # Using Pipeline and GridSearchCV for More Compact and Comprehensive Code
@@ -99,16 +87,6 @@ if __name__ == '__main__':
         sklearn.cross_validation.train_test_split(
             X, y, test_size=0.33, random_state=42)
 
-    # fit your pipeline on X_train and y_train
-    pipeline.fit(X_train, y_train)
-    # call pipeline.predict() on your X_test data to make a set of test
-    # predictions
-    y_prediction = pipeline.predict(X_test)
-    # test your predictions using sklearn.classification_report()
-    report = sklearn.metrics.classification_report(y_test, y_prediction)
-    # and print the report
-    print(report)
-
     parameters = dict(feature_selection__k=[100, 200],
                       random_forest__n_estimators=[50, 100, 200],
                       random_forest__min_samples_split=[2, 3, 4, 5, 10])
@@ -124,5 +102,5 @@ if __name__ == '__main__':
     ll = log_loss(
         y_test, 'OutcomeType', y_prediction_df, possible_outcomes)
 
-    # BEST: 1.12855
+    # BEST: 1.08376
     print "score: %.5f" % ll

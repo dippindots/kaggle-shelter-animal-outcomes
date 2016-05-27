@@ -90,13 +90,14 @@ if __name__ == '__main__':
         sklearn.cross_validation.train_test_split(
             X, y, test_size=0.33, random_state=42)
 
-    parameters = dict(feature_selection__k=[100, 200],
-                      random_forest__n_estimators=[50, 100, 200],
-                      random_forest__min_samples_split=[2, 3, 4, 5, 10])
+    parameters = dict(feature_selection__k=[50, 100, 200],
+                      random_forest__n_estimators=[50, 100, 200, 400],
+                      random_forest__min_samples_split=[2, 3, 4, 5, 10, 20])
 
     cv = sklearn.grid_search.GridSearchCV(pipeline, param_grid=parameters)
 
     cv.fit(X_train, y_train)
+    print cv.best_params_
     y_predictions = cv.predict_proba(X_test)
 
     y_prediction_df = bundle_predictions(y_predictions)
@@ -105,5 +106,5 @@ if __name__ == '__main__':
     ll = log_loss(
         y_test, 'OutcomeType', y_prediction_df, possible_outcomes)
 
-    # BEST: 0.81189
+    # BEST: 0.80022
     print "score: %.5f" % ll

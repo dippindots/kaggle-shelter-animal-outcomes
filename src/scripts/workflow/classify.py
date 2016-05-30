@@ -98,6 +98,8 @@ if __name__ == '__main__':
 
     cv.fit(X_train, y_train)
     print cv.best_params_
+    # http://stackoverflow.com/q/37501450/7648
+
     y_predictions = cv.predict_proba(X_test)
 
     y_prediction_df = bundle_predictions(y_predictions)
